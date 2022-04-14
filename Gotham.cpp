@@ -1,3 +1,4 @@
+//para cargar imagen
 #define STB_IMAGE_IMPLEMENTATION
 
 #include <stdio.h>
@@ -24,6 +25,12 @@
 #include"Model.h"
 #include "Skybox.h"
 
+//para iluminación
+#include "CommonValues.h"
+#include "DirectionalLight.h"
+#include "PointLight.h"
+#include "SpotLight.h"
+#include "Material.h"
 const float toRadians = 3.14159265f / 180.0f;
 
 Window mainWindow;
@@ -38,11 +45,21 @@ Texture TimTexture;
 
 Skybox skybox;
 
+//materiales
+Material Material_brillante;
+Material Material_opaco;
+
+
 //Sphere cabeza = Sphere(0.5, 20, 20);
 GLfloat deltaTime = 0.0f;
 GLfloat lastTime = 0.0f;
 static double limitFPS = 1.0 / 60.0;
 
+// luz direccional
+DirectionalLight mainLight;
+//para declarar varias luces de tipo pointlight
+PointLight pointLights[MAX_POINT_LIGHTS];
+SpotLight spotLights[MAX_SPOT_LIGHTS];
 
 // Vertex Shader
 static const char* vShader = "shaders/shader_light.vert";
@@ -51,7 +68,7 @@ static const char* vShader = "shaders/shader_light.vert";
 static const char* fShader = "shaders/shader_light.frag";
 
 //cálculo del promedio de las normales para sombreado de Phong
-void calcAverageNormals(unsigned int * indices, unsigned int indiceCount, GLfloat * vertices, unsigned int verticeCount,
+void calcAverageNormals(unsigned int* indices, unsigned int indiceCount, GLfloat* vertices, unsigned int verticeCount,
 	unsigned int vLength, unsigned int normalOffset)
 {
 	for (size_t i = 0; i < indiceCount; i += 3)
@@ -108,42 +125,20 @@ void CreateObjects()
 		10.0f, 0.0f, 10.0f,		10.0f, 10.0f,	0.0f, -1.0f, 0.0f
 	};
 
-	//En create objects: 
-	unsigned int vegetacionIndices[] = {
-			0, 1, 2,
-			0, 2, 3,
-			4,5,6,
-			4,6,7
-	};
-
-	GLfloat vegetacionVertices[] = {
-		-0.5f, -0.5f, 0.0f,		0.0f, 0.0f,		0.0f, 0.0f, 0.0f,
-		0.5f, -0.5f, 0.0f,		1.0f, 0.0f,		0.0f, 0.0f, 0.0f,
-		0.5f, 0.5f, 0.0f,		1.0f, 1.0f,		0.0f, 0.0f, 0.0f,
-		-0.5f, 0.5f, 0.0f,		0.0f, 1.0f,		0.0f, 0.0f, 0.0f,
-
-		0.0f, -0.5f, -0.5f,		0.0f, 0.0f,		0.0f, 0.0f, 0.0f,
-		0.0f, -0.5f, 0.5f,		1.0f, 0.0f,		0.0f, 0.0f, 0.0f,
-		0.0f, 0.5f, 0.5f,		1.0f, 1.0f,		0.0f, 0.0f, 0.0f,
-		0.0f, 0.5f, -0.5f,		0.0f, 1.0f,		0.0f, 0.0f, 0.0f,
-	};
 	calcAverageNormals(indices, 12, vertices, 32, 8, 5);
 
-	Mesh *obj1 = new Mesh();
+	Mesh* obj1 = new Mesh();
 	obj1->CreateMesh(vertices, indices, 32, 12);
 	meshList.push_back(obj1);
 
-	Mesh *obj2 = new Mesh();
+	Mesh* obj2 = new Mesh();
 	obj2->CreateMesh(vertices, indices, 32, 12);
 	meshList.push_back(obj2);
 
-	Mesh *obj3 = new Mesh();
+	Mesh* obj3 = new Mesh();
 	obj3->CreateMesh(floorVertices, floorIndices, 32, 6);
 	meshList.push_back(obj3);
 
-	Mesh *obj4 = new Mesh();
-	obj4->CreateMesh(vegetacionVertices, vegetacionIndices, 64, 12);
-	meshList.push_back(obj4);
 	// fin create objects
 }
 
@@ -170,7 +165,7 @@ void CrearPersonaje()
 		20, 21, 22,
 		22, 23, 20,
 	};
-	
+
 	GLfloat cara_vertices[] = {
 		// front
 		//x		y		z		S		T			NX		NY		NZ
@@ -716,11 +711,11 @@ void CrearPersonaje()
 		 -0.5f, 0.5f,  -0.5f,	0.89553f,	0.87011f,		0.0f,	-1.0f,	0.0f,
 	};
 
-	Mesh *cara = new Mesh();
+	Mesh* cara = new Mesh();
 	cara->CreateMesh(cara_vertices, cara_indices, 192, 36);
 	meshList.push_back(cara);
 
-	Mesh *cuerpo = new Mesh();
+	Mesh* cuerpo = new Mesh();
 	cuerpo->CreateMesh(cuerpo_vertices, cuerpo_indices, 192, 36);
 	meshList.push_back(cuerpo);
 
@@ -755,7 +750,7 @@ void CrearPersonaje()
 
 void CreateShaders()
 {
-	Shader *shader1 = new Shader();
+	Shader* shader1 = new Shader();
 	shader1->CreateFromFiles(vShader, fShader);
 	shaderList.push_back(*shader1);
 }
@@ -778,6 +773,43 @@ int main()
 	TimTexture = Texture("Textures/TimTexture.tga");
 	TimTexture.LoadTextureA();
 
+	Model Batmobile_M; 
+	Model llanta_B_M;
+	Model WE_M;
+	Model ClockTower_M;
+	Model Coffe_M;
+	Model Building1_M;
+	Model Building2_M;
+	Model Building3_M;
+	Model Building4_M;
+	Model Building5_M;
+	Model Building6_M;
+
+	Batmobile_M = Model();
+	Batmobile_M.LoadModel("Modelos_obj/Batmobile.obj");
+	llanta_B_M = Model();
+	llanta_B_M.LoadModel("Modelos_obj/LlantaBatmobile.obj");
+
+	//Edificios
+	WE_M = Model();
+	WE_M.LoadModel("Modelos_obj/Edificios/WE.obj");
+	ClockTower_M = Model();
+	ClockTower_M.LoadModel("Modelos_obj/Edificios/clockTower.obj");
+	Coffe_M = Model();
+	Coffe_M.LoadModel("Modelos_obj/Edificios/coffeeShop.obj");
+	Building1_M = Model();
+	Building1_M.LoadModel("Modelos_obj/Edificios/building1.obj");
+	Building2_M = Model();
+	Building2_M.LoadModel("Modelos_obj/Edificios/building2.obj");
+	Building3_M = Model();
+	Building3_M.LoadModel("Modelos_obj/Edificios/building3.obj");
+	Building4_M = Model();
+	Building4_M.LoadModel("Modelos_obj/Edificios/building4.obj");
+	Building5_M = Model();
+	Building5_M.LoadModel("Modelos_obj/Edificios/building5.obj");
+	Building6_M = Model();
+	Building6_M.LoadModel("Modelos_obj/Edificios/building6.obj");
+
 	std::vector<std::string> skyboxFaces;
 	skyboxFaces.push_back("Textures/Skybox/cupertin-lake_rt.tga");
 	skyboxFaces.push_back("Textures/Skybox/cupertin-lake_lf.tga");
@@ -787,6 +819,63 @@ int main()
 	skyboxFaces.push_back("Textures/Skybox/cupertin-lake_ft.tga");
 
 	skybox = Skybox(skyboxFaces);
+
+	Material_brillante = Material(4.0f, 256);
+	Material_opaco = Material(0.3f, 4);
+
+	/*
+	//luz direccional, sólo 1 y siempre debe de existir
+	mainLight = DirectionalLight(1.0f, 1.0f, 1.0f,
+		0.7f, 0.3f,
+		0.0f, 0.0f, -1.0f);
+
+	//contador de luces puntuales
+	unsigned int pointLightCount = 0;
+
+	//Declaración de primer luz puntual
+	pointLights[0] = PointLight(1.0f, 0.0f, 0.0f,
+		0.7f, 1.0f,//amb (igual que en la direccional),difusa (intensidad,no alcance)
+		2.0f, 1.5f, 1.5f,//Pos
+		0.3f, 0.2f, 0.1f); //Ec A=0 o C=0 y B>>>A,C
+	pointLightCount++;
+
+	unsigned int spotLightCount = 0;
+	//linterna
+	spotLights[0] = SpotLight(1.0f, 1.0f, 1.0f,
+		0.7f, 2.0f,
+		0.0f, 0.0f, 0.0f,
+		0.0f, -1.0f, 0.0f,
+		1.0f, 0.0f, 0.0f,
+		5.0f);
+	spotLightCount++;
+	
+	//luz fija
+	spotLights[1] = SpotLight(0.0f, 0.0f, 1.0f,
+		0.7f, 2.0f,
+		5.0f, 10.0f, 0.0f,
+		0.0f, -5.0f, 0.0f,
+		1.0f, 0.0f, 0.0f,
+		15.0f);
+	spotLightCount++;
+
+	//luz de helicóptero
+	spotLights[1] = SpotLight(1.0f, 0.0f, 1.0f,
+		0.7f, 2.0f,
+		0.0f, 5.0f, -1.0,
+		0.0f, -1.0f, 0.0f,
+		1.0f, 0.0f, 0.0f,
+		60.0f);
+	spotLightCount++;
+
+	//luz de faro del auto
+	spotLights[2] = SpotLight(1.0f, 1.0f, 0.0f,
+		0.7f, 5.0f,
+		0.0f, 0.3f, 0.0f,
+		-1.0f, 0.0f, 0.0f,
+		1.0f, 0.0f, 0.0f,
+		10.0f);
+	spotLightCount++; */
+
 
 	GLuint uniformProjection = 0, uniformModel = 0, uniformView = 0, uniformEyePosition = 0,
 		uniformSpecularIntensity = 0, uniformShininess = 0;
@@ -815,9 +904,24 @@ int main()
 		uniformView = shaderList[0].GetViewLocation();
 		uniformEyePosition = shaderList[0].GetEyePositionLocation();
 		uniformColor = shaderList[0].getColorLocation();
+
+		//información en el shader de intensidad especular y brillo
+		uniformSpecularIntensity = shaderList[0].GetSpecularIntensityLocation();
+		uniformShininess = shaderList[0].GetShininessLocation();
+
 		glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
+
 		glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera.calculateViewMatrix()));
 		glUniform3f(uniformEyePosition, camera.getCameraPosition().x, camera.getCameraPosition().y, camera.getCameraPosition().z);
+		// luz ligada a la cámara de tipo flash
+		glm::vec3 lowerLight = camera.getCameraPosition();
+		lowerLight.y -= 0.3f; //abajito de los ojos
+		spotLights[0].SetFlash(lowerLight, camera.getCameraDirection());
+
+		//información al shader de fuentes de iluminación
+		shaderList[0].SetDirectionalLight(&mainLight);
+		//shaderList[0].SetPointLights(pointLights, pointLightCount);
+		//shaderList[0].SetSpotLights(spotLights, spotLightCount);
 
 		glm::mat4 model(1.0);
 		glm::mat4 modelaux(1.0);
@@ -835,102 +939,228 @@ int main()
 
 
 		//Personaje
-		
+
 		//cuerpo
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(0.0f, 2.5f, 0.0f));
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 15.0f));
 		modelaux = model;
-		model = glm::scale(model, glm::vec3(2.4f, 3.2f, 1.6f));
-		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		TimTexture.UseTexture();
-		meshList[5]->RenderMesh();
-		
-		//cuello
-		model = modelaux;
-		model = glm::translate(model, glm::vec3(0.0f, 1.6f, 0.0f));
-		modelaux2 = model;
-		model = glm::scale(model, glm::vec3(0.8f, 0.2f, 0.7f));
-		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		TimTexture.UseTexture();
-		meshList[12]->RenderMesh();
-		
-		//cara
-		model = modelaux2;
-		model = glm::translate(model, glm::vec3(0.0f, 1.1f, 0.0f));
-		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 1.6f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.6f, 0.8f));
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		TimTexture.UseTexture();
 		meshList[4]->RenderMesh();
-		
+
+		//cuello
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(0.0f, 0.8f, 0.0f));
+
+		modelaux2 = model;
+		model = glm::scale(model, glm::vec3(0.4f, 0.1f, 0.35f));
+
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		TimTexture.UseTexture();
+		meshList[11]->RenderMesh();
+
+		//cara
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(0.0f, 0.55f, 0.0f));
+		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 0.8f));
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		TimTexture.UseTexture();
+		meshList[3]->RenderMesh();
+
 		//brazo izq
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(-1.55f, 0.2f, 0.0f));
-		model = glm::scale(model, glm::vec3(0.7f, 2.4f, 0.8f));
+		model = glm::translate(model, glm::vec3(-0.775f, 0.1f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.35f, 1.2f, 0.4f));
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		TimTexture.UseTexture();
+		meshList[5]->RenderMesh();
+
+		//brazo der
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(0.775f, 0.1f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.35f, 1.2f, 0.4f));
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		TimTexture.UseTexture();
 		meshList[6]->RenderMesh();
-		
-		//brazo der
+
+		//pierna izq
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(1.55f, 0.2f, 0.0f));
-		model = glm::scale(model, glm::vec3(0.7f, 2.4f, 0.8f));
+		model = glm::translate(model, glm::vec3(-0.375f, -1.25f, 0.0f));
+		modelaux2 = model;
+		model = glm::scale(model, glm::vec3(0.45f, 0.95f, 0.4f));
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		TimTexture.UseTexture();
 		meshList[7]->RenderMesh();
-		
-		//pierna izq
+
+		//pie izq
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(0.0f, -0.6f, 0.125f));
+		model = glm::scale(model, glm::vec3(0.45f, 0.25f, 0.65f));
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		TimTexture.UseTexture();
+		meshList[9]->RenderMesh();
+
+		//pierna der
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(-0.75f, -2.5f, 0.0f));
+		model = glm::translate(model, glm::vec3(0.375f, -1.25f, 0.0f));
 		modelaux2 = model;
-		model = glm::scale(model, glm::vec3(0.9f, 1.9f, 0.8f));
+		model = glm::scale(model, glm::vec3(0.45f, 0.95f, 0.4f));
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		TimTexture.UseTexture();
 		meshList[8]->RenderMesh();
-		
-		//pie izq
+
+		//pie der
 		model = modelaux2;
-		model = glm::translate(model, glm::vec3(0.0f, -1.2f, 0.25f));
-		model = glm::scale(model, glm::vec3(0.9f, 0.5f, 1.3f));
+		model = glm::translate(model, glm::vec3(0.0f, -0.6f, 0.125f));
+		model = glm::scale(model, glm::vec3(0.45f, 0.25f, 0.65f));
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		TimTexture.UseTexture();
 		meshList[10]->RenderMesh();
 
-		//pierna der
-		model = modelaux;
-		model = glm::translate(model, glm::vec3(0.75f, -2.5f, 0.0f));
-		modelaux2 = model;
-		model = glm::scale(model, glm::vec3(0.9f, 1.9f, 0.8f));
-		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		TimTexture.UseTexture();
-		meshList[9]->RenderMesh();
-		
-		//pie der
-		model = modelaux2;
-		model = glm::translate(model, glm::vec3(0.0f, -1.2f, 0.25f));
-		model = glm::scale(model, glm::vec3(0.9f, 0.5f, 1.3f));
-		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		TimTexture.UseTexture();
-		meshList[11]->RenderMesh();
-		
 
+		//WE
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(0.0f, -2.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(5.0f, 7.0f, 5.0f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		WE_M.RenderModel();
+
+		//ClockTower
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(130.0f, -2.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(7.0f, 7.0f, 7.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		ClockTower_M.RenderModel();
+
+		//Building
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(130.0f, -2.0f, -130.0f));
+		model = glm::scale(model, glm::vec3(7.0f, 7.0f, 7.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Building1_M.RenderModel();
+
+		//Building2
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-130.0f, -2.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(7.0f, 7.0f, 7.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Building2_M.RenderModel();
+
+		//Building4
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(0.0f, -2.0f, 130.0f));
+		model = glm::scale(model, glm::vec3(7.0f, 7.0f, 7.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Building4_M.RenderModel();
+
+
+		//Building3
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(0.0f, -2.0f, -130.0f));
+		model = glm::scale(model, glm::vec3(7.0f, 7.0f, 7.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Building3_M.RenderModel();
+
+		//Building5
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-130.0f, -2.0f, -130.0f));
+		model = glm::scale(model, glm::vec3(7.0f, 7.0f, 7.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Building5_M.RenderModel();
+
+		//Building6
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-130.0f, -2.0f, 130.0f));
+		model = glm::scale(model, glm::vec3(7.0f, 7.0f, 7.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Building6_M.RenderModel();
+
+		//CoffeeShop
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(130.0f, -2.0f, 130.0f));
+		model = glm::scale(model, glm::vec3(7.0f, 7.0f, 7.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Coffe_M.RenderModel();
+		
+		/*
+		//batmobile
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(1.0f, 0.0f, 0.0f));
+		//model = glm::translate(model, glm::vec3(mainWindow.getAutomovil(), 0.0f, 0.0f));
+		modelaux = model;
+		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Batmobile_M.RenderModel();
+
+		//Llanta delantera derecha
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-1.72f, -0.7f, -0.8f));
+		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		//model = glm::rotate(model, mainWindow.getLlanta(), glm::vec3(0.0f, 0.0f, 1.0f));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		llanta_B_M.RenderModel();
+
+
+		//Llanta posterior derecha
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(1.55f, -0.7f, -0.8f));
+		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		//model = glm::rotate(model, mainWindow.getLlanta(), glm::vec3(0.0f, 0.0f, 1.0f));
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		llanta_B_M.RenderModel();
+
+		//Llanta delantera izq
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-1.72f, -0.7f, 0.8f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		//model = glm::rotate(model, mainWindow.getLlanta(), glm::vec3(0.0f, 0.0f, 1.0f));
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		llanta_B_M.RenderModel();
+
+		//Llanta posterior izq
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(1.55f, -0.7f, 0.8f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		//model = glm::rotate(model, mainWindow.getLlanta(), glm::vec3(0.0f, 0.0f, 1.0f));
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		llanta_B_M.RenderModel();
+		*/
+		
 		glUseProgram(0);
 
 		mainWindow.swapBuffers();
