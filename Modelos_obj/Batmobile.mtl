@@ -14,4 +14,4 @@ newmtl Batmobile_batmobile_palette
 	Ni 1.5000
 	Ke 0.0000 0.0000 0.0000
 	illum 2
-	map_Kd C:\Users\z3839\Documents\Compu Graf\Modelos-Textura\Modelos\Models\batmobile.png
+	map_Kd batmobile.png
