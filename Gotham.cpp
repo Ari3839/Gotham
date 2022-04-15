@@ -788,8 +788,6 @@ int main()
 	Model Tree_M;
 	Model Tree2_M;
 	Model Tree3_M;
-	Model Pole_M;
-	Model Pole2_M;
 	Model tren_M;
 	Model BaseTren_M;
 	Model Auto1_M;
@@ -804,6 +802,14 @@ int main()
 	Model Nw_M;
 	Model Rh_M;
 
+	Model Pole_M;
+	Model Banca_M;
+	Model Batiseñal_M;
+	Model BlueBird_M;
+	Model BlueBirdWings_M;
+	Model Bote_M;
+	Model Semaforo_M;
+	Model PhoneBox_M;
 
 	//Personajes
 	Nw_M = Model();
@@ -820,12 +826,23 @@ int main()
 	Tree2_M.LoadModel("Modelos_obj/Arbol/arbol2.obj");
 	Tree3_M = Model();
 	Tree3_M.LoadModel("Modelos_obj/Arbol/Jacaranda.obj");
-
+	BlueBird_M = Model();
+	BlueBird_M.LoadModel("Modelos_obj/Others-street/Bluebird.obj");
+	BlueBirdWings_M = Model();
+	BlueBirdWings_M.LoadModel("Modelos_obj/Others-street/Bluebird_wings.obj");
 	Pole_M = Model();
-	Pole_M.LoadModel("Modelos_obj/Poles/pole1.obj");
-	Pole2_M = Model();
-	Pole2_M.LoadModel("Modelos_obj/Poles/Pole2.obj");
-
+	Pole_M.LoadModel("Modelos_obj/Poles/pole2.obj");
+	Banca_M = Model();
+	Banca_M.LoadModel("Modelos_obj/Others-street/banca.obj");
+	Batiseñal_M = Model();
+	Batiseñal_M.LoadModel("Modelos_obj/Others-street/batisenal.obj");
+	Semaforo_M = Model();
+	Semaforo_M.LoadModel("Modelos_obj/Others-street/semaforo.obj");
+	PhoneBox_M = Model();
+	PhoneBox_M.LoadModel("Modelos_obj/Others-street/phonebox.obj");
+	Bote_M = Model();
+	Bote_M.LoadModel("Modelos_obj/Others-street/boteBasura.obj");
+	
 	//Transportes
 	Batmobile_M = Model();
 	Batmobile_M.LoadModel("Modelos_obj/Batmobile.obj");
@@ -1006,7 +1023,7 @@ int main()
 
 		//cuerpo
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 15.0f));
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -18.0f));
 		modelaux = model;
 		model = glm::scale(model, glm::vec3(1.2f, 1.6f, 0.8f));
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -1146,6 +1163,153 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Tree3_M.RenderModel();
 
+		//Phonebox
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-40.0f, 1.4f, 20.0f));
+		model = glm::scale(model, glm::vec3(1.0f, 1.2f, 1.0f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		PhoneBox_M.RenderModel();
+
+		//Phonebox
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(40.0f, 1.4f, -20.0f));
+		model = glm::scale(model, glm::vec3(1.0f, 1.2f, 1.0f));
+		model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		PhoneBox_M.RenderModel();
+
+		//Banca
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(25.0f, 0.2f, 40.0f));
+		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Banca_M.RenderModel();
+
+		//Banca
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(0.0f, 0.2f, 40.0f));
+		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Banca_M.RenderModel();
+
+		//Banca
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-25.0f, 0.2f, 40.0f));
+		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Banca_M.RenderModel();
+
+		//Bote
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-55.0f, 1.5f, 40.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Bote_M.RenderModel();
+
+		//Bote
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(55.0f, 1.5f, 40.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Bote_M.RenderModel();
+
+		//Banca
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(25.0f, 0.2f, -40.0f));
+		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Banca_M.RenderModel();
+
+		//Banca
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(0.0f, 0.2f, -40.0f));
+		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Banca_M.RenderModel();
+
+		//Banca
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-25.0f, 0.2f, -40.0f));
+		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Banca_M.RenderModel();
+
+		//Bote
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-55.0f, 1.5f, -40.0f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Bote_M.RenderModel();
+
+		//Bote
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(55.0f, 1.5f, -40.0f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Bote_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-40.0f, 1.4f, 40.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(40.0f, 1.4f, 40.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(40.0f, 1.4f, -40.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-40.0f, 1.4f, -40.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-70.0f, 1.4f, -15.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-70.0f, 1.4f, 15.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(70.0f, 1.4f, -15.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(70.0f, 1.4f, 15.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
 		//ClockTower 1,0
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(180.0f, -3.4f, -60.0f));
@@ -1192,6 +1356,101 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Tree3_M.RenderModel();
 
+		//Semaforo
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-72.0f, 1.4f, 45.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Semaforo_M.RenderModel();
+
+		//Banca
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(25.0f, 0.2f, 40.0f));
+		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Banca_M.RenderModel();
+
+		//Banca
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(0.0f, 0.2f, 40.0f));
+		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Banca_M.RenderModel();
+
+		//Banca
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-25.0f, 0.2f, 40.0f));
+		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Banca_M.RenderModel();
+
+		//Banca
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(25.0f, 0.2f, -40.0f));
+		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Banca_M.RenderModel();
+
+		//Banca
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(0.0f, 0.2f, -40.0f));
+		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Banca_M.RenderModel();
+
+		//Banca
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-25.0f, 0.2f, -40.0f));
+		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Banca_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-40.0f, 1.4f, 40.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(40.0f, 1.4f, 40.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(40.0f, 1.4f, -40.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-40.0f, 1.4f, -40.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-70.0f, 1.4f, -15.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-70.0f, 1.4f, 15.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
 
 		//Building 1,-1
 		model = glm::mat4(1.0);
@@ -1207,6 +1466,13 @@ int main()
 		model = glm::scale(model, glm::vec3(0.48f, 0.5f, 0.48f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Rh_M.RenderModel();
+
+		//Moto RedHood
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(140.0f, -1.9f, -135.0f));
+		model = glm::scale(model, glm::vec3(0.8f, 0.8f, 0.8f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Moto1_M.RenderModel();
 
 		//arbol
 		model = modelaux;
@@ -1245,6 +1511,63 @@ int main()
 		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Tree3_M.RenderModel();
+
+		//Semaforo
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-72.0f, 1.4f, 45.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Semaforo_M.RenderModel();
+
+		//Banca
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(25.0f, 0.2f, 40.0f));
+		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Banca_M.RenderModel();
+
+		//Banca
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(0.0f, 0.2f, 40.0f));
+		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Banca_M.RenderModel();
+
+		//Banca
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-25.0f, 0.2f, 40.0f));
+		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Banca_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-40.0f, 1.4f, 40.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(40.0f, 1.4f, 40.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-70.0f, 1.4f, -15.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-70.0f, 1.4f, 15.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
 
 		//Building2 -1,0
 		model = glm::mat4(1.0);
@@ -1292,6 +1615,102 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Tree3_M.RenderModel();
 
+		//Semaforo
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(72.0f, -29.0f, -45.0f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Semaforo_M.RenderModel();
+
+		//Banca
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(25.0f, -29.0f, 40.0f));
+		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Banca_M.RenderModel();
+
+		//Banca
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(0.0f, -29.0f, 40.0f));
+		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Banca_M.RenderModel();
+
+		//Banca
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-25.0f, -29.0f, 40.0f));
+		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Banca_M.RenderModel();
+
+		//Banca
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(25.0f, -29.0f, -40.0f));
+		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Banca_M.RenderModel();
+
+		//Banca
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(0.0f, -29.0f, -40.0f));
+		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Banca_M.RenderModel();
+
+		//Banca
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-25.0f, -29.0f, -40.0f));
+		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Banca_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-40.0f, -29.0f, 40.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(40.0f, -29.0f, 40.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(40.0f, -29.0f, -40.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-40.0f, -29.0f, -40.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(70.0f, -29.0f, -15.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(70.0f, -29.0f, 15.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
 		//Building4 0,1
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(0.0f, -2.6f, 70.0f));
@@ -1337,6 +1756,84 @@ int main()
 		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Tree3_M.RenderModel();
+
+		//Semaforo
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-72.0f, 1.3f, -45.0f));
+		model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Semaforo_M.RenderModel();
+
+
+		//Banca
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(25.0f, 0.2f, -40.0f));
+		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Banca_M.RenderModel();
+
+		//Banca
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(0.0f, 0.2f, -40.0f));
+		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Banca_M.RenderModel();
+
+		//Banca
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-25.0f, 0.2f, -40.0f));
+		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Banca_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(40.0f, 1.4f, -40.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-40.0f, 1.4f, -40.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-70.0f, 1.4f, -15.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-70.0f, 1.4f, 15.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(70.0f, 1.4f, -15.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(70.0f, 1.4f, 15.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
 
 		//Building3 0,-1
 		model = glm::mat4(1.0);
@@ -1384,6 +1881,82 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Tree3_M.RenderModel();
 
+		//Semaforo
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(72.0f, 2.8f, 45.0f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Semaforo_M.RenderModel();
+
+		//Banca
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(25.0f, 2.8f, 40.0f));
+		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Banca_M.RenderModel();
+
+		//Banca
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(0.0f, 2.8f, 40.0f));
+		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Banca_M.RenderModel();
+
+		//Banca
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-25.0f, 2.8f, 40.0f));
+		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Banca_M.RenderModel();
+
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-40.0f, 2.8f, 40.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(40.0f, 2.8f, 40.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-70.0f, 2.8f, -15.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-70.0f, 2.8f, 15.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(70.0f, 2.8f, -15.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(70.0f, 2.8f, 15.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
 		//Building5 -1,-1
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(-180.0f, -4.0f, -190.0f));
@@ -1430,6 +2003,65 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Tree3_M.RenderModel();
 
+		//Semaforo
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(72.0f, 2.8f, 45.0f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Semaforo_M.RenderModel();
+
+		//Banca
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(25.0f, 2.8f, 40.0f));
+		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Banca_M.RenderModel();
+
+		//Banca
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(0.0f, 2.8f, 40.0f));
+		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Banca_M.RenderModel();
+
+		//Banca
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-25.0f, 2.8f, 40.0f));
+		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Banca_M.RenderModel();
+
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-40.0f, 2.8f, 40.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(40.0f, 2.8f, 40.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(70.0f, 2.8f, -15.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(70.0f, 2.8f, 15.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
 		//Building6 -1,1
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(-180.0f, -4.7f, 70.0f));
@@ -1444,6 +2076,14 @@ int main()
 		model = glm::scale(model, glm::vec3(0.48f, 0.49f, 0.48f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Nw_M.RenderModel();
+
+		//Batiseñal
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(10.0f, 85.5f, 25.0f));
+		model = glm::scale(model, glm::vec3(1.5f, 1.5f, 1.5f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Batiseñal_M.RenderModel();
 
 		//arbol
 		model = modelaux;
@@ -1482,6 +2122,68 @@ int main()
 		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Tree3_M.RenderModel();
+
+		//Semaforo
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(72.0f, 3.5f, -45.0f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Semaforo_M.RenderModel();
+
+		//Banca
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(25.0f, 3.5f, -40.0f));
+		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Banca_M.RenderModel();
+
+		//Banca
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(0.0f, 3.5f, -40.0f));
+		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Banca_M.RenderModel();
+
+		//Banca
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-25.0f, 3.5f, -40.0f));
+		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Banca_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(40.0f, 3.5f, -40.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-40.0f, 3.5f, -40.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(70.0f, 3.5f, -15.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(70.0f, 3.5f, 15.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
 
 		//CoffeeShop 1,1
 		model = glm::mat4(1.0);
@@ -1528,6 +2230,68 @@ int main()
 		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Tree3_M.RenderModel();
+
+		//Semaforo
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-72.0f, 1.3f, -45.0f));
+		model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Semaforo_M.RenderModel();
+
+		//Banca
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(25.0f, 1.3f, -40.0f));
+		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Banca_M.RenderModel();
+
+		//Banca
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(0.0f, 1.3f, -40.0f));
+		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Banca_M.RenderModel();
+
+		//Banca
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-25.0f, 1.3f, -40.0f));
+		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Banca_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(40.0f, 1.3f, -40.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-40.0f, 1.3f, -40.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-70.0f, 1.3f, -15.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
+		//pole
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-70.0f, 1.3f, 15.0f));
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pole_M.RenderModel();
+
 		
 
 		//Calle
@@ -1604,13 +2368,13 @@ int main()
 		Auto1_M.RenderModel();
 
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(-5.0f, -1.6f, -14.0f));
+		model = glm::translate(model, glm::vec3(-5.0f, -1.0f, -14.0f));
 		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Moto3_M.RenderModel();
 
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(-5.0f, -1.6f, 70.0f));
+		model = glm::translate(model, glm::vec3(-5.0f, -1.0f, 70.0f));
 		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Moto2_M.RenderModel();
@@ -1663,6 +2427,8 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Patrulla_M.RenderModel();
 
+		//Transportes
+
 		//Tren
 		model = glm::mat4(1.0);
 		model = glm::scale(model, glm::vec3(24.0f, 10.0f, 10.0f));
@@ -1694,7 +2460,6 @@ int main()
 		helicopter_M.RenderModel();
 
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		helice_M.RenderModel();
 		
@@ -1756,6 +2521,19 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		llanta_B_M.RenderModel();
 		*/
+
+		//Bird
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(120.0f, 100.0f, 50.0f));
+		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+		modelaux = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		BlueBird_M.RenderModel();
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(0.0f, -0.35f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		BlueBirdWings_M.RenderModel();
 		
 		glUseProgram(0);
 
