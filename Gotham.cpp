@@ -6,6 +6,7 @@
 #include <cmath>
 #include <vector>
 #include <math.h>
+#include <Windows.h> //sleep
 
 #include <glew.h>
 #include <glfw3.h>
@@ -44,6 +45,7 @@ Texture pisoTexture;
 Texture TimTexture;
 
 Skybox skybox;
+Skybox skybox2;
 
 //materiales
 Material Material_brillante;
@@ -764,7 +766,7 @@ int main()
 	CrearPersonaje();
 	CreateShaders();
 
-	camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 10.0f, 0.5f);
+	camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 0.5f, 0.5f);
 
 	plainTexture = Texture("Textures/plain.png");
 	plainTexture.LoadTextureA();
@@ -891,6 +893,7 @@ int main()
 	Building6_M = Model();
 	Building6_M.LoadModel("Modelos_obj/Edificios/building6.obj");
 
+	
 	std::vector<std::string> skyboxFaces;
 	skyboxFaces.push_back("Textures/Skybox/cupertin-lake_rt.tga");
 	skyboxFaces.push_back("Textures/Skybox/cupertin-lake_lf.tga");
@@ -900,6 +903,17 @@ int main()
 	skyboxFaces.push_back("Textures/Skybox/cupertin-lake_ft.tga");
 
 	skybox = Skybox(skyboxFaces);
+
+	std::vector<std::string> skyboxFaces2;
+	skyboxFaces2.push_back("Textures/Skybox/cupertin-lake_rt_noche.tga");
+	skyboxFaces2.push_back("Textures/Skybox/cupertin-lake_lf_noche.tga");
+	skyboxFaces2.push_back("Textures/Skybox/cupertin-lake_dn_noche.tga");
+	skyboxFaces2.push_back("Textures/Skybox/cupertin-lake_up_noche.tga");
+	skyboxFaces2.push_back("Textures/Skybox/cupertin-lake_bk_noche.tga");
+	skyboxFaces2.push_back("Textures/Skybox/cupertin-lake_ft_noche.tga");
+	
+	skybox2 = Skybox(skyboxFaces2);
+
 
 	Material_brillante = Material(4.0f, 256);
 	Material_opaco = Material(0.3f, 4);
@@ -969,6 +983,7 @@ int main()
 		deltaTime = now - lastTime;
 		deltaTime += (now - lastTime) / limitFPS;
 		lastTime = now;
+		
 
 		//Recibir eventos del usuario
 		glfwPollEvents();
@@ -1483,6 +1498,7 @@ int main()
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(180.0f, -2.0f, -190.0f));
 		modelaux = model;
+		model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(7.0f, 7.0f, 7.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Building1_M.RenderModel();
@@ -1547,21 +1563,21 @@ int main()
 
 		//Banca
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(25.0f, 0.0f, 40.0f));
+		model = glm::translate(model, glm::vec3(25.0f, 0.0f, 45.0f));
 		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Banca_M.RenderModel();
 
 		//Banca
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 40.0f));
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 45.0f));
 		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Banca_M.RenderModel();
 
 		//Banca
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(-25.0f, 0.0f, 40.0f));
+		model = glm::translate(model, glm::vec3(-25.0f, 0.0f, 45.0f));
 		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Banca_M.RenderModel();
@@ -1866,6 +1882,7 @@ int main()
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(-180.0f, -2.0f, -60.0f));
 		modelaux = model;
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(7.0f, 7.0f, 7.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Building2_M.RenderModel();
@@ -2033,6 +2050,7 @@ int main()
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(-180.0f, -4.7f, 70.0f));
 		modelaux = model;
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(7.0f, 7.0f, 7.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Building6_M.RenderModel();
@@ -2041,12 +2059,13 @@ int main()
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(-110.0f, -2.0f, 30.0f));
 		model = glm::scale(model, glm::vec3(0.48f, 0.49f, 0.48f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Nw_M.RenderModel();
 
 		//Batiseñal
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(12.0f, 85.5f, 24.0f));
+		model = glm::translate(model, glm::vec3(-12.0f, 85.5f, -24.0f));
 		model = glm::scale(model, glm::vec3(1.5f, 1.5f, 1.5f));
 		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
@@ -2101,7 +2120,7 @@ int main()
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(25.0f, 2.7f, -40.0f));
 		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
-		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Banca_M.RenderModel();
 
@@ -2109,7 +2128,7 @@ int main()
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(0.0f, 2.7f, -40.0f));
 		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
-		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Banca_M.RenderModel();
 
@@ -2117,7 +2136,7 @@ int main()
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(-25.0f, 2.7f, -40.0f));
 		model = glm::scale(model, glm::vec3(1.6f, 1.2f, 1.4f));
-		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Banca_M.RenderModel();
 
@@ -2169,6 +2188,7 @@ int main()
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(0.0f, -2.6f, 70.0f));
 		modelaux = model;
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(7.0f, 7.0f, 7.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Building4_M.RenderModel();
@@ -2307,6 +2327,7 @@ int main()
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(180.0f, -2.0, 70.0f));
 		modelaux = model;
+		model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(7.0f, 7.0f, 7.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Coffe_M.RenderModel();
