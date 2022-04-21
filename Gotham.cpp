@@ -39,6 +39,8 @@ std::vector<Mesh*> meshList;
 std::vector<Shader> shaderList;
 
 Camera camera;
+Camera cameraPiso;
+Camera cameraAerea;
 
 Texture plainTexture;
 Texture pisoTexture;
@@ -56,6 +58,8 @@ Material Material_opaco;
 GLfloat deltaTime = 0.0f;
 GLfloat lastTime = 0.0f;
 static double limitFPS = 1.0 / 60.0;
+
+GLint count = 0;
 
 // luz direccional
 DirectionalLight mainLight;
@@ -766,7 +770,10 @@ int main()
 	CrearPersonaje();
 	CreateShaders();
 
-	camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 0.5f, 0.5f);
+	//camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 0.5f, 0.5f);
+	cameraPiso = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -50.0f, 0.0f, 0.5f, 0.5f);
+	cameraAerea = Camera(glm::vec3(0.0f, 350.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, -90.0f, 0.5f, 0.5f);
+
 
 	plainTexture = Texture("Textures/plain.png");
 	plainTexture.LoadTextureA();
@@ -987,13 +994,37 @@ int main()
 
 		//Recibir eventos del usuario
 		glfwPollEvents();
-		camera.keyControl(mainWindow.getsKeys(), deltaTime);
-		camera.mouseControl(mainWindow.getXChange(), mainWindow.getYChange());
+
+		if (mainWindow.getCamAerea()) {
+			cameraAerea.keyControl(mainWindow.getsKeys(), deltaTime, mainWindow.getCamAerea());
+			cameraAerea.mouseControl(mainWindow.getXChange());
+		}
+		else {
+			cameraPiso.keyControl(mainWindow.getsKeys(), deltaTime, mainWindow.getCamAerea());
+			cameraPiso.mouseControl(mainWindow.getXChange());
+		}
+
+		
 
 		// Clear the window
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		skybox.DrawSkybox(camera.calculateViewMatrix(), projection);
+		
+		if ((count < 1000) && (mainWindow.getCamAerea())) {
+			skybox.DrawSkybox(cameraAerea.calculateViewMatrix(), projection);
+		}else if ((count < 1000) && (mainWindow.getCamAerea()==false)) {
+			skybox.DrawSkybox(cameraPiso.calculateViewMatrix(), projection);
+		}else if ((count >= 1000) && (mainWindow.getCamAerea())) {
+			skybox2.DrawSkybox(cameraAerea.calculateViewMatrix(), projection);
+		}else {
+			skybox2.DrawSkybox(cameraPiso.calculateViewMatrix(), projection);
+		}
+		count++;
+		if (count >= 2000) {
+			count = 0;
+		}
+
+
 		shaderList[0].UseShader();
 		uniformModel = shaderList[0].GetModelLocation();
 		uniformProjection = shaderList[0].GetProjectionLocation();
@@ -1007,12 +1038,16 @@ int main()
 
 		glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
 
-		glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera.calculateViewMatrix()));
-		glUniform3f(uniformEyePosition, camera.getCameraPosition().x, camera.getCameraPosition().y, camera.getCameraPosition().z);
-		// luz ligada a la cámara de tipo flash
-		glm::vec3 lowerLight = camera.getCameraPosition();
-		lowerLight.y -= 0.3f; //abajito de los ojos
-		spotLights[0].SetFlash(lowerLight, camera.getCameraDirection());
+		if (mainWindow.getCamAerea()) {
+			glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(cameraAerea.calculateViewMatrix()));
+			glUniform3f(uniformEyePosition, cameraAerea.getCameraPosition().x, cameraAerea.getCameraPosition().y, cameraAerea.getCameraPosition().z);
+		}
+		else {
+			glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(cameraPiso.calculateViewMatrix()));
+			glUniform3f(uniformEyePosition, cameraPiso.getCameraPosition().x, cameraPiso.getCameraPosition().y, cameraPiso.getCameraPosition().z);
+		}
+
+		
 
 		//información al shader de fuentes de iluminación
 		shaderList[0].SetDirectionalLight(&mainLight);
@@ -2450,7 +2485,7 @@ int main()
 
 		//camino der
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(90.0f, -2.0f, 5.0f));
+		model = glm::translate(model, glm::vec3(90.0f, -1.5f, 5.0f));
 		modelaux = model;
 		model = glm::scale(model, glm::vec3(20.0f, 1.0f, 23.2f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
@@ -2533,7 +2568,7 @@ int main()
 		////////////////////////////////////////////////////////////////////////////////////////////
 		//camino izq
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(-90.0f, -2.0f, 5.0f));
+		model = glm::translate(model, glm::vec3(-90.0f, -1.5f, 5.0f));
 		modelaux = model;
 		model = glm::scale(model, glm::vec3(20.0f, 1.0f, 23.2f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));

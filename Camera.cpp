@@ -8,7 +8,7 @@ Camera::Camera(glm::vec3 startPosition, glm::vec3 startUp, GLfloat startYaw, GLf
 	worldUp = startUp;
 	yaw = startYaw;
 	pitch = startPitch;
-	front = glm::vec3(0.0f, 0.0f, -1.0f);
+	front = glm::vec3(0.0f, 0.0f, -1.0f); //piso
 
 	moveSpeed = startMoveSpeed;
 	turnSpeed = startTurnSpeed;
@@ -16,17 +16,23 @@ Camera::Camera(glm::vec3 startPosition, glm::vec3 startUp, GLfloat startYaw, GLf
 	update();
 }
 
-void Camera::keyControl(bool* keys, GLfloat deltaTime)
+void Camera::keyControl(bool* keys, GLfloat deltaTime, GLboolean aerea)
 {
 	GLfloat velocity = moveSpeed * deltaTime;
 
-	if (keys[GLFW_KEY_W])
+	if ((keys[GLFW_KEY_W])&&(aerea == true))
 	{
+		position += up * velocity;
+	}
+	else if (keys[GLFW_KEY_W]) {
 		position += front * velocity;
 	}
 
-	if (keys[GLFW_KEY_S])
+	if ((keys[GLFW_KEY_S]) && (aerea == true))
 	{
+		position -= up * velocity;
+	}
+	else if (keys[GLFW_KEY_S]) {
 		position -= front * velocity;
 	}
 
@@ -41,23 +47,11 @@ void Camera::keyControl(bool* keys, GLfloat deltaTime)
 	}
 }
 
-void Camera::mouseControl(GLfloat xChange, GLfloat yChange)
+void Camera::mouseControl(GLfloat xChange)
 {
 	xChange *= turnSpeed;
-	yChange *= turnSpeed;
 
 	yaw += xChange;
-	pitch += yChange;
-
-	if (pitch > 89.0f)
-	{
-		pitch = 89.0f;
-	}
-
-	if (pitch < -89.0f)
-	{
-		pitch = -89.0f;
-	}
 
 	update();
 }
