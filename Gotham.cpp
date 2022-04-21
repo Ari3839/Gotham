@@ -59,7 +59,7 @@ GLfloat deltaTime = 0.0f;
 GLfloat lastTime = 0.0f;
 static double limitFPS = 1.0 / 60.0;
 
-GLint count = 0;
+GLint count = 0, countSem=0;
 
 // luz direccional
 DirectionalLight mainLight;
@@ -770,7 +770,7 @@ int main()
 	CrearPersonaje();
 	CreateShaders();
 
-	//camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 0.5f, 0.5f);
+	camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 5.0f, 0.5f);
 	cameraPiso = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -50.0f, 0.0f, 0.5f, 0.5f);
 	cameraAerea = Camera(glm::vec3(0.0f, 350.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, -90.0f, 0.5f, 0.5f);
 
@@ -810,15 +810,19 @@ int main()
 	Model helice_M;
 	Model Nw_M;
 	Model Rh_M;
-
 	Model Pole_M;
 	Model Banca_M;
 	Model Batiseñal_M;
 	Model BlueBird_M;
 	Model BlueBirdWings_M;
 	Model Bote_M;
+	Model PhoneBox_M; 
 	Model Semaforo_M;
-	Model PhoneBox_M;
+	Model Semaforo_Pole_M;
+	Model Semaforo_Top_M;
+	Model Semaforo_V_M;
+	Model Semaforo_A_M;
+	Model Semaforo_R_M;
 
 	//Personajes
 	Nw_M = Model();
@@ -845,13 +849,23 @@ int main()
 	Banca_M.LoadModel("Modelos_obj/Others-street/banca.obj");
 	Batiseñal_M = Model();
 	Batiseñal_M.LoadModel("Modelos_obj/Others-street/batisenal2.obj");
-	Semaforo_M = Model();
-	Semaforo_M.LoadModel("Modelos_obj/Others-street/semaforo.obj");
 	PhoneBox_M = Model();
 	PhoneBox_M.LoadModel("Modelos_obj/Others-street/phonebox.obj");
 	Bote_M = Model();
 	Bote_M.LoadModel("Modelos_obj/Others-street/boteBasura.obj");
-	
+	Semaforo_M = Model();
+	Semaforo_M.LoadModel("Modelos_obj/Others-street/semaforo.obj");
+	Semaforo_Pole_M = Model();
+	Semaforo_Pole_M.LoadModel("Modelos_obj/Others-street/semaforo_pole.obj");
+	Semaforo_Top_M = Model();
+	Semaforo_Top_M.LoadModel("Modelos_obj/Others-street/Semaforo_top_apagado.obj");
+	Semaforo_V_M = Model();
+	Semaforo_V_M.LoadModel("Modelos_obj/Others-street/Semaforo_top_v.obj");
+	Semaforo_A_M = Model();
+	Semaforo_A_M.LoadModel("Modelos_obj/Others-street/Semaforo_top_a.obj");
+	Semaforo_R_M = Model();
+	Semaforo_R_M.LoadModel("Modelos_obj/Others-street/Semaforo_top_r.obj");
+
 	//Transportes
 	Batmobile_M = Model();
 	Batmobile_M.LoadModel("Modelos_obj/Batmobile.obj");
@@ -995,6 +1009,8 @@ int main()
 		//Recibir eventos del usuario
 		glfwPollEvents();
 
+		
+
 		if (mainWindow.getCamAerea()) {
 			cameraAerea.keyControl(mainWindow.getsKeys(), deltaTime, mainWindow.getCamAerea());
 			cameraAerea.mouseControl(mainWindow.getXChange());
@@ -1004,7 +1020,8 @@ int main()
 			cameraPiso.mouseControl(mainWindow.getXChange());
 		}
 
-		
+		//camera.keyControl(mainWindow.getsKeys(), deltaTime);
+		//camera.mouseControl(mainWindow.getXChange(), mainWindow.getYChange());
 
 		// Clear the window
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -1014,10 +1031,12 @@ int main()
 			skybox.DrawSkybox(cameraAerea.calculateViewMatrix(), projection);
 		}else if ((count < 1000) && (mainWindow.getCamAerea()==false)) {
 			skybox.DrawSkybox(cameraPiso.calculateViewMatrix(), projection);
+			//skybox.DrawSkybox(camera.calculateViewMatrix(), projection);
 		}else if ((count >= 1000) && (mainWindow.getCamAerea())) {
 			skybox2.DrawSkybox(cameraAerea.calculateViewMatrix(), projection);
 		}else {
 			skybox2.DrawSkybox(cameraPiso.calculateViewMatrix(), projection);
+			//skybox2.DrawSkybox(camera.calculateViewMatrix(), projection);
 		}
 		count++;
 		if (count >= 2000) {
@@ -1047,7 +1066,8 @@ int main()
 			glUniform3f(uniformEyePosition, cameraPiso.getCameraPosition().x, cameraPiso.getCameraPosition().y, cameraPiso.getCameraPosition().z);
 		}
 
-		
+		//glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera.calculateViewMatrix()));
+		//glUniform3f(uniformEyePosition, camera.getCameraPosition().x, cameraPiso.getCameraPosition().y, cameraPiso.getCameraPosition().z);
 
 		//información al shader de fuentes de iluminación
 		shaderList[0].SetDirectionalLight(&mainLight);
@@ -1407,11 +1427,30 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Tree3_M.RenderModel();
 
-		//Semaforo
+		//Semaforo 
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(-72.0f, 1.4f, 45.0f));
+		model = glm::translate(model, glm::vec3(-72.0f, 2.0f, 45.0f));
+		modelaux2 = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Semaforo_M.RenderModel();
+		Semaforo_Pole_M.RenderModel();
+
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-0.3f, 3.3f, -1.5f));
+		model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		if (countSem<301) {
+			Semaforo_V_M.RenderModel();
+		}else if ((countSem < 601) && (countSem > 300)) {
+			Semaforo_A_M.RenderModel();
+		}
+		else {
+			Semaforo_R_M.RenderModel();
+		}
+		countSem++;
+		if (countSem >= 900) {
+			countSem = 0;
+		}
+		
 
 		//Banca
 		model = modelaux;
@@ -1590,11 +1629,26 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Tree3_M.RenderModel();
 
-		//Semaforo
+		//Semaforo 
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(-72.0f, 0.1f, 45.0f));
+		model = glm::translate(model, glm::vec3(-72.0f, 0.6f, 45.0f));
+		modelaux2 = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Semaforo_M.RenderModel();
+		Semaforo_Pole_M.RenderModel();
+
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-0.3f, 3.3f, -1.5f));
+		model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		if (countSem < 301) {
+			Semaforo_V_M.RenderModel();
+		}
+		else if ((countSem < 601) && (countSem > 300)) {
+			Semaforo_A_M.RenderModel();
+		}
+		else {
+			Semaforo_R_M.RenderModel();
+		}
 
 		//Banca
 		model = modelaux;
@@ -1706,12 +1760,25 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Tree3_M.RenderModel();
 
-		//Semaforo
+		//Semaforo 
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(72.0f, 2.1f, 45.0f));
-		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(72.0f, 2.6f, 45.0f));
+		modelaux2 = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Semaforo_M.RenderModel();
+		Semaforo_Pole_M.RenderModel();
+
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-0.3f, 3.3f, -1.5f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		if (countSem < 301) {
+			Semaforo_A_M.RenderModel();
+		}
+		else if ((countSem < 601) && (countSem > 300)) {
+			Semaforo_R_M.RenderModel();
+		}
+		else {
+			Semaforo_V_M.RenderModel();
+		}
 
 		//Banca
 		model = modelaux;
@@ -1842,12 +1909,25 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Tree3_M.RenderModel();
 
-		//Semaforo
+		//Semaforo 
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(72.0f, 2.1f, 45.0f));
-		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(72.0f, 2.6f, 45.0f));
+		modelaux2 = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Semaforo_M.RenderModel();
+		Semaforo_Pole_M.RenderModel();
+
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-0.3f, 3.3f, -1.5f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		if (countSem < 301) {
+			Semaforo_A_M.RenderModel();
+		}
+		else if ((countSem < 601) && (countSem > 300)) {
+			Semaforo_R_M.RenderModel();
+		}
+		else {
+			Semaforo_V_M.RenderModel();
+		}
 
 		//Banca
 		model = modelaux;
@@ -1960,12 +2040,26 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Tree3_M.RenderModel();
 
-		//Semaforo
+		//Semaforo 
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(72.0f, 0.1F, -45.0f));
-		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(72.0f, 0.6f, -45.0f));
+		modelaux2 = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Semaforo_M.RenderModel();
+		Semaforo_Pole_M.RenderModel();
+
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-0.3f, 3.3f, -1.5f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		if (countSem < 301) {
+			Semaforo_V_M.RenderModel();
+		}
+		else if ((countSem < 601) && (countSem > 300)) {
+			Semaforo_A_M.RenderModel();
+		}
+		else {
+			Semaforo_R_M.RenderModel();
+		}
 
 		//Banca
 		model = modelaux;
@@ -2144,12 +2238,27 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Tree3_M.RenderModel();
 
-		//Semaforo
+		//Semaforo 
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(72.0f, 2.8f, -45.0f));
-		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(72.0f, 3.3f, -45.0f));
+		modelaux2 = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Semaforo_M.RenderModel();
+		Semaforo_Pole_M.RenderModel();
+
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-0.3f, 3.3f, -1.5f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		if (countSem < 301) {
+			Semaforo_V_M.RenderModel();
+		}
+		else if ((countSem < 601) && (countSem > 300)) {
+			Semaforo_A_M.RenderModel();
+		}
+		else {
+			Semaforo_R_M.RenderModel();
+		}
+
 
 		//Banca
 		model = modelaux;
@@ -2266,12 +2375,26 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Tree3_M.RenderModel();
 
-		//Semaforo
+		//Semaforo 
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(-72.0f, 0.7f, -45.0f));
-		model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(-72.0f, 1.2f, -45.0f));
+		modelaux2 = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Semaforo_M.RenderModel();
+		Semaforo_Pole_M.RenderModel();
+
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-0.3f, 3.3f, -1.5f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		if (countSem < 301) {
+			Semaforo_A_M.RenderModel();
+		}
+		else if ((countSem < 601) && (countSem > 300)) {
+			Semaforo_R_M.RenderModel();
+		}
+		else {
+			Semaforo_V_M.RenderModel();
+		}
 
 
 		//Banca
@@ -2405,12 +2528,26 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Tree3_M.RenderModel();
 
-		//Semaforo
+		//Semaforo 
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(-72.0f, 0.1f, -45.0f));
-		model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(-72.0f, 0.6f, -45.0f));
+		modelaux2 = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Semaforo_M.RenderModel();
+		Semaforo_Pole_M.RenderModel();
+
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-0.3f, 3.3f, -1.5f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		if (countSem < 301) {
+			Semaforo_A_M.RenderModel();
+		}
+		else if ((countSem < 601) && (countSem > 300)) {
+			Semaforo_R_M.RenderModel();
+		}
+		else {
+			Semaforo_V_M.RenderModel();
+		}
 
 		//Banca
 		model = modelaux;
