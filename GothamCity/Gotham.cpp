@@ -58,8 +58,7 @@ Material Material_opaco;
 GLfloat deltaTime = 0.0f;
 GLfloat lastTime = 0.0f;
 static double limitFPS = 1.0 / 60.0;
-
-GLint count = 0, countSem=0;
+unsigned int count = 0, countSem=0, cicloDia=1000, cicloDiaNoche=2000;
 
 // luz direccional
 DirectionalLight mainLight;
@@ -985,59 +984,9 @@ int main()
 	Material_brillante = Material(4.0f, 256);
 	Material_opaco = Material(0.3f, 4);
 
-	/*
-	//luz direccional, sólo 1 y siempre debe de existir
-	mainLight = DirectionalLight(1.0f, 1.0f, 1.0f,
-		0.7f, 0.3f,
-		0.0f, 0.0f, -1.0f);
-
 	//contador de luces puntuales
 	unsigned int pointLightCount = 0;
-
-	//Declaración de primer luz puntual
-	pointLights[0] = PointLight(1.0f, 0.0f, 0.0f,
-		0.7f, 1.0f,//amb (igual que en la direccional),difusa (intensidad,no alcance)
-		2.0f, 1.5f, 1.5f,//Pos
-		0.3f, 0.2f, 0.1f); //Ec A=0 o C=0 y B>>>A,C
-	pointLightCount++;
-
 	unsigned int spotLightCount = 0;
-	//linterna
-	spotLights[0] = SpotLight(1.0f, 1.0f, 1.0f,
-		0.7f, 2.0f,
-		0.0f, 0.0f, 0.0f,
-		0.0f, -1.0f, 0.0f,
-		1.0f, 0.0f, 0.0f,
-		5.0f);
-	spotLightCount++;
-	
-	//luz fija
-	spotLights[1] = SpotLight(0.0f, 0.0f, 1.0f,
-		0.7f, 2.0f,
-		5.0f, 10.0f, 0.0f,
-		0.0f, -5.0f, 0.0f,
-		1.0f, 0.0f, 0.0f,
-		15.0f);
-	spotLightCount++;
-
-	//luz de helicóptero
-	spotLights[1] = SpotLight(1.0f, 0.0f, 1.0f,
-		0.7f, 2.0f,
-		0.0f, 5.0f, -1.0,
-		0.0f, -1.0f, 0.0f,
-		1.0f, 0.0f, 0.0f,
-		60.0f);
-	spotLightCount++;
-
-	//luz de faro del auto
-	spotLights[2] = SpotLight(1.0f, 1.0f, 0.0f,
-		0.7f, 5.0f,
-		0.0f, 0.3f, 0.0f,
-		-1.0f, 0.0f, 0.0f,
-		1.0f, 0.0f, 0.0f,
-		10.0f);
-	spotLightCount++; */
-
 
 	GLuint uniformProjection = 0, uniformModel = 0, uniformView = 0, uniformEyePosition = 0,
 		uniformSpecularIntensity = 0, uniformShininess = 0;
@@ -1057,37 +1006,107 @@ int main()
 
 		
 
-		/*if (mainWindow.getCamAerea()) {
+		if (mainWindow.getCamAerea()) {
 			cameraAerea.keyControl(mainWindow.getsKeys(), deltaTime, mainWindow.getCamAerea());
 			cameraAerea.mouseControl(mainWindow.getXChange());
 		}
 		else {
 			cameraPiso.keyControl(mainWindow.getsKeys(), deltaTime, mainWindow.getCamAerea());
 			cameraPiso.mouseControl(mainWindow.getXChange());
-		}*/
+		}
 
-		camera.keyControl(mainWindow.getsKeys(), deltaTime);
-		camera.mouseControl(mainWindow.getXChange(), mainWindow.getYChange());
+		//camera.keyControl(mainWindow.getsKeys(), deltaTime);
+		//camera.mouseControl(mainWindow.getXChange(), mainWindow.getYChange());
 
 		// Clear the window
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
-		if ((count < 1000) && (mainWindow.getCamAerea())) {
+		if ((count < cicloDia) && (mainWindow.getCamAerea())) {
 			skybox.DrawSkybox(cameraAerea.calculateViewMatrix(), projection);
-		}else if ((count < 1000) && (mainWindow.getCamAerea()==false)) {
-			//skybox.DrawSkybox(cameraPiso.calculateViewMatrix(), projection);
-			skybox.DrawSkybox(camera.calculateViewMatrix(), projection);
-		}else if ((count >= 1000) && (mainWindow.getCamAerea())) {
+		}else if ((count < cicloDia) && (mainWindow.getCamAerea()==false)) {
+			skybox.DrawSkybox(cameraPiso.calculateViewMatrix(), projection);
+			//skybox.DrawSkybox(camera.calculateViewMatrix(), projection);
+		}else if ((count >= cicloDia) && (mainWindow.getCamAerea())) {
 			skybox2.DrawSkybox(cameraAerea.calculateViewMatrix(), projection);
 		}else {
-			//skybox2.DrawSkybox(cameraPiso.calculateViewMatrix(), projection);
-			skybox2.DrawSkybox(camera.calculateViewMatrix(), projection);
+			skybox2.DrawSkybox(cameraPiso.calculateViewMatrix(), projection);
+			//skybox2.DrawSkybox(camera.calculateViewMatrix(), projection);
 		}
 		count++;
-		if (count >= 2000) {
+		if (count >= cicloDiaNoche) {
 			count = 0;
 		}
+
+		if (count >= cicloDia) {
+
+			//luz direccional, sólo 1 y siempre debe de existir
+			mainLight = DirectionalLight(1.0f, 1.0f, 1.0f,
+				0.6f, 0.3f,
+				0.0f, 0.0f, -1.0f);
+
+			//Luces puntuales
+
+			//Helicoptero
+			pointLights[0] = PointLight(1.0f, 0.0f, 1.0f,
+				0.6f, 10.0f,
+				-130.0f, 0.0f, -130.0f,
+				0.3f, 0.2f, 0.1f);
+			
+			//Dirigible
+			pointLights[1] = PointLight(0.0f, 1.0f, 1.0f,
+				0.6f, 10.0f,
+				100.0f, 0.0f, 100.0f,
+				0.3f, 0.2f, 0.1f);
+
+			//Batiseñal
+			pointLights[2] = PointLight(1.0f, 1.0f, 0.0f,
+				0.6f, 20.0f,
+				-192.0f, 82.8f, 46.0f,
+				0.3f, 0.2f, 0.1f);
+
+			pointLightCount = 3;
+		}
+		else {
+			mainLight = DirectionalLight(1.0f, 1.0f, 1.0f,
+				1.0f, 0.3f,
+				0.0f, 0.0f, -1.0f);
+
+			pointLightCount = 0;
+		}
+		
+		//Show de luces
+		if (mainWindow.getSpotlights()) {
+			//luz fija
+			spotLights[0] = SpotLight(0.0f, 1.0f, 1.0f,
+				1.0f, 2.0f,
+				-20.0f, 0.0f, 160.0f,
+				0.0f, -1.0f, 0.0f,
+				1.0f, 0.0f, 0.0f,
+				80.0f);
+
+			//luz de helicóptero
+			spotLights[1] = SpotLight(1.0f, 0.0f, 1.0f,
+				1.0f, 2.0f,
+				0.0f, 0.0f, 160.0f,
+				0.0f, -1.0f, 0.0f,
+				1.0f, 0.0f, 0.0f,
+				80.0f);
+
+			//luz de faro del auto
+			spotLights[2] = SpotLight(1.0f, 1.0f, 0.0f,
+				1.0f, 2.0f,
+				20.0f, 0.0f, 160.0f,
+				0.0f, -1.0f, 0.0f,
+				1.0f, 0.0f, 0.0f,
+				80.0f);
+
+			spotLightCount = 3;
+		}
+		else {
+			spotLightCount = 0;
+		}
+		
 
 
 		shaderList[0].UseShader();
@@ -1112,13 +1131,13 @@ int main()
 			glUniform3f(uniformEyePosition, cameraPiso.getCameraPosition().x, cameraPiso.getCameraPosition().y, cameraPiso.getCameraPosition().z);
 		}
 
-		glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera.calculateViewMatrix()));
-		glUniform3f(uniformEyePosition, camera.getCameraPosition().x, cameraPiso.getCameraPosition().y, cameraPiso.getCameraPosition().z);
+		//glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera.calculateViewMatrix()));
+		//glUniform3f(uniformEyePosition, camera.getCameraPosition().x, cameraPiso.getCameraPosition().y, cameraPiso.getCameraPosition().z);
 
 		//información al shader de fuentes de iluminación
 		shaderList[0].SetDirectionalLight(&mainLight);
-		//shaderList[0].SetPointLights(pointLights, pointLightCount);
-		//shaderList[0].SetSpotLights(spotLights, spotLightCount);
+		shaderList[0].SetPointLights(pointLights, pointLightCount);
+		shaderList[0].SetSpotLights(spotLights, spotLightCount);
 
 		glm::mat4 model(1.0);
 		glm::mat4 modelaux(1.0);
@@ -1823,7 +1842,7 @@ int main()
 
 		//Señal
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(15.5f, 58.8f, 16.7f));
+		model = glm::translate(model, glm::vec3(10.5f, 58.8f, 21.5f));
 		model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(1.0f, 3.5f, 3.5f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
@@ -2459,7 +2478,7 @@ int main()
 		model = glm::translate(model, glm::vec3(0.0f, -2.6f, 70.0f));
 		modelaux = model;
 		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(7.0f, 7.0f, 7.0f));
+		model = glm::scale(model, glm::vec3(8.5f, 10.0f, 8.5f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Building4_M.RenderModel();
 

@@ -15,6 +15,7 @@ Window::Window(GLint windowWidth, GLint windowHeight)
 	height = windowHeight;
 	muevex = 2.0f;
 	CamAerea = false;
+	spotlights = false;
 	for (size_t i = 0; i < 1024; i++)
 	{
 		keys[i] = 0;
@@ -123,6 +124,14 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 		theWindow->CamAerea = true;
 	}
 
+	if (key == GLFW_KEY_3)
+	{
+		theWindow->spotlights = true;
+	}
+	if (key == GLFW_KEY_4)
+	{
+		theWindow->spotlights = false;
+	}
 
 	if (key >= 0 && key < 1024)
 	{

@@ -1,7 +1,11 @@
-﻿  Gotham.cpp
+﻿  Camera.cpp
+C:\Users\z3839\Documents\Gotham\GothamCity\Camera.cpp(21,38): warning C4805: '==': combinación no segura del tipo 'GLboolean' y el tipo 'bool' en la operación
+C:\Users\z3839\Documents\Gotham\GothamCity\Camera.cpp(29,38): warning C4805: '==': combinación no segura del tipo 'GLboolean' y el tipo 'bool' en la operación
+  Gotham.cpp
 C:\Users\z3839\Documents\Gotham\GothamCity\Window.h(12,36): warning C4244: 'return': conversión de 'GLint' a 'GLfloat'; posible pérdida de datos
 C:\Users\z3839\Documents\Gotham\GothamCity\Window.h(13,37): warning C4244: 'return': conversión de 'GLint' a 'GLfloat'; posible pérdida de datos
-C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(277,2): warning C4305: 'inicializando': truncamiento de 'double' a 'GLfloat'
-C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(1049,15): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(1051,43): warning C4244: '+=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(276,2): warning C4305: 'inicializando': truncamiento de 'double' a 'GLfloat'
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(998,15): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(1000,43): warning C4244: '+=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+  Generando código...
   GothamCity.vcxproj -> C:\Users\z3839\Documents\Gotham\GothamCity\Debug\GothamCity.exe
