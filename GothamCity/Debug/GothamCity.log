@@ -1,0 +1,7 @@
+﻿  Gotham.cpp
+C:\Users\z3839\Documents\Gotham\GothamCity\Window.h(12,36): warning C4244: 'return': conversión de 'GLint' a 'GLfloat'; posible pérdida de datos
+C:\Users\z3839\Documents\Gotham\GothamCity\Window.h(13,37): warning C4244: 'return': conversión de 'GLint' a 'GLfloat'; posible pérdida de datos
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(277,2): warning C4305: 'inicializando': truncamiento de 'double' a 'GLfloat'
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(1049,15): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(1051,43): warning C4244: '+=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+  GothamCity.vcxproj -> C:\Users\z3839\Documents\Gotham\GothamCity\Debug\GothamCity.exe
