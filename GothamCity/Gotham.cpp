@@ -1,4 +1,3 @@
-//para cargar imagen
 #define STB_IMAGE_IMPLEMENTATION
 
 #include <stdio.h>
@@ -7,16 +6,12 @@
 #include <vector>
 #include <math.h>
 #include <Windows.h> //sleep
-
+#include <bass.h>
 #include <glew.h>
 #include <glfw3.h>
-
 #include <glm.hpp>
 #include <gtc\matrix_transform.hpp>
 #include <gtc\type_ptr.hpp>
-//para probar el importer
-//#include<assimp/Importer.hpp>
-
 #include "Window.h"
 #include "Mesh.h"
 #include "Shader_light.h"
@@ -25,13 +20,12 @@
 #include "Sphere.h"
 #include"Model.h"
 #include "Skybox.h"
-
-//para iluminación
 #include "CommonValues.h"
 #include "DirectionalLight.h"
 #include "PointLight.h"
 #include "SpotLight.h"
 #include "Material.h"
+#include "Sound.h"
 const float toRadians = 3.14159265f / 180.0f;
 
 Window mainWindow;
@@ -49,7 +43,11 @@ Texture TimTexture;
 Skybox skybox;
 Skybox skybox2;
 
-//materiales
+Sound music = Sound("Music/The Batman - Michael Giacchino.mp3");
+Sound Tim = Sound("Music/twenty one pilots Stressed Out.mp3");
+Sound Jason = Sound("Music/Bohnes - Middle Finger.mp3");
+Sound Dick = Sound("Music/Fall Out Boy - Where Did The Party Go.mp3");
+
 Material Material_brillante;
 Material Material_opaco;
 
@@ -58,7 +56,7 @@ Material Material_opaco;
 GLfloat deltaTime = 0.0f;
 GLfloat lastTime = 0.0f;
 static double limitFPS = 1.0 / 60.0;
-unsigned int count = 0, countSem=0, cicloDia=1000, cicloDiaNoche=2000;
+unsigned int count = 0, countSem=0, cicloDia=2000, cicloDiaNoche=4000;
 
 // luz direccional
 DirectionalLight mainLight;
@@ -798,6 +796,7 @@ int main()
 	Model Tree3_M;
 	Model tren_M;
 	Model BaseTren_M;
+	Model Estacion_M;
 	Model Auto1_M;
 	Model Auto2_M;
 	Model Dirigible_M;
@@ -920,6 +919,8 @@ int main()
 	tren_M.LoadModel("Modelos_obj/Transportes/tren.obj");
 	BaseTren_M = Model();
 	BaseTren_M.LoadModel("Modelos_obj/Transportes/baseTren.obj");
+	Estacion_M = Model();
+	Estacion_M.LoadModel("Modelos_obj/Transportes/Estacion.obj");
 	Auto1_M = Model();
 	Auto1_M.LoadModel("Modelos_obj/Transportes/Auto1.obj");
 	Auto2_M = Model();
@@ -959,7 +960,7 @@ int main()
 	Building6_M = Model();
 	Building6_M.LoadModel("Modelos_obj/Edificios/building6.obj");
 
-	
+	//skyboxes
 	std::vector<std::string> skyboxFaces;
 	skyboxFaces.push_back("Textures/Skybox/cupertin-lake_rt.tga");
 	skyboxFaces.push_back("Textures/Skybox/cupertin-lake_lf.tga");
@@ -1107,7 +1108,32 @@ int main()
 			spotLightCount = 0;
 		}
 		
+			if (count < cicloDia/2) {
+				music.play();
+				Tim.pause();
+				Jason.pause();
+				Dick.pause();
+			}
+			else if ((count > cicloDia / 2) && (count < cicloDia)) {
+				music.pause();
+				Tim.play();
+				Jason.pause();
+				Dick.pause();
+			}
+			else if ((count > cicloDia) && (count < cicloDia * 3 / 2)) {
+				music.pause();
+				Tim.pause();
+				Jason.play();
+				Dick.pause();
+			}
+			else {
+				music.pause();
+				Tim.pause();
+				Jason.pause();
+				Dick.play();
+			}
 
+		//music.play();
 
 		shaderList[0].UseShader();
 		uniformModel = shaderList[0].GetModelLocation();
@@ -1266,7 +1292,7 @@ int main()
 		model = glm::translate(model, glm::vec3(0.0f, 69.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(2.2f, 3.52f, 2.2f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		if (count < 1000) {
+		if (count < cicloDia) {
 			WE2_M.RenderModel();
 		}
 		else {
@@ -1279,7 +1305,7 @@ int main()
 		model = glm::scale(model, glm::vec3(2.5f, 2.5f, 1.0f));
 		model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		if (count < 1000) {
+		if (count < cicloDia) {
 			WESignal_M.RenderModel();
 		}
 		else {
@@ -1292,7 +1318,7 @@ int main()
 		model = glm::scale(model, glm::vec3(2.5f, 2.5f, 1.0f));
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		if (count < 1000) {
+		if (count < cicloDia) {
 			WESignal_M.RenderModel();
 		}
 		else {
@@ -1686,7 +1712,7 @@ int main()
 		model = glm::scale(model, glm::vec3(3.4f, 4.0f, 1.0f));
 		model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f)); 
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		if (count < 1000) {
+		if (count < cicloDia) {
 			SignalB1_M.RenderModel();
 		}
 		else {
@@ -1846,7 +1872,7 @@ int main()
 		model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(1.0f, 3.5f, 3.5f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		if (count < 1000) {
+		if (count < cicloDia) {
 			CloudSignal_M.RenderModel();
 		}
 		else {
@@ -2139,7 +2165,7 @@ int main()
 		model = glm::translate(model, glm::vec3(25.0f, 81.0f, -10.0f ));
 		model = glm::scale(model, glm::vec3(1.0f, 3.0f, 3.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		if (count < 1000) {
+		if (count < cicloDia) {
 			GotSignal_M.RenderModel();
 		}
 		else {
@@ -2488,7 +2514,7 @@ int main()
 		model = glm::scale(model, glm::vec3(1.0f, 3.0f, 3.0f));
 		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		if (count < 1000) {
+		if (count < cicloDia) {
 			b4Signal_M.RenderModel();
 		}
 		else {
@@ -3000,7 +3026,7 @@ int main()
 
 		//Plataforma tren
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 200.0f));
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 180.0f));
 		modelaux2 = model;
 		model = glm::scale(model, glm::vec3(24.0f, 10.0f, 10.0f));
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
@@ -3012,7 +3038,7 @@ int main()
 		model = glm::scale(model, glm::vec3(12.0f, 5.0f, 5.0f));
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		if (count < 1000) {
+		if (count < cicloDia) {
 			PlatTren_M.RenderModel();
 		}
 		else {
@@ -3022,10 +3048,18 @@ int main()
 		//Tren
 		model = glm::mat4(1.0);
 		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 20.0f));
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 18.0f));
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		tren_M.RenderModel();
+
+		//Estacion
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(0.0f, -2.0f, 212.0f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(5.5f, 5.6f, 5.5f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Estacion_M.RenderModel();
 
 		//Dirigible
 		model = glm::mat4(1.0);
