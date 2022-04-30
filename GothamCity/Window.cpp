@@ -16,6 +16,7 @@ Window::Window(GLint windowWidth, GLint windowHeight)
 	muevex = 2.0f;
 	CamAerea = false;
 	spotlights = false;
+	animacionBatmobile = false;
 	for (size_t i = 0; i < 1024; i++)
 	{
 		keys[i] = 0;
@@ -131,6 +132,14 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 	if (key == GLFW_KEY_4)
 	{
 		theWindow->spotlights = false;
+	}
+	if (key == GLFW_KEY_5)
+	{
+		theWindow->animacionBatmobile = true;
+	}
+	if (key == GLFW_KEY_6)
+	{
+		theWindow->animacionBatmobile = false;
 	}
 
 	if (key >= 0 && key < 1024)

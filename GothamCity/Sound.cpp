@@ -10,7 +10,7 @@ Sound::Sound(const char* filename)
 	{
 		if (!BASS_Init(-1, 44100, 0, NULL, NULL))
 		{
-			printf("Error al cargar el archivo \n");
+			printf("Error al cargar el archivo, no hay dispositivo de audio\n");
 		}
 		audio_device = true;
 	}

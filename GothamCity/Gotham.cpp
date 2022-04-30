@@ -28,6 +28,16 @@
 #include "Sound.h"
 const float toRadians = 3.14159265f / 180.0f;
 
+
+float xbird = 0.0f, ybird = 0.0f, zbird = 0.0f, rotBird = 0.0f, rotWings = 0.0f, movbird =0.0f;
+float countBird = 0.0f;
+bool wings = true, sube = true;
+
+float movBatmobile = 0.0f, movBatmobile2 = 0.0f, rotllanta = 0.0f, rotBatmobile = 180.0f;
+int batmobile = 1;
+
+float movDirigible = 0.0f, rotaDirigible = 0.0f, a = 0.0f, b = 0.0f, countDirigible = 0.0f;
+
 Window mainWindow;
 std::vector<Mesh*> meshList;
 std::vector<Shader> shaderList;
@@ -1007,17 +1017,17 @@ int main()
 
 		
 
-		if (mainWindow.getCamAerea()) {
+		/*if (mainWindow.getCamAerea()) {
 			cameraAerea.keyControl(mainWindow.getsKeys(), deltaTime, mainWindow.getCamAerea());
 			cameraAerea.mouseControl(mainWindow.getXChange());
 		}
 		else {
 			cameraPiso.keyControl(mainWindow.getsKeys(), deltaTime, mainWindow.getCamAerea());
 			cameraPiso.mouseControl(mainWindow.getXChange());
-		}
+		}*/
 
-		//camera.keyControl(mainWindow.getsKeys(), deltaTime);
-		//camera.mouseControl(mainWindow.getXChange(), mainWindow.getYChange());
+		camera.keyControl(mainWindow.getsKeys(), deltaTime);
+		camera.mouseControl(mainWindow.getXChange(), mainWindow.getYChange());
 
 		// Clear the window
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -1026,13 +1036,13 @@ int main()
 		if ((count < cicloDia) && (mainWindow.getCamAerea())) {
 			skybox.DrawSkybox(cameraAerea.calculateViewMatrix(), projection);
 		}else if ((count < cicloDia) && (mainWindow.getCamAerea()==false)) {
-			skybox.DrawSkybox(cameraPiso.calculateViewMatrix(), projection);
-			//skybox.DrawSkybox(camera.calculateViewMatrix(), projection);
+			//skybox.DrawSkybox(cameraPiso.calculateViewMatrix(), projection);
+			skybox.DrawSkybox(camera.calculateViewMatrix(), projection);
 		}else if ((count >= cicloDia) && (mainWindow.getCamAerea())) {
 			skybox2.DrawSkybox(cameraAerea.calculateViewMatrix(), projection);
 		}else {
-			skybox2.DrawSkybox(cameraPiso.calculateViewMatrix(), projection);
-			//skybox2.DrawSkybox(camera.calculateViewMatrix(), projection);
+			//skybox2.DrawSkybox(cameraPiso.calculateViewMatrix(), projection);
+			skybox2.DrawSkybox(camera.calculateViewMatrix(), projection);
 		}
 		count++;
 		if (count >= cicloDiaNoche) {
@@ -1043,8 +1053,8 @@ int main()
 
 			//luz direccional, sólo 1 y siempre debe de existir
 			mainLight = DirectionalLight(1.0f, 1.0f, 1.0f,
-				0.6f, 0.3f,
-				0.0f, 0.0f, -1.0f);
+				0.6f, 0.1f,
+				-1.0f, 0.0f, 0.0f);
 
 			//Luces puntuales
 
@@ -1057,8 +1067,10 @@ int main()
 			//Dirigible
 			pointLights[1] = PointLight(0.0f, 1.0f, 1.0f,
 				0.6f, 10.0f,
-				100.0f, 0.0f, 100.0f,
+				70.0f, 0.0f, 60.0f,
 				0.3f, 0.2f, 0.1f);
+
+			pointLights[1].SetPos(glm::vec3(70.0f + a, 0.0f, 60.0f + b));
 
 			//Batiseñal
 			pointLights[2] = PointLight(1.0f, 1.0f, 0.0f,
@@ -1070,15 +1082,15 @@ int main()
 		}
 		else {
 			mainLight = DirectionalLight(1.0f, 1.0f, 1.0f,
-				1.0f, 0.3f,
-				0.0f, 0.0f, -1.0f);
+				1.0f, 0.1f,
+				-1.0f, 0.0f, 0.0f);
 
 			pointLightCount = 0;
 		}
 		
 		//Show de luces
 		if (mainWindow.getSpotlights()) {
-			//luz fija
+			//luz 1
 			spotLights[0] = SpotLight(0.0f, 1.0f, 1.0f,
 				1.0f, 2.0f,
 				-20.0f, 0.0f, 160.0f,
@@ -1086,7 +1098,7 @@ int main()
 				1.0f, 0.0f, 0.0f,
 				80.0f);
 
-			//luz de helicóptero
+			//luz 2
 			spotLights[1] = SpotLight(1.0f, 0.0f, 1.0f,
 				1.0f, 2.0f,
 				0.0f, 0.0f, 160.0f,
@@ -1094,7 +1106,7 @@ int main()
 				1.0f, 0.0f, 0.0f,
 				80.0f);
 
-			//luz de faro del auto
+			//luz 3
 			spotLights[2] = SpotLight(1.0f, 1.0f, 0.0f,
 				1.0f, 2.0f,
 				20.0f, 0.0f, 160.0f,
@@ -1108,7 +1120,7 @@ int main()
 			spotLightCount = 0;
 		}
 		
-			if (count < cicloDia/2) {
+			/*if (count < cicloDia/2) {
 				music.play();
 				Tim.pause();
 				Jason.pause();
@@ -1131,7 +1143,7 @@ int main()
 				Tim.pause();
 				Jason.pause();
 				Dick.play();
-			}
+			}*/
 
 		//music.play();
 
@@ -1157,8 +1169,8 @@ int main()
 			glUniform3f(uniformEyePosition, cameraPiso.getCameraPosition().x, cameraPiso.getCameraPosition().y, cameraPiso.getCameraPosition().z);
 		}
 
-		//glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera.calculateViewMatrix()));
-		//glUniform3f(uniformEyePosition, camera.getCameraPosition().x, cameraPiso.getCameraPosition().y, cameraPiso.getCameraPosition().z);
+		glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera.calculateViewMatrix()));
+		glUniform3f(uniformEyePosition, camera.getCameraPosition().x, cameraPiso.getCameraPosition().y, cameraPiso.getCameraPosition().z);
 
 		//información al shader de fuentes de iluminación
 		shaderList[0].SetDirectionalLight(&mainLight);
@@ -1192,6 +1204,7 @@ int main()
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		TimTexture.UseTexture();
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[4]->RenderMesh();
 
 		//cuello
@@ -1203,6 +1216,7 @@ int main()
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		TimTexture.UseTexture();
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[11]->RenderMesh();
 
 		//cara
@@ -1213,6 +1227,7 @@ int main()
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		TimTexture.UseTexture();
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[3]->RenderMesh();
 
 		//brazo izq
@@ -1223,6 +1238,7 @@ int main()
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		TimTexture.UseTexture();
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[5]->RenderMesh();
 
 		//brazo der
@@ -1233,6 +1249,7 @@ int main()
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		TimTexture.UseTexture();
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[6]->RenderMesh();
 
 		//pierna izq
@@ -1244,6 +1261,7 @@ int main()
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		TimTexture.UseTexture();
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[7]->RenderMesh();
 
 		//pie izq
@@ -1254,6 +1272,7 @@ int main()
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		TimTexture.UseTexture();
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[9]->RenderMesh();
 
 		//pierna der
@@ -1265,6 +1284,7 @@ int main()
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		TimTexture.UseTexture();
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[8]->RenderMesh();
 
 		//pie der
@@ -1275,6 +1295,7 @@ int main()
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		TimTexture.UseTexture();
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[10]->RenderMesh();
 
 		//////////////////////////////////////////////////////////////////////////////////////////
@@ -1725,6 +1746,7 @@ int main()
 		model = glm::translate(model, glm::vec3(140.0f, -2.0f, -145.0f));
 		model = glm::scale(model, glm::vec3(0.48f, 0.5f, 0.48f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Rh_M.RenderModel();
 
 		//Moto RedHood
@@ -1732,6 +1754,7 @@ int main()
 		model = glm::translate(model, glm::vec3(140.0f, -1.9f, -135.0f));
 		model = glm::scale(model, glm::vec3(0.8f, 0.8f, 0.8f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Moto1_M.RenderModel();
 
 		//arbol
@@ -2361,6 +2384,7 @@ int main()
 		model = glm::scale(model, glm::vec3(0.48f, 0.49f, 0.48f));
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Nw_M.RenderModel();
 
 		//Batiseñal
@@ -2369,7 +2393,9 @@ int main()
 		model = glm::scale(model, glm::vec3(1.5f, 1.5f, 1.5f));
 		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Batiseñal_M.RenderModel();
+
 
 		//arbol
 		model = modelaux;
@@ -3031,6 +3057,7 @@ int main()
 		model = glm::scale(model, glm::vec3(24.0f, 10.0f, 10.0f));
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		BaseTren_M.RenderModel();
 
 		model = modelaux2;
@@ -3038,6 +3065,7 @@ int main()
 		model = glm::scale(model, glm::vec3(12.0f, 5.0f, 5.0f));
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		if (count < cicloDia) {
 			PlatTren_M.RenderModel();
 		}
@@ -3051,6 +3079,7 @@ int main()
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 18.0f));
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		tren_M.RenderModel();
 
 		//Estacion
@@ -3061,19 +3090,43 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Estacion_M.RenderModel();
 
+		//Elipse
+		a = 100 * cos(movDirigible * toRadians);
+		b = 150 * sin(movDirigible * toRadians);
+		if (countDirigible >= 850.0f) {
+			movDirigible += 1.0f;
+			rotaDirigible += 0.2f;
+		}
+		else {
+			countDirigible += 1.0f;
+		}
+
+		if (rotaDirigible > 359.0f) {
+			rotaDirigible = 0.0f;
+		}
+		if (rotaDirigible < -359.0f) {
+			rotaDirigible = 0.0f;
+		}
+
 		//Dirigible
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(100.0f, 150.0f, 100.0f));
+		model = glm::translate(model, glm::vec3(70.0f+a, 175.0f, 60.0f+b));
 		model = glm::scale(model, glm::vec3(6.0f, 6.0f, 6.0f));
+		model = glm::rotate(model, -b * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Dirigible_M.RenderModel();
+
+		
+		
 
 		//Helicopter
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(-130.0f, 150.0f, -130.0f));
+		model = glm::translate(model, glm::vec3(-130.0f, 125.0f, -130.0f));
 		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
 		modelaux = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		helicopter_M.RenderModel();
 
 		//helice
@@ -3082,21 +3135,66 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		helice_M.RenderModel();
 		
-		
-		//batmobile
+		if(mainWindow.getAnimacionBatmobile()){
+			if (movBatmobile <= 160.0f && batmobile == 1) {
+				movBatmobile += 0.25f;
+				rotllanta += 0.1f;
+				rotBatmobile = 180.0f;
+			}
+			else if (movBatmobile > 160.0f && batmobile == 1) {
+				batmobile = 2;
+				rotBatmobile = 180.0f;
+			}
+			else if (movBatmobile2 <= 108.0f && batmobile == 2) {
+				movBatmobile2 += 0.25f;
+				rotllanta += 0.1f;
+				rotBatmobile = 90.0f;
+			}
+			else if (movBatmobile2 > 108.0f && batmobile == 2) {
+				batmobile = 3;
+				rotBatmobile = 90.0f;
+			}
+			else if (movBatmobile >= 0.0f && batmobile == 3) {
+				movBatmobile -= 0.25f;
+				rotllanta += 0.1f;
+				rotBatmobile = 0.0f;
+			}
+			else if (movBatmobile < 0.0f && batmobile == 3) {
+				batmobile = 4;
+				rotBatmobile = 0.0f;
+			}
+			else if (movBatmobile2 >=0.0f && batmobile == 4) {
+				movBatmobile2 -= 0.25f;
+				rotllanta += 0.1f;
+				rotBatmobile = -90.0f;
+			}
+			else if (movBatmobile2 < 0.0f && batmobile == 4) {
+				batmobile = 1;
+				rotBatmobile = -90.0f;
+			}
+		}
+
+		if (rotllanta > 359.0f) {
+			rotllanta = 0.0f;
+		}
+		if (rotllanta < -359.0f) {
+			rotllanta = 0.0f;
+		}
+
+		//batmobile sin movimiento
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(1.0f, 0.55f, -5.0f));
-		//model = glm::translate(model, glm::vec3(mainWindow.getAutomovil(), 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(78.0f - movBatmobile, 0.8f, -5.5f - movBatmobile2));
+		model = glm::rotate(model, rotBatmobile * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		modelaux = model;
-		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Batmobile_M.RenderModel();
 
 		//Llanta delantera derecha
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(-3.44f, -1.4f, -1.6f));
+		model = glm::rotate(model, -rotllanta, glm::vec3(0.0f, 0.0f, 1.0f));
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		//model = glm::rotate(model, mainWindow.getLlanta(), glm::vec3(0.0f, 0.0f, 1.0f));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		llanta_B_M.RenderModel();
@@ -3105,7 +3203,7 @@ int main()
 		//Llanta posterior derecha
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(3.1f, -1.4f, -1.6f));
-		//model = glm::rotate(model, mainWindow.getLlanta(), glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::rotate(model, -rotllanta, glm::vec3(0.0f, 0.0f, 1.0f));
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
@@ -3115,7 +3213,7 @@ int main()
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(-3.44f, -1.4f, 1.6f));
 		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
-		//model = glm::rotate(model, mainWindow.getLlanta(), glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::rotate(model, rotllanta, glm::vec3(0.0f, 0.0f, 1.0f));
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
@@ -3125,17 +3223,90 @@ int main()
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(3.1f, -1.4f, 1.6f));
 		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
-		//model = glm::rotate(model, mainWindow.getLlanta(), glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::rotate(model, rotllanta, glm::vec3(0.0f, 0.0f, 1.0f));
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		llanta_B_M.RenderModel();
-		
+
+
+
+		xbird = (10 + 15 * movbird * toRadians) * cos(movbird * toRadians);
+		zbird = (10 + 15 * movbird * toRadians) * sin(movbird * toRadians);
+		if (countBird >= 500.0f) {
+			if (sube == true && movbird <= 359.0f) {
+				movbird += 0.2f;
+				rotBird += 0.3f;
+				ybird += 0.02f;
+				if (rotWings <= 45.0f && wings == true) {
+					rotWings += 0.75f;
+					//printf("\nRotWings: %f\n", rotWings);
+				}
+				else if (rotWings > 45.0f && wings == true) {
+					wings = false;
+					//printf("\nCambio a False\n");
+				}
+				else if (rotWings >= -45.0f && wings == false) {
+					rotWings -= 0.75f;
+					//printf("\nRotWings: %f\n", rotWings);
+				}
+				else if (rotWings < -45.0f && wings == false) {
+					wings = true;
+					//printf("\nCambio a True\n");
+				}
+			}
+			else if (sube == true && movbird > 359.0f) {
+				sube = false;
+			}
+			else if (sube == false && movbird >= 0.0f) {
+				movbird -= 0.2f;
+				rotBird += 0.3f;
+				ybird -= 0.02f;
+				if (rotWings <= 45.0f && wings == true) {
+					rotWings += 0.75f;
+					//printf("\nRotWings: %f\n", rotWings);
+				}
+				else if (rotWings > 45.0f && wings == true) {
+					wings = false;
+					//printf("\nCambio a False\n");
+				}
+				else if (rotWings >= -45.0f && wings == false) {
+					rotWings -= 0.75f;
+					//printf("\nRotWings: %f\n", rotWings);
+				}
+				else if (rotWings < -45.0f && wings == false) {
+					wings = true;
+					//printf("\nCambio a True\n");
+				}
+			}
+			else if (sube == false && movbird < 0.0f) {
+				sube = true;
+			}
+			
+		}
+		else {
+			countBird += 1.0f;
+		}
+
+		if (movbird > 359.0f) {
+			movbird = 0.0f;
+		}
+		if (movbird < -359.0f) {
+			movbird = 0.0f;
+		}
+		if (rotBird > 359.0f) {
+			rotBird = 0.0f;
+		}
+		if (rotBird < -359.0f) {
+			rotBird = 0.0f;
+		}
 
 		//Bird
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(120.0f, 100.0f, 50.0f));
+		model = glm::translate(model, glm::vec3(180.0f - xbird, 56.0f + ybird, 70.0f - zbird));
 		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, rotBird * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		modelaux = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		BlueBird_M.RenderModel();
@@ -3143,6 +3314,7 @@ int main()
 		//alas
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(0.0f, -0.1f, -0.2f));
+		model = glm::rotate(model, rotWings * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); 
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		BlueBirdWings_M.RenderModel();
 		
