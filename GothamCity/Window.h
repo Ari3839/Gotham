@@ -17,6 +17,8 @@ public:
 	GLboolean getCamAerea() { return CamAerea; }
 	GLboolean getSpotlights() { return spotlights; }
 	GLboolean getAnimacionBatmobile() { return animacionBatmobile; }
+	GLboolean getMovNigthwing() { return movNigthwing; }
+	GLboolean getMovRedHood(){ return movRedHood; }
 	bool getShouldClose() {
 		return  glfwWindowShouldClose(mainWindow);}
 	bool* getsKeys() { return keys; }
@@ -35,6 +37,7 @@ private:
 	GLfloat yChange;
 	GLfloat muevex;
 	GLboolean CamAerea, spotlights, animacionBatmobile;
+	GLboolean movNigthwing, movRedHood;
 	bool mouseFirstMoved;
 	static void ManejaTeclado(GLFWwindow* window, int key, int code, int action, int mode);
 	static void ManejaMouse(GLFWwindow* window, double xPos, double yPos);

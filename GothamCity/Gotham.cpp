@@ -28,15 +28,34 @@
 #include "Sound.h"
 const float toRadians = 3.14159265f / 180.0f;
 
-
+//Movimiento ave (compleja)
 float xbird = 0.0f, ybird = 0.0f, zbird = 0.0f, rotBird = 0.0f, rotWings = 0.0f, movbird =0.0f;
 float countBird = 0.0f;
 bool wings = true, sube = true;
 
+//Movimiento batmobile (simple)
 float movBatmobile = 0.0f, movBatmobile2 = 0.0f, rotllanta = 0.0f, rotBatmobile = 180.0f;
 int batmobile = 1;
 
-float movDirigible = 0.0f, rotaDirigible = 0.0f, a = 0.0f, b = 0.0f, countDirigible = 0.0f;
+//Movimiento dirigible (compleja)
+float movDirigible = 0.0f, a = 0.0f, b = 0.0f, countDirigible = 0.0f;
+
+//Movimiento show de luces 
+float xluz1 = 0.0f, zluz1 = 0.0f, xluz2 = 0.0f, zluz2 = 0.0f, xluz3 = 0.0f, zluz3 = 0.0f, movLuz=0.0f;
+int luces = 1;
+
+//Rotacion batiseñal
+float rotBatsignal =0.0f;
+
+//Movimiento RedHood (compleja)
+float brazo1 = 0.0f, brazo2 = 0.0f, pierna1 = 0.0f, pierna2 = 0.0f, cuerpo1 = 0.0f;
+bool movBrazo = true, movBrazo2 = false, movPierna1=false, movPierna2=true, fin1=false;
+int  countDisp = 0;
+
+//Movimiento Nightwing (compleja)
+float brazo3 = 0.0f, brazo4 = 0.0f, pierna3 = 0.0f, pierna4 = 0.0f, cuerpo2 = 0.0f, movY=0.0f;
+bool movBrazo3 = true, movBrazo4 = false, movPierna3 = false, movPierna4 = true, movCuerpo2 = true, salto = false, fin2 = false;
+int  countSalto = 0;
 
 Window mainWindow;
 std::vector<Mesh*> meshList;
@@ -57,6 +76,7 @@ Sound music = Sound("Music/The Batman - Michael Giacchino.mp3");
 Sound Tim = Sound("Music/twenty one pilots Stressed Out.mp3");
 Sound Jason = Sound("Music/Bohnes - Middle Finger.mp3");
 Sound Dick = Sound("Music/Fall Out Boy - Where Did The Party Go.mp3");
+Sound Disparo = Sound("Music/Disparo.mp3");
 
 Material Material_brillante;
 Material Material_opaco;
@@ -777,7 +797,7 @@ int main()
 	CrearPersonaje();
 	CreateShaders();
 
-	camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 25.0f, 0.5f);
+	camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 10.0f, 0.5f);
 	cameraPiso = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -50.0f, 0.0f, 0.5f, 0.5f);
 	cameraAerea = Camera(glm::vec3(0.0f, 350.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, -90.0f, 0.5f, 0.5f);
 
@@ -816,11 +836,10 @@ int main()
 	Model Moto3_M;
 	Model helicopter_M;
 	Model helice_M;
-	Model Nw_M;
-	Model Rh_M;
 	Model Pole_M;
 	Model Banca_M;
-	Model Batiseñal_M;
+	Model Batiseñal1_M;
+	Model Batiseñal2_M;
 	Model BlueBird_M;
 	Model BlueBirdWings_M;
 	Model Bote_M;
@@ -845,13 +864,28 @@ int main()
 	Model CloudSignal_luz_M;
 	Model b4Signal_M;
 	Model b4Signal_luz_M;
+	Model Escenario_M;
+	Model Nw_Cuerpo_M;
+	Model Nw_Brazo_M;
+	Model Nw_Pierna_M;
+	Model Rh_Cuerpo_M;
+	Model Rh_Brazo_M;
+	Model Rh_Pierna_M;
 
 
 	//Personajes
-	Nw_M = Model();
-	Nw_M.LoadModel("Modelos_obj/Personas/Nightwing.obj");
-	Rh_M = Model();
-	Rh_M.LoadModel("Modelos_obj/Personas/RedHood2.obj");
+	Nw_Cuerpo_M = Model();
+	Nw_Cuerpo_M.LoadModel("Modelos_obj/Personas/Nightwing_Cuerpo.obj");
+	Nw_Pierna_M = Model();
+	Nw_Pierna_M.LoadModel("Modelos_obj/Personas/Nightwing_Pierna.obj");
+	Nw_Brazo_M = Model();
+	Nw_Brazo_M.LoadModel("Modelos_obj/Personas/Nightwing_Brazo.obj");
+	Rh_Cuerpo_M = Model();
+	Rh_Cuerpo_M.LoadModel("Modelos_obj/Personas/Jason_Cuerpo.obj");
+	Rh_Pierna_M = Model();
+	Rh_Pierna_M.LoadModel("Modelos_obj/Personas/Jason_Pierna.obj");
+	Rh_Brazo_M = Model();
+	Rh_Brazo_M.LoadModel("Modelos_obj/Personas/Jason_Brazo.obj");
 
 
 	//Señales
@@ -901,8 +935,10 @@ int main()
 	Pole_M.LoadModel("Modelos_obj/Poles/pole2.obj");
 	Banca_M = Model();
 	Banca_M.LoadModel("Modelos_obj/Others-street/banca.obj");
-	Batiseñal_M = Model();
-	Batiseñal_M.LoadModel("Modelos_obj/Others-street/batisenal2.obj");
+	Batiseñal1_M = Model();
+	Batiseñal1_M.LoadModel("Modelos_obj/Others-street/batisenal.obj");
+	Batiseñal2_M = Model();
+	Batiseñal2_M.LoadModel("Modelos_obj/Others-street/batisenal2.obj");
 	PhoneBox_M = Model();
 	PhoneBox_M.LoadModel("Modelos_obj/Others-street/phonebox.obj");
 	Bote_M = Model();
@@ -919,6 +955,8 @@ int main()
 	Semaforo_A_M.LoadModel("Modelos_obj/Others-street/Semaforo_top_a.obj");
 	Semaforo_R_M = Model();
 	Semaforo_R_M.LoadModel("Modelos_obj/Others-street/Semaforo_top_r.obj");
+	Escenario_M = Model();
+	Escenario_M.LoadModel("Modelos_obj/Others-street/Escenario.obj");
 
 	//Transportes
 	Batmobile_M = Model();
@@ -1051,7 +1089,7 @@ int main()
 
 		if (count >= cicloDia) {
 
-			//luz direccional, sólo 1 y siempre debe de existir
+			//luz direccional
 			mainLight = DirectionalLight(1.0f, 1.0f, 1.0f,
 				0.6f, 0.1f,
 				-1.0f, 0.0f, 0.0f);
@@ -1059,13 +1097,13 @@ int main()
 			//Luces puntuales
 
 			//Helicoptero
-			pointLights[0] = PointLight(1.0f, 0.0f, 1.0f,
+			pointLights[0] = PointLight(1.0f, 0.0f, 0.0f,
 				0.6f, 10.0f,
 				-130.0f, 0.0f, -130.0f,
 				0.3f, 0.2f, 0.1f);
 			
 			//Dirigible
-			pointLights[1] = PointLight(0.0f, 1.0f, 1.0f,
+			pointLights[1] = PointLight(0.0f, 0.0f, 1.0f,
 				0.6f, 10.0f,
 				70.0f, 0.0f, 60.0f,
 				0.3f, 0.2f, 0.1f);
@@ -1076,6 +1114,7 @@ int main()
 			pointLights[2] = PointLight(1.0f, 1.0f, 0.0f,
 				0.6f, 20.0f,
 				-192.0f, 82.8f, 46.0f,
+				//-170.0f, 104.0f, 66.0f,
 				0.3f, 0.2f, 0.1f);
 
 			pointLightCount = 3;
@@ -1093,28 +1132,113 @@ int main()
 			//luz 1
 			spotLights[0] = SpotLight(0.0f, 1.0f, 1.0f,
 				1.0f, 2.0f,
-				-20.0f, 0.0f, 160.0f,
+				-35.0f, 20.0f, 130.0f,
 				0.0f, -1.0f, 0.0f,
 				1.0f, 0.0f, 0.0f,
-				80.0f);
+				20.0f);
 
 			//luz 2
 			spotLights[1] = SpotLight(1.0f, 0.0f, 1.0f,
 				1.0f, 2.0f,
-				0.0f, 0.0f, 160.0f,
+				0.0f, 15.0f, 130.0f,
 				0.0f, -1.0f, 0.0f,
 				1.0f, 0.0f, 0.0f,
-				80.0f);
+				20.0f);
 
 			//luz 3
 			spotLights[2] = SpotLight(1.0f, 1.0f, 0.0f,
 				1.0f, 2.0f,
-				20.0f, 0.0f, 160.0f,
+				35.0f, 25.0f, 130.0f,
 				0.0f, -1.0f, 0.0f,
 				1.0f, 0.0f, 0.0f,
-				80.0f);
+				20.0f);
 
 			spotLightCount = 3;
+
+
+			xluz2 = (3 + 2 * movLuz * toRadians) * cos(movLuz * toRadians);
+			zluz2 = (3 + 2 * movLuz * toRadians) * sin(movLuz * toRadians);
+			if (xluz1<=75.0f && luces==1) {
+				xluz1 += 0.2f;
+				zluz1 += 1.0f;
+			}
+			else if (xluz1 > 75.0f && luces == 1) {
+				luces = 2;
+				xluz1 = 0.0f;
+			}
+			else if (xluz3 <= 75.0f && luces == 2) {
+				xluz3 += 0.2f;
+				zluz3 += 1.0f;
+			}
+			else if (xluz3 > 75.0f && luces == 2) {
+				luces = 3;
+				xluz3 = 0.0f;
+			}
+			else if (xluz1 <= 75.0f && luces == 3) {
+				xluz1 += 0.2f;
+				zluz1 += 1.0f;
+			}
+			else if (xluz1 > 75.0f && luces == 3) {
+				luces = 4;
+			}
+			else if (xluz3 <= 75.0f && luces == 4) {
+				xluz3 += 0.2f;
+				zluz3 += 1.0f;
+				xluz1 -= 0.2f;
+				zluz1 += 1.0f;
+			}
+			else if (xluz3 > 75.0f && luces == 4) {
+				luces = 5;
+			}
+			else if (xluz3 >= 0.0f && luces == 5) {
+				xluz3 -= 0.2f;
+				zluz3 += 1.0f;
+				xluz1 += 0.2f;
+				zluz1 += 1.0f;
+			}
+			else if (xluz3 < 0.0f && luces == 5) {
+				luces = 6;
+				xluz1 = 0.0f;
+				xluz3 = 0.0f;
+			}
+			else if (movLuz <= 360.0f && luces == 6) {
+				movLuz += 1.0f;
+			}
+			else if (movLuz > 360.0f && luces == 6) {
+				luces = 7;
+			}
+			else if (movLuz >= 0.0f && luces == 7) {
+				movLuz -= 1.0f;
+			}
+			else if (movLuz < 0.0f && luces == 7) {
+				luces = 1;
+				xluz1 = 0.0f;
+				xluz2 = 0.0f;
+				xluz3 = 0.0f;
+				zluz1 = 0.0f;
+				zluz2= 0.0f;
+				zluz3 = 0.0f;
+				movLuz = 0.0f;
+			}
+
+			if (zluz1 > 360.0f) {
+				zluz1 = 0.0f;
+			}
+			if (zluz1 < -360.0f) {
+				zluz1 = 0.0f;
+			}
+			if (zluz3 > 360.0f) {
+				zluz3 = 0.0f;
+			}
+			if (zluz3 < -360.0f) {
+				zluz3 = 0.0f;
+			}
+
+
+			spotLights[0].SetPos(glm::vec3(-35.0f + xluz1, 11.0f, 130.0f + 6.0f * cos(zluz1 * toRadians)));
+			spotLights[1].SetPos(glm::vec3(0.0f + xluz2, 11.0f, 130.0f + zluz2));
+			spotLights[2].SetPos(glm::vec3(35.0f - xluz3, 11.0f, 130.0f + 6.0f * cos(zluz3 * toRadians)));
+
 		}
 		else {
 			spotLightCount = 0;
@@ -1133,6 +1257,7 @@ int main()
 				Dick.pause();
 			}
 			else if ((count > cicloDia) && (count < cicloDia * 3 / 2)) {
+				mainWindow.getShouldClose()
 				music.pause();
 				Tim.pause();
 				Jason.play();
@@ -1192,7 +1317,15 @@ int main()
 		meshList[2]->RenderMesh();
 
 		//////////////////////////////////////////////////////////////////////////////////////////
+		//Escenario
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(0.0f, -2.0f, 130.0f));
+		model = glm::scale(model, glm::vec3(17.0f, 12.0f, 12.0f));
+		//model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Escenario_M.RenderModel();
 
+		////////////////////////////////////////////////////////////////////////////////////////////
 		//Personaje
 
 		//cuerpo
@@ -1741,13 +1874,141 @@ int main()
 		}
 		
 
+
+		if (mainWindow.getMovRedHood() && fin1==false) {
+			//Musica
+			music.pause();
+			Tim.pause();
+			Jason.play();
+			Dick.pause();
+			Disparo.pause();
+
+			if (cuerpo1 <= 10.0f) {
+				//Mov miembros
+				if (brazo1 <= 30.0f && movBrazo == true) {
+					brazo1 += 1.5f;
+				}
+				else if (brazo1 > 30.0f && movBrazo == true) {
+					movBrazo = false;
+				}
+				else if (brazo1 >= -30.0f && movBrazo == false) {
+					brazo1 -= 1.5f;
+				}
+				else if (brazo1 < -30.0f && movBrazo == false) {
+					movBrazo = true;
+				}
+
+
+				if (brazo2 <= 30.0f && movBrazo2 == true) {
+					brazo2 += 1.5f;
+				}
+				else if (brazo2 > 30.0f && movBrazo2 == true) {
+					movBrazo2 = false;
+				}
+				else if (brazo2 >= -30.0f && movBrazo2 == false) {
+					brazo2 -= 1.5f;
+				}
+				else if (brazo2 < -30.0f && movBrazo2 == false) {
+					movBrazo2 = true;
+				}
+
+
+				if (pierna1 <= 30.0f && movPierna1 == true) {
+					pierna1 += 1.5f;
+				}
+				else if (pierna1 > 30.0f && movPierna1 == true) {
+					movPierna1 = false;
+				}
+				else if (pierna1 >= -30.0f && movPierna1 == false) {
+					pierna1 -= 1.5f;
+				}
+				else if (pierna1 < -30.0f && movPierna1 == false) {
+					movPierna1 = true;
+				}
+
+
+				if (pierna2 <= 30.0f && movPierna2 == true) {
+					pierna2 += 1.5f;
+				}
+				else if (pierna2 > 30.0f && movPierna2 == true) {
+					movPierna2 = false;
+				}
+				else if (pierna2 >= -30.0f && movPierna2 == false) {
+					pierna2 -= 1.5f;
+				}
+				else if (pierna2 < -30.0f && movPierna2 == false) {
+					movPierna2 = true;
+				}
+
+				//Traslacion
+				cuerpo1 += 0.01f;
+			}
+			else if (cuerpo1 > 10.0f && brazo1 >= -90.0f) {
+				brazo1 -= 1.5f;
+			}
+			else if (cuerpo1 > 10.0f && brazo1 < -90.0f && countDisp<150) {
+				pierna1 = 0.0f;
+				pierna2 = 0.0f;
+				brazo2 = 0.0f;
+				Disparo.play();
+				countDisp += 1;
+			}
+			else if(cuerpo1 > 10.0f && countDisp >= 150) {
+				fin1 = true;
+			}
+		}
+		else {
+			//Musica
+			music.play();
+			Tim.pause();
+			Jason.pause();
+			Dick.pause();
+			Disparo.pause();
+		}
+		
+
 		//RedHood
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(140.0f, -2.0f, -145.0f));
+		model = glm::translate(model, glm::vec3(125.0f, 0.0f, -250.0f));
+		model = glm::translate(model, glm::vec3(cuerpo1, 0.0f, cuerpo1 * cuerpo1));
 		model = glm::scale(model, glm::vec3(0.48f, 0.5f, 0.48f));
+		modelaux2 = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		Rh_M.RenderModel();
+		Rh_Cuerpo_M.RenderModel();
+
+		//Brazo izq
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-1.55f, 1.2f, 0.0f));
+		model = glm::rotate(model, brazo1 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Rh_Brazo_M.RenderModel();
+
+		//Brazo der
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(1.55f, 1.2f, 0.0f));
+		model = glm::rotate(model, brazo2 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Rh_Brazo_M.RenderModel();
+
+		//Pierna izq
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-0.75f, -1.63f, 0.0f));
+		model = glm::rotate(model, pierna2 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Rh_Pierna_M.RenderModel();
+
+		//Pierna der
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(0.75f, -1.63f, 0.0f));
+		model = glm::rotate(model, pierna1 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Rh_Pierna_M.RenderModel();
+
 
 		//Moto RedHood
 		model = glm::mat4(1.0);
@@ -2378,23 +2639,180 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Building6_M.RenderModel();
 
+		if (mainWindow.getMovNigthwing() && fin2==false) {
+			//Musica
+			music.pause();
+			Tim.pause();
+			Jason.pause();
+			Dick.play();
+			Disparo.pause();
+
+			if (cuerpo2 <= 10.0f && movCuerpo2) {
+				//Mov miembros
+				if (brazo3 <= 30.0f && movBrazo3 == true) {
+					brazo3 += 1.5f;
+				}
+				else if (brazo3 > 30.0f && movBrazo3 == true) {
+					movBrazo3 = false;
+				}
+				else if (brazo3 >= -30.0f && movBrazo3 == false) {
+					brazo3 -= 1.5f;
+				}
+				else if (brazo3 < -30.0f && movBrazo3 == false) {
+					movBrazo3 = true;
+				}
+
+
+				if (brazo4 <= 30.0f && movBrazo4 == true) {
+					brazo4 += 1.5f;
+				}
+				else if (brazo4 > 30.0f && movBrazo4 == true) {
+					movBrazo4 = false;
+				}
+				else if (brazo4 >= -30.0f && movBrazo4 == false) {
+					brazo4 -= 1.5f;
+				}
+				else if (brazo4 < -30.0f && movBrazo4 == false) {
+					movBrazo4 = true;
+				}
+
+
+				if (pierna3 <= 30.0f && movPierna3 == true) {
+					pierna3 += 1.5f;
+				}
+				else if (pierna3 > 30.0f && movPierna3 == true) {
+					movPierna3 = false;
+				}
+				else if (pierna3 >= -30.0f && movPierna3 == false) {
+					pierna3 -= 1.5f;
+				}
+				else if (pierna3 < -30.0f && movPierna3 == false) {
+					movPierna3 = true;
+				}
+
+
+				if (pierna4 <= 30.0f && movPierna4 == true) {
+					pierna4 += 1.5f;
+				}
+				else if (pierna4 > 30.0f && movPierna4 == true) {
+					movPierna4 = false;
+				}
+				else if (pierna4 >= -30.0f && movPierna4 == false) {
+					pierna4 -= 1.5f;
+				}
+				else if (pierna4 < -30.0f && movPierna4 == false) {
+					movPierna4 = true;
+				}
+
+				//Traslacion
+				cuerpo2 += 0.01f;
+			}
+			else if (cuerpo2 > 10.0f && movCuerpo2) {
+				pierna3 = 0.0f;
+				pierna4 = 0.0f;
+				movCuerpo2 = false;
+			}
+			else if (cuerpo2 > 10.0f && pierna3 >= -90.0f && pierna4 <= 90.0f && movCuerpo2 == false && salto == false) {
+				pierna3 -= 1.0f;
+				pierna4 += 1.0f;
+				movY += 0.05f;
+			}
+			else if (cuerpo2 > 10.0f && pierna3 < -90.0f && pierna4 > 90.0f && movCuerpo2 == false && salto == false) {
+				salto = true;
+			}
+			else if (cuerpo2 > 10.0f && movCuerpo2 == false && movY > 0.0f  && salto == true) {
+				pierna3 += 1.0f;
+				pierna4 -= 1.0f;
+				movY -= 0.05f;
+			}
+			else if (cuerpo2 > 10.0f && movCuerpo2 == false && movY <= 0.0f && salto == true) {
+				fin2 = true;
+			}
+		}
+		else {
+			pierna3 = 0.0f;
+			pierna4 = 0.0f;
+			brazo3 = 0.0f;
+			brazo4 = 0.0f;
+			movY = 0.0f;
+			//Musica
+			music.play();
+			Tim.pause();
+			Jason.pause();
+			Dick.pause();
+			Disparo.pause();
+		}
+
 		//Nigthwing
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(-110.0f, -2.0f, 30.0f));
+		model = glm::translate(model, glm::vec3(-230.0f, 0.3f, 17.0f));
+		model = glm::translate(model, glm::vec3(cuerpo2*cuerpo2, 0.3f+ movY, cuerpo2));
 		model = glm::scale(model, glm::vec3(0.48f, 0.49f, 0.48f));
+		modelaux2 = model;
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		Nw_M.RenderModel();
+		Nw_Cuerpo_M.RenderModel();
+
+		//Brazo izq
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(0.0f, 0.2f, -1.55f));
+		model = glm::rotate(model, brazo3 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Nw_Brazo_M.RenderModel();
+
+		//Brazo der
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(0.0f, 0.2f, 1.55f));
+		model = glm::rotate(model, brazo4 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Nw_Brazo_M.RenderModel();
+
+		//Pierna izq
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(0.0f, -2.5f, -0.75f));
+		model = glm::rotate(model, pierna4 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Nw_Pierna_M.RenderModel();
+
+		//Pierna der
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(0.0f, -2.5f, 0.75f));
+		model = glm::rotate(model, pierna3 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Nw_Pierna_M.RenderModel();
 
 		//Batiseñal
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(-12.0f, 85.5f, -24.0f));
 		model = glm::scale(model, glm::vec3(1.5f, 1.5f, 1.5f));
 		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, rotBatsignal * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		Batiseñal_M.RenderModel();
+		if (count < cicloDia) {
+			Batiseñal1_M.RenderModel();
+		}
+		else {
+			Batiseñal2_M.RenderModel();
+			rotBatsignal += 1.0f;
+		}
+
+		if (rotBatsignal > 359.0f) {
+			rotBatsignal = 0.0f;
+		}
+		if (rotBatsignal < -359.0f) {
+			rotBatsignal = 0.0f;
+		}
+		
 
 
 		//arbol
@@ -3093,26 +3511,18 @@ int main()
 		//Elipse
 		a = 100 * cos(movDirigible * toRadians);
 		b = 150 * sin(movDirigible * toRadians);
-		if (countDirigible >= 850.0f) {
-			movDirigible += 1.0f;
-			rotaDirigible += 0.2f;
+		if (countDirigible > 850.0f) {
+			movDirigible += 0.5f;
 		}
 		else {
 			countDirigible += 1.0f;
-		}
-
-		if (rotaDirigible > 359.0f) {
-			rotaDirigible = 0.0f;
-		}
-		if (rotaDirigible < -359.0f) {
-			rotaDirigible = 0.0f;
 		}
 
 		//Dirigible
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(70.0f+a, 175.0f, 60.0f+b));
 		model = glm::scale(model, glm::vec3(6.0f, 6.0f, 6.0f));
-		model = glm::rotate(model, -b * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, -a * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Dirigible_M.RenderModel();
@@ -3317,7 +3727,7 @@ int main()
 		model = glm::rotate(model, rotWings * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); 
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		BlueBirdWings_M.RenderModel();
-		
+
 		glUseProgram(0);
 
 		mainWindow.swapBuffers();
