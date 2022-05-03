@@ -1270,7 +1270,7 @@ int main()
 				Dick.play();
 			}*/
 
-		//music.play();
+		music.play();
 
 		shaderList[0].UseShader();
 		uniformModel = shaderList[0].GetModelLocation();
@@ -1955,15 +1955,13 @@ int main()
 			}
 			else if(cuerpo1 > 10.0f && countDisp >= 150) {
 				fin1 = true;
+				//Musica
+				music.play();
+				Tim.pause();
+				Jason.pause();
+				Dick.pause();
+				Disparo.pause();
 			}
-		}
-		else {
-			//Musica
-			music.play();
-			Tim.pause();
-			Jason.pause();
-			Dick.pause();
-			Disparo.pause();
 		}
 		
 
@@ -2727,20 +2725,18 @@ int main()
 			}
 			else if (cuerpo2 > 10.0f && movCuerpo2 == false && movY <= 0.0f && salto == true) {
 				fin2 = true;
+				pierna3 = 0.0f;
+				pierna4 = 0.0f;
+				brazo3 = 0.0f;
+				brazo4 = 0.0f;
+				movY = 0.0f;
+				//Musica
+				music.play();
+				Tim.pause();
+				Jason.pause();
+				Dick.pause();
+				Disparo.pause();
 			}
-		}
-		else {
-			pierna3 = 0.0f;
-			pierna4 = 0.0f;
-			brazo3 = 0.0f;
-			brazo4 = 0.0f;
-			movY = 0.0f;
-			//Musica
-			music.play();
-			Tim.pause();
-			Jason.pause();
-			Dick.pause();
-			Disparo.pause();
 		}
 
 		//Nigthwing
