@@ -61,6 +61,7 @@ int  countSalto = 0;
 
 //Movimiento Tim (simple) por teclado
 float brazo5 = 0.0f, brazo6 = 0.0f, pierna5 = 0.0f, pierna6 = 0.0f, cuerpo3 = 0.0f;
+float staffScale = 1.0f, staffRot = 0.0f, movimientoY = 0.0f, ganchoTras = 0.0f, ganchoRot = 0.0f, ganchoMovZ=0.0f;
 bool movBrazo5 = true, movBrazo6 = false, movPierna5 = false, movPierna6 = true, movCuerpo3 = true, fin3 = false;
 int cambio = 1;
 
@@ -1322,7 +1323,40 @@ int main()
 			Dick.pause();
 			Disparo.pause();
 
-			if (cuerpo3 <= 10.0f) {
+			if (cambio == 1 && brazo5 >= -90.0f) {
+				brazo5 -= 2.0f;
+			}
+			else if (cambio == 1 && brazo5 < -90.0f) {
+				cambio = 2;
+			}
+			else if (cambio == 2 && staffScale <= 4.0f) {
+				staffScale += 0.2f;
+			}
+			else if (cambio == 2 && staffScale > 4.0f) {
+				cambio = 3;
+				staffScale = 1.0f;
+			}
+			else if (cambio == 3 && staffRot <= 360) {
+				staffRot += 2.5f;
+			}
+			else if (cambio == 3 && staffRot > 360) {
+				cambio = 4;
+				staffRot = 0.0f;
+				staffScale = 4.0f;
+			}
+			else if (cambio == 4 && staffScale > 1.0f) {
+				staffScale -= 0.2f;
+			}
+			else if (cambio == 4 && staffScale <= 1.0f) {
+				cambio = 5;
+			}
+			else if (cambio == 5 && brazo5 < 0.0f) {
+				brazo5 += 2.0f;
+			}
+			else if (cambio == 5 && brazo5 >= 0.0f) {
+				cambio = 6;
+			}
+			else if (cambio == 6 && cuerpo3 <= 70.0f) {
 				//Mov miembros
 				if (brazo5 <= 30.0f && movBrazo5 == true) {
 					brazo5 += 1.5f;
@@ -1380,39 +1414,74 @@ int main()
 				}
 
 				//Traslacion
-				cuerpo3 += 0.01f;
+				cuerpo3 += 0.25f;
+				movimientoY += 0.005f;
 			}
-			//else if (cuerpo3 > 10.0f && brazo1 >= -90.0f) {
-			//	brazo1 -= 1.5f;
-			//}
-			//else if (cuerpo1 > 10.0f && brazo1 < -90.0f && countDisp < 150) {
-			//	pierna1 = 0.0f;
-			//	pierna2 = 0.0f;
-			//	brazo2 = 0.0f;
-			//	Disparo.play();
-			//	countDisp += 1;
-			//}
-			//else if (cuerpo3 > 10.0f && fin3==false) {
-			//	fin1 = true;
-			//	//Musica
-			//	music.play();
-			//	Tim.pause();
-			//	Jason.pause();
-			//	Dick.pause();
-			//	Disparo.pause();
-			//}
+			else if (cambio == 6 && cuerpo3 > 70.0f) {
+				pierna5 = 0.0f;
+				pierna6 = 0.0f;
+				brazo5 = 0.0f;
+				brazo6 = 0.0f;
+				cambio = 7;
+			}
+			else if (cambio == 7 && brazo6 >= -210.0f) {
+				brazo6 -= 2.0f;
+			}
+			else if (cambio == 7 && brazo6 < -210.0f) {
+				cambio = 8;
+			}
+			else if (cambio == 8 && brazo6 <= -180.0f) {
+				brazo6 += 5.0f;
+			}
+			else if (cambio == 8 && brazo6 > -180.0f) {
+				cambio = 9;
+			}
+			else if (cambio == 9 && ganchoTras <= 42.0f) {
+				ganchoTras += 0.5f;
+				if (ganchoRot <= 110.0f) {
+					ganchoRot += 5.0f;
+				}
+			}
+			else if (cambio == 9 && ganchoTras > 42.0f) {
+				cambio=10;
+			}
+			else if (cambio == 10 && movimientoY <= 43.8f) {
+				movimientoY+=0.2f;
+				ganchoTras -= 0.2f;
+				if (cuerpo3 <= 72.0f) {
+					cuerpo3 += 0.1f;
+				}
+			}
+			else if (cambio == 10 && movimientoY > 43.8f) {
+				cambio=11;
+			}
+			else if (cambio == 11 && movimientoY <= 48.0f) {
+				movimientoY += 0.5f;
+				if (cuerpo3 <= 76.0f) {
+					cuerpo3 += 0.2f;
+				}
+			}
+			else if (cambio == 11 && movimientoY > 48.0f) {
+				brazo6 = 0.0f;
+				ganchoRot = 0.0f;
+				fin3 = true;
+			}
 		}
-
-
-
-
+		else{
+			//Musica
+			music.play();
+			Tim.pause();
+			Jason.pause();
+			Dick.pause();
+			Disparo.pause();
+		}
 
 
 		//Personaje
 
 		//cuerpo
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -18.0f));
+		model = glm::translate(model, glm::vec3(-12.0f, movimientoY, -17.0f+ cuerpo3));
 		modelaux = model;
 		model = glm::scale(model, glm::vec3(1.2f, 1.6f, 0.8f));
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -1445,9 +1514,14 @@ int main()
 		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[3]->RenderMesh();
 
-		//brazo izq
+		//Hombro izquierdo
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(-0.775f, 0.1f, 0.0f));
+		model = glm::translate(model, glm::vec3(-0.775f, 0.5f, 0.0f));
+		model = glm::rotate(model, brazo5* toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+
+
+		//brazo izq
+		model = glm::translate(model, glm::vec3(0.0f, -0.4f, 0.0f));
 		modelaux2 = model;
 		model = glm::scale(model, glm::vec3(0.35f, 1.2f, 0.4f));
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -1460,15 +1534,24 @@ int main()
 		//bostaff
 		model = modelaux2;
 		model = glm::translate(model, glm::vec3(0.0f, -0.67f, 0.0f));
+		model = glm::scale(model, glm::vec3(1.0f, 1.0f, staffScale));
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
-		//model = glm::scale(model, glm::vec3(0.45f, 0.25f, 0.65f));
+		model = glm::rotate(model, staffRot * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		boStaff2_M.RenderModel();
-		//boStaff_M.RenderModel();
+		if (cambio == 3) {
+			boStaff_M.RenderModel();
+		}
+		else {
+			boStaff2_M.RenderModel();
+		}
+
+		//hombro derecho
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(0.775f, 0.5f, 0.0f));
+		model = glm::rotate(model, brazo6 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 
 		//brazo der
-		model = modelaux;
-		model = glm::translate(model, glm::vec3(0.775f, 0.1f, 0.0f));
+		model = glm::translate(model, glm::vec3(0.0f, -0.4f, 0.0f));
 		modelaux2 = model;
 		model = glm::scale(model, glm::vec3(0.35f, 1.2f, 0.4f));
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -1480,15 +1563,20 @@ int main()
 
 		//Gancho
 		model = modelaux2;
-		model = glm::translate(model, glm::vec3(0.0f, -0.67f, 0.0f));
+		model = glm::translate(model, glm::vec3(0.0f, -0.67f - ganchoTras, 0.0f + ganchoMovZ));
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, ganchoRot * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		//model = glm::scale(model, glm::vec3(0.45f, 0.25f, 0.65f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		gancho_M.RenderModel();
 
-		//pierna izq
+		//union pierna izq
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(-0.375f, -1.25f, 0.0f));
+		model = glm::translate(model, glm::vec3(-0.375f, -0.625f, 0.0f));
+		model = glm::rotate(model, pierna6 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+
+		//pierna izq
+		model = glm::translate(model, glm::vec3(0.0f, -0.625f, 0.0f));
 		modelaux2 = model;
 		model = glm::scale(model, glm::vec3(0.45f, 0.95f, 0.4f));
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -1509,9 +1597,13 @@ int main()
 		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[9]->RenderMesh();
 
-		//pierna der
+		//union pierna der
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(0.375f, -1.25f, 0.0f));
+		model = glm::translate(model, glm::vec3(0.375f, -0.625f, 0.0f));
+		model = glm::rotate(model, pierna5 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+
+		//pierna der
+		model = glm::translate(model, glm::vec3(0.0f, -0.625f, 0.0f));
 		modelaux2 = model;
 		model = glm::scale(model, glm::vec3(0.45f, 0.95f, 0.4f));
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
