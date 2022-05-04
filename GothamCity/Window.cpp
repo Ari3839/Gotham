@@ -17,8 +17,8 @@ Window::Window(GLint windowWidth, GLint windowHeight)
 	CamAerea = false;
 	spotlights = false;
 	animacionBatmobile = false;
-	movNigthwing = false;
-	movRedHood = false;
+	Tim = false;
+
 	for (size_t i = 0; i < 1024; i++)
 	{
 		keys[i] = 0;
@@ -127,6 +127,7 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 		theWindow->CamAerea = true;
 	}
 
+
 	if (key == GLFW_KEY_3)
 	{
 		theWindow->spotlights = true;
@@ -134,6 +135,8 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 	if (key == GLFW_KEY_4)
 	{
 		theWindow->spotlights = false;
+
+
 	}
 	if (key == GLFW_KEY_5)
 	{
@@ -146,15 +149,16 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 	}
 
 
+	if (key == GLFW_KEY_7)
+	{
+		theWindow->Tim = true;
+	}
+	if (key == GLFW_KEY_8)
+	{
+		theWindow->Tim = false;
 
-	if (key == GLFW_KEY_N)
-	{
-		theWindow->movNigthwing = true;
 	}
-	if (key == GLFW_KEY_R)
-	{
-		theWindow->movRedHood = true;
-	}
+
 
 
 	if (key >= 0 && key < 1024)

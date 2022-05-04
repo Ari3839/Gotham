@@ -28,34 +28,41 @@
 #include "Sound.h"
 const float toRadians = 3.14159265f / 180.0f;
 
-//Movimiento ave (compleja)
+//Movimiento ave (compleja automática)
 float xbird = 0.0f, ybird = 0.0f, zbird = 0.0f, rotBird = 0.0f, rotWings = 0.0f, movbird =0.0f;
 float countBird = 0.0f;
 bool wings = true, sube = true;
 
-//Movimiento batmobile (simple)
+//Movimiento batmobile (simple por teclado)
 float movBatmobile = 0.0f, movBatmobile2 = 0.0f, rotllanta = 0.0f, rotBatmobile = 180.0f;
 int batmobile = 1;
 
-//Movimiento dirigible (compleja)
+//Movimiento dirigible (compleja *Keyframe)
 float movDirigible = 0.0f, a = 0.0f, b = 0.0f, countDirigible = 0.0f;
 
-//Movimiento show de luces 
+//Movimiento show de luces (compleja por teclado)
 float xluz1 = 0.0f, zluz1 = 0.0f, xluz2 = 0.0f, zluz2 = 0.0f, xluz3 = 0.0f, zluz3 = 0.0f, movLuz=0.0f;
 int luces = 1;
 
-//Rotacion batiseñal
-float rotBatsignal =0.0f;
+//Movimiento batiseñal (simple automática)
+float rotBatsignal =0.0f, escalaBatsignal=1.0f;
 
-//Movimiento RedHood (compleja)
+//Movimiento RedHood (compleja) automática
+float xRh= 125.0f, yRh= 0.0f, zRh= -250.0f;
 float brazo1 = 0.0f, brazo2 = 0.0f, pierna1 = 0.0f, pierna2 = 0.0f, cuerpo1 = 0.0f;
 bool movBrazo = true, movBrazo2 = false, movPierna1=false, movPierna2=true, fin1=false;
 int  countDisp = 0;
 
-//Movimiento Nightwing (compleja)
+//Movimiento Nightwing (compleja) automática
+float xNw = -230.0f, yNw = 0.3f, zNw = 17.0f;
 float brazo3 = 0.0f, brazo4 = 0.0f, pierna3 = 0.0f, pierna4 = 0.0f, cuerpo2 = 0.0f, movY=0.0f;
 bool movBrazo3 = true, movBrazo4 = false, movPierna3 = false, movPierna4 = true, movCuerpo2 = true, salto = false, fin2 = false;
 int  countSalto = 0;
+
+//Movimiento Tim (simple) por teclado
+float brazo5 = 0.0f, brazo6 = 0.0f, pierna5 = 0.0f, pierna6 = 0.0f, cuerpo3 = 0.0f;
+bool movBrazo5 = true, movBrazo6 = false, movPierna5 = false, movPierna6 = true, movCuerpo3 = true, fin3 = false;
+int cambio = 1;
 
 Window mainWindow;
 std::vector<Mesh*> meshList;
@@ -871,6 +878,11 @@ int main()
 	Model Rh_Cuerpo_M;
 	Model Rh_Brazo_M;
 	Model Rh_Pierna_M;
+	Model Helipuerto_M;
+	Model pista_M;
+	Model boStaff_M;
+	Model boStaff2_M;
+	Model gancho_M;
 
 
 	//Personajes
@@ -886,6 +898,12 @@ int main()
 	Rh_Pierna_M.LoadModel("Modelos_obj/Personas/Jason_Pierna.obj");
 	Rh_Brazo_M = Model();
 	Rh_Brazo_M.LoadModel("Modelos_obj/Personas/Jason_Brazo.obj");
+	boStaff_M = Model();
+	boStaff_M.LoadModel("Modelos_obj/Poles/boStaff.obj");
+	boStaff2_M = Model();
+	boStaff2_M.LoadModel("Modelos_obj/Poles/boStaff_2.obj");
+	gancho_M = Model();
+	gancho_M.LoadModel("Modelos_obj/Personas/Gancho.obj");
 
 
 	//Señales
@@ -957,6 +975,8 @@ int main()
 	Semaforo_R_M.LoadModel("Modelos_obj/Others-street/Semaforo_top_r.obj");
 	Escenario_M = Model();
 	Escenario_M.LoadModel("Modelos_obj/Others-street/Escenario.obj");
+	pista_M = Model();
+	pista_M.LoadModel("Modelos_obj/Transportes/pista.obj");
 
 	//Transportes
 	Batmobile_M = Model();
@@ -987,6 +1007,8 @@ int main()
 	helicopter_M.LoadModel("Modelos_obj/Transportes/helicopter.obj");
 	helice_M = Model();
 	helice_M.LoadModel("Modelos_obj/Transportes/helicopter_helice.obj");
+	Helipuerto_M = Model();
+	Helipuerto_M.LoadModel("Modelos_obj/Transportes/Helipuerto.obj");
 
 	//Edificios
 	WE_M = Model();
@@ -1091,20 +1113,20 @@ int main()
 
 			//luz direccional
 			mainLight = DirectionalLight(1.0f, 1.0f, 1.0f,
-				0.6f, 0.1f,
+				1.0f, 0.1f,
 				-1.0f, 0.0f, 0.0f);
 
 			//Luces puntuales
 
 			//Helicoptero
 			pointLights[0] = PointLight(1.0f, 0.0f, 0.0f,
-				0.6f, 10.0f,
+				0.8f, 10.0f,
 				-130.0f, 0.0f, -130.0f,
 				0.3f, 0.2f, 0.1f);
 			
 			//Dirigible
 			pointLights[1] = PointLight(0.0f, 0.0f, 1.0f,
-				0.6f, 10.0f,
+				0.8f, 10.0f,
 				70.0f, 0.0f, 60.0f,
 				0.3f, 0.2f, 0.1f);
 
@@ -1112,7 +1134,7 @@ int main()
 
 			//Batiseñal
 			pointLights[2] = PointLight(1.0f, 1.0f, 0.0f,
-				0.6f, 20.0f,
+				0.8f, 20.0f,
 				-192.0f, 82.8f, 46.0f,
 				//-170.0f, 104.0f, 66.0f,
 				0.3f, 0.2f, 0.1f);
@@ -1132,7 +1154,7 @@ int main()
 			//luz 1
 			spotLights[0] = SpotLight(0.0f, 1.0f, 1.0f,
 				1.0f, 2.0f,
-				-35.0f, 20.0f, 130.0f,
+				-35.0f, 20.0f, 160.0f,
 				0.0f, -1.0f, 0.0f,
 				1.0f, 0.0f, 0.0f,
 				20.0f);
@@ -1140,7 +1162,7 @@ int main()
 			//luz 2
 			spotLights[1] = SpotLight(1.0f, 0.0f, 1.0f,
 				1.0f, 2.0f,
-				0.0f, 15.0f, 130.0f,
+				0.0f, 15.0f, 160.0f,
 				0.0f, -1.0f, 0.0f,
 				1.0f, 0.0f, 0.0f,
 				20.0f);
@@ -1148,7 +1170,7 @@ int main()
 			//luz 3
 			spotLights[2] = SpotLight(1.0f, 1.0f, 0.0f,
 				1.0f, 2.0f,
-				35.0f, 25.0f, 130.0f,
+				35.0f, 25.0f, 160.0f,
 				0.0f, -1.0f, 0.0f,
 				1.0f, 0.0f, 0.0f,
 				20.0f);
@@ -1235,40 +1257,14 @@ int main()
 			}
 
 
-			spotLights[0].SetPos(glm::vec3(-35.0f + xluz1, 11.0f, 130.0f + 6.0f * cos(zluz1 * toRadians)));
-			spotLights[1].SetPos(glm::vec3(0.0f + xluz2, 11.0f, 130.0f + zluz2));
-			spotLights[2].SetPos(glm::vec3(35.0f - xluz3, 11.0f, 130.0f + 6.0f * cos(zluz3 * toRadians)));
+			spotLights[0].SetPos(glm::vec3(-35.0f + xluz1, 11.0f, 160.0f + 6.0f * cos(zluz1 * toRadians)));
+			spotLights[1].SetPos(glm::vec3(0.0f + xluz2, 11.0f, 160.0f + zluz2));
+			spotLights[2].SetPos(glm::vec3(35.0f - xluz3, 11.0f, 160.0f + 6.0f * cos(zluz3 * toRadians)));
 
 		}
 		else {
 			spotLightCount = 0;
 		}
-		
-			/*if (count < cicloDia/2) {
-				music.play();
-				Tim.pause();
-				Jason.pause();
-				Dick.pause();
-			}
-			else if ((count > cicloDia / 2) && (count < cicloDia)) {
-				music.pause();
-				Tim.play();
-				Jason.pause();
-				Dick.pause();
-			}
-			else if ((count > cicloDia) && (count < cicloDia * 3 / 2)) {
-				mainWindow.getShouldClose()
-				music.pause();
-				Tim.pause();
-				Jason.play();
-				Dick.pause();
-			}
-			else {
-				music.pause();
-				Tim.pause();
-				Jason.pause();
-				Dick.play();
-			}*/
 
 		music.play();
 
@@ -1316,16 +1312,102 @@ int main()
 		pisoTexture.UseTexture();
 		meshList[2]->RenderMesh();
 
-		//////////////////////////////////////////////////////////////////////////////////////////
-		//Escenario
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(0.0f, -2.0f, 130.0f));
-		model = glm::scale(model, glm::vec3(17.0f, 12.0f, 12.0f));
-		//model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Escenario_M.RenderModel();
-
 		////////////////////////////////////////////////////////////////////////////////////////////
+		// Animacion avatar
+		if ((mainWindow.getTim()) && (fin3 == false)) {
+			//Musica
+			music.pause();
+			Tim.play();
+			Jason.pause();
+			Dick.pause();
+			Disparo.pause();
+
+			if (cuerpo3 <= 10.0f) {
+				//Mov miembros
+				if (brazo5 <= 30.0f && movBrazo5 == true) {
+					brazo5 += 1.5f;
+				}
+				else if (brazo5 > 30.0f && movBrazo5 == true) {
+					movBrazo5 = false;
+				}
+				else if (brazo5 >= -30.0f && movBrazo5 == false) {
+					brazo5 -= 1.5f;
+				}
+				else if (brazo5 < -30.0f && movBrazo5 == false) {
+					movBrazo5 = true;
+				}
+
+
+				if (brazo6 <= 30.0f && movBrazo6 == true) {
+					brazo6 += 1.5f;
+				}
+				else if (brazo6 > 30.0f && movBrazo6 == true) {
+					movBrazo6 = false;
+				}
+				else if (brazo6 >= -30.0f && movBrazo6 == false) {
+					brazo6 -= 1.5f;
+				}
+				else if (brazo6 < -30.0f && movBrazo6 == false) {
+					movBrazo6 = true;
+				}
+
+
+				if (pierna5 <= 30.0f && movPierna5 == true) {
+					pierna5 += 1.5f;
+				}
+				else if (pierna5 > 30.0f && movPierna5 == true) {
+					movPierna5 = false;
+				}
+				else if (pierna5 >= -30.0f && movPierna5 == false) {
+					pierna5 -= 1.5f;
+				}
+				else if (pierna5 < -30.0f && movPierna5 == false) {
+					movPierna5 = true;
+				}
+
+
+				if (pierna6 <= 30.0f && movPierna6 == true) {
+					pierna6 += 1.5f;
+				}
+				else if (pierna6 > 30.0f && movPierna6 == true) {
+					movPierna6 = false;
+				}
+				else if (pierna6 >= -30.0f && movPierna6 == false) {
+					pierna6 -= 1.5f;
+				}
+				else if (pierna6 < -30.0f && movPierna6 == false) {
+					movPierna6 = true;
+				}
+
+				//Traslacion
+				cuerpo3 += 0.01f;
+			}
+			//else if (cuerpo3 > 10.0f && brazo1 >= -90.0f) {
+			//	brazo1 -= 1.5f;
+			//}
+			//else if (cuerpo1 > 10.0f && brazo1 < -90.0f && countDisp < 150) {
+			//	pierna1 = 0.0f;
+			//	pierna2 = 0.0f;
+			//	brazo2 = 0.0f;
+			//	Disparo.play();
+			//	countDisp += 1;
+			//}
+			//else if (cuerpo3 > 10.0f && fin3==false) {
+			//	fin1 = true;
+			//	//Musica
+			//	music.play();
+			//	Tim.pause();
+			//	Jason.pause();
+			//	Dick.pause();
+			//	Disparo.pause();
+			//}
+		}
+
+
+
+
+
+
 		//Personaje
 
 		//cuerpo
@@ -1366,6 +1448,7 @@ int main()
 		//brazo izq
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(-0.775f, 0.1f, 0.0f));
+		modelaux2 = model;
 		model = glm::scale(model, glm::vec3(0.35f, 1.2f, 0.4f));
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -1374,9 +1457,19 @@ int main()
 		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[5]->RenderMesh();
 
+		//bostaff
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(0.0f, -0.67f, 0.0f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(0.45f, 0.25f, 0.65f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		boStaff2_M.RenderModel();
+		//boStaff_M.RenderModel();
+
 		//brazo der
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(0.775f, 0.1f, 0.0f));
+		modelaux2 = model;
 		model = glm::scale(model, glm::vec3(0.35f, 1.2f, 0.4f));
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -1384,6 +1477,14 @@ int main()
 		TimTexture.UseTexture();
 		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[6]->RenderMesh();
+
+		//Gancho
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(0.0f, -0.67f, 0.0f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(0.45f, 0.25f, 0.65f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		gancho_M.RenderModel();
 
 		//pierna izq
 		model = modelaux;
@@ -1875,7 +1976,7 @@ int main()
 		
 
 
-		if (mainWindow.getMovRedHood() && fin1==false) {
+		if ( ( (cameraPiso.getCameraPosition().x- xRh <= 15.0f) || (cameraPiso.getCameraPosition().z - zRh <= 15.0f)) && (fin1==false)) {
 			//Musica
 			music.pause();
 			Tim.pause();
@@ -1967,7 +2068,7 @@ int main()
 
 		//RedHood
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(125.0f, 0.0f, -250.0f));
+		model = glm::translate(model, glm::vec3(xRh, yRh, zRh));
 		model = glm::translate(model, glm::vec3(cuerpo1, 0.0f, cuerpo1 * cuerpo1));
 		model = glm::scale(model, glm::vec3(0.48f, 0.5f, 0.48f));
 		modelaux2 = model;
@@ -2637,7 +2738,7 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Building6_M.RenderModel();
 
-		if (mainWindow.getMovNigthwing() && fin2==false) {
+		if (((cameraPiso.getCameraPosition().x - xNw <= 15.0f) || (cameraPiso.getCameraPosition().z - zNw <= 15.0f)) && fin2==false) {
 			//Musica
 			music.pause();
 			Tim.pause();
@@ -2741,7 +2842,7 @@ int main()
 
 		//Nigthwing
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(-230.0f, 0.3f, 17.0f));
+		model = glm::translate(model, glm::vec3(xNw,yNw,zNw));
 		model = glm::translate(model, glm::vec3(cuerpo2*cuerpo2, 0.3f+ movY, cuerpo2));
 		model = glm::scale(model, glm::vec3(0.48f, 0.49f, 0.48f));
 		modelaux2 = model;
@@ -2792,14 +2893,21 @@ int main()
 		model = glm::scale(model, glm::vec3(1.5f, 1.5f, 1.5f));
 		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::rotate(model, rotBatsignal * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(escalaBatsignal, escalaBatsignal, escalaBatsignal));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		if (count < cicloDia) {
 			Batiseñal1_M.RenderModel();
+			if (escalaBatsignal > 1.0f) {
+				escalaBatsignal -= 0.001f;
+			}
 		}
 		else {
 			Batiseñal2_M.RenderModel();
 			rotBatsignal += 1.0f;
+			if (escalaBatsignal < 2.0f) {
+				escalaBatsignal += 0.001f;
+			}
 		}
 
 		if (rotBatsignal > 359.0f) {
@@ -3464,9 +3572,9 @@ int main()
 		////////////////////////////////////////////////////////////////////////////////////////////
 		//Transportes
 
-		//Plataforma tren
+		//Base plataforma tren
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 180.0f));
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 230.0f));
 		modelaux2 = model;
 		model = glm::scale(model, glm::vec3(24.0f, 10.0f, 10.0f));
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
@@ -3474,6 +3582,7 @@ int main()
 		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		BaseTren_M.RenderModel();
 
+		//Plataforma tren
 		model = modelaux2;
 		model = glm::translate(model, glm::vec3(0.0f, 26.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(12.0f, 5.0f, 5.0f));
@@ -3489,7 +3598,7 @@ int main()
 
 		//Tren
 		model = glm::mat4(1.0);
-		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 12.8f));
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 18.0f));
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
@@ -3498,7 +3607,7 @@ int main()
 
 		//Estacion
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(0.0f, -2.0f, 212.0f));
+		model = glm::translate(model, glm::vec3(0.0f, -2.0f, 262.0f));
 		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(5.5f, 5.6f, 5.5f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
@@ -3523,20 +3632,43 @@ int main()
 		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Dirigible_M.RenderModel();
 
+		//////////////////////////////////////////////////////////////////////////////////////////
+		//Escenario spotlight
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(0.0f, -2.0f, 160.0f));
+		model = glm::scale(model, glm::vec3(17.0f, 12.0f, 12.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Escenario_M.RenderModel();
+		//////////////////////////////////////////////////////////////////////////////////////////
 		
-		
+		//Pista
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-190.0f, -2.0f, 160.0f));
+		model = glm::scale(model, glm::vec3(9.0f, 2.0f, 9.0f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		pista_M.RenderModel();
+
+		//Helipuerto
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(190.0f, -2.0f, 160.0f));
+		modelaux = model;
+		model = glm::scale(model, glm::vec3(8.0f, 5.0f, 8.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Helipuerto_M.RenderModel();
 
 		//Helicopter
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(-130.0f, 125.0f, -130.0f));
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(0.0f, 20.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
-		modelaux = model;
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		modelaux2 = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		helicopter_M.RenderModel();
 
 		//helice
-		model = modelaux;
+		model = modelaux2;
 		model = glm::translate(model, glm::vec3(0.0f, 3.8f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		helice_M.RenderModel();
