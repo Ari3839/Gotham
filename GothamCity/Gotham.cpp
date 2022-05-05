@@ -802,7 +802,7 @@ void CreateShaders()
 
 
 //Animacion helicoptero
-void inputKeyframes_Helicopter(bool* keys);
+void inputKeyframes(bool* keys);
 bool animacion_Helicopter = false;
 float reproduciranimacion_Helicopter, habilitaranimacion_Helicopter, guardoFrame_Helicopter, reinicioFrame_Helicopter, ciclo_Helicopter, ciclo2_Helicopter;
 float leoFrame_Helicopter=0.0f, reinicioLeoFrame = 0.0f, contador_Helicopter = 0;
@@ -811,11 +811,12 @@ bool xokay=false, yokay = false, zokay = false, heliceokay=false;
 glm::vec3 posh = glm::vec3(0.0f, 0.0f, 0.0f);
 float posXh = 190.0f, posYh = 18.0f, posZh = 160.0f;
 
+
 //NEW// Keyframes
 float movh_x = 0.0f, movh_y = 0.0f;
 float giroh = 0, rot_helice=0.0f;
 
-#define MAX_FRAMES_Helicopter 10 //Cuantos cuadros se guardan
+#define MAX_FRAMES_Helicopter 30 //Cuantos cuadros se guardan
 int i_max_steps_Helicopter = 90; //Valores intermedios, entre mayor, mas suave se ve, pero ocupa mas recursos
 int i_curr_steps_Helicopter = 3; //Numero de frames declarados
 typedef struct _frame_Helicopter
@@ -867,10 +868,10 @@ void readFrame_Helicopter(void)
 	using namespace std;
 	string aux = "";
 	fstream fichero;
-	char linea[200];
+	char linea[40];
 	fichero.open("Frames_Helicoptero.txt", ios::in);
 	if (fichero.fail()) {
-		cerr << "Error al abrir el archivo Pruebas.txt" << endl;
+		cerr << "Error al abrir el archivo Frames_Helicoptero.txt" << endl;
 	}
 	else {
 		fichero >> linea;           // Primera linea
@@ -975,6 +976,170 @@ void animate_Helicopter(void)
 			giroh += KeyFrame_Helicopter[playIndex_Helicopter].girohInc;
 			rot_helice += KeyFrame_Helicopter[playIndex_Helicopter].rot_heliceInc;
 			i_curr_steps_Helicopter++;
+		}
+	}
+}
+
+
+
+//Animacion Dirigible
+bool animacion_Dirigible = false;
+float reproduciranimacion_Dirigible, habilitaranimacion_Dirigible, guardoFrame_Dirigible, reinicioFrame_Dirigible, ciclo_Dirigible, ciclo2_Dirigible;
+float leoFrame_Dirigible = 0.0f, reinicioLeoFrame_Dirigible = 0.0f, contador_Dirigible = 0;
+bool xdokay = false, ydokay = false, zdokay = false;
+
+glm::vec3 posd = glm::vec3(0.0f, 0.0f, 0.0f);
+float posXd = 70.0f, posYd = 175.0f, posZd = 60.0f;
+
+
+//NEW// Keyframes
+float movd_x = 0.0f, movd_y = 0.0f;
+float girod = 0;
+
+#define MAX_FRAMES_Dirigible 30 //Cuantos cuadros se guardan
+int i_max_steps_Dirigible = 90; //Valores intermedios, entre mayor, mas suave se ve, pero ocupa mas recursos
+int i_curr_steps_Dirigible = 3; //Numero de frames declarados
+typedef struct _frame_Dirigible
+{
+	//Variables para GUARDAR Key Frames
+	float movd_x;
+	float movd_y;
+	float movd_xInc;
+	float movd_yInc;
+	float girod;
+	float girodInc;
+	//Por cada variable, se necesita otra incremental
+}FRAMED;
+
+FRAMED KeyFrame_Dirigible[MAX_FRAMES_Dirigible];
+int FrameIndex_Dirigible = 3;			//introducir datos
+bool play_Dirigible = false;
+int playIndex_Dirigible = 0;
+
+void saveFrame_Dirigible(void)
+{
+	using namespace std;
+	printf("Se guardo el frame (%d)\n", FrameIndex_Dirigible);
+
+	KeyFrame_Dirigible[FrameIndex_Dirigible].movd_x = movd_x;
+	KeyFrame_Dirigible[FrameIndex_Dirigible].movd_y = movd_y;
+	KeyFrame_Dirigible[FrameIndex_Dirigible].girod = girod;
+
+	ofstream archivo("Frames_Dirigible.txt", ios::app);
+	if (archivo.is_open()) {
+		archivo << "****************************** " << endl;
+		archivo << "KeyFrame[" + std::to_string(FrameIndex_Dirigible) + "].movh_x=" + std::to_string(movd_x) << endl;
+		archivo << "KeyFrame[" + std::to_string(FrameIndex_Dirigible) + "].movh_y=" + std::to_string(movd_y) << endl;
+		archivo << "KeyFrame[" + std::to_string(FrameIndex_Dirigible) + "].giroh=" + std::to_string(girod) << endl;
+		/*archivo << "\ni_curr_steps= " + std::to_string(i_curr_steps) << endl;*/
+		archivo.close();
+	}
+	else cerr << "Error de apertura del archivo." << endl;
+
+	FrameIndex_Dirigible++;
+}
+
+void readFrame_Dirigible(void)
+{
+	using namespace std;
+	string aux = "";
+	fstream fichero;
+	char linea[40];
+	fichero.open("Frames_Dirigible.txt", ios::in);
+	if (fichero.fail()) {
+		cerr << "Error al abrir el archivo Frames_Dirigible.txt" << endl;
+	}
+	else {
+		fichero >> linea;           // Primera linea
+		while (!fichero.eof())
+		{
+			//cout << texto << endl;    // Muestrar el contenido en terminal 
+			if (linea[0] == 'K') {
+				if (linea[17] == 'x') {
+					aux = aux + linea[19] + linea[20] + linea[21] + linea[22] + linea[23] + linea[24] + linea[25];
+					movd_x = stof(aux);
+					aux = "";
+					xdokay = true;
+					cout << "movd_x =" + to_string(movd_x) << endl;
+				}
+				else if (linea[17] == 'y') {
+					aux = aux + linea[19] + linea[20] + linea[21] + linea[22] + linea[23] + linea[24] + linea[25];
+					movd_y = stof(aux);
+					aux = "";
+					ydokay = true;
+					cout << "movd_y =" + to_string(movd_y) << endl;
+				}
+				else if (linea[12] == 'g') {
+					aux = aux + linea[18] + linea[19] + linea[20] + linea[21] + linea[22] + linea[23] + linea[24];
+					girod = stof(aux);
+					aux = "";
+					zdokay = true;
+					cout << "girod =" + to_string(girod) << endl;
+				}
+			}
+
+			if (xdokay && ydokay && zdokay) {
+				xdokay = false;
+				ydokay = false;
+				zdokay = false;
+				KeyFrame_Dirigible[FrameIndex_Dirigible].movd_x = movd_x;
+				KeyFrame_Dirigible[FrameIndex_Dirigible].movd_y = movd_y;
+				KeyFrame_Dirigible[FrameIndex_Dirigible].girod = girod;
+				cout << "\nKeyFrame [" + to_string(FrameIndex_Dirigible) + "] leido correctamente" << endl;
+				FrameIndex_Dirigible++;
+			}
+
+			fichero >> linea;         // Seguimos leyendo 
+		}
+		fichero.close();
+	}
+}
+
+
+void resetElements_Dirigible(void)
+{
+	movd_x = KeyFrame_Dirigible[0].movd_x;
+	movd_y = KeyFrame_Dirigible[0].movd_y;
+	girod = KeyFrame_Dirigible[0].girod;
+}
+
+void interpolation_Dirigible(void)
+{
+	KeyFrame_Dirigible[playIndex_Dirigible].movd_xInc = (KeyFrame_Dirigible[playIndex_Dirigible + 1].movd_x - KeyFrame_Dirigible[playIndex_Dirigible].movd_x) / i_max_steps_Dirigible;
+	KeyFrame_Dirigible[playIndex_Dirigible].movd_yInc = (KeyFrame_Dirigible[playIndex_Dirigible + 1].movd_y - KeyFrame_Dirigible[playIndex_Dirigible].movd_y) / i_max_steps_Dirigible;
+	KeyFrame_Dirigible[playIndex_Dirigible].girodInc = (KeyFrame_Dirigible[playIndex_Dirigible + 1].girod - KeyFrame_Dirigible[playIndex_Dirigible].girod) / i_max_steps_Dirigible;
+}
+
+void animate_Dirigible(void)
+{
+	//Movimiento del objeto
+	if (play_Dirigible)
+	{
+		if (i_curr_steps_Dirigible >= i_max_steps_Dirigible) //end of animation between frames
+		{
+			playIndex_Dirigible++;
+			printf("Frame (%d) reproducido\n", playIndex_Dirigible);
+			if (playIndex_Dirigible > FrameIndex_Dirigible - 2)	//end of total animation
+			{
+				printf("El ultimo frame es [%d]\n", FrameIndex_Dirigible);
+				printf("Termina animacion\n");
+				playIndex_Dirigible = 0;
+				play_Dirigible = false;
+			}
+			else //Next frame interpolations
+			{
+				i_curr_steps_Dirigible = 0; //Reset counter
+				//Interpolation
+				interpolation_Dirigible();
+			}
+		}
+		else
+		{
+			//Draw animation
+			movd_x += KeyFrame_Dirigible[playIndex_Dirigible].movd_xInc;
+			movd_y += KeyFrame_Dirigible[playIndex_Dirigible].movd_yInc;
+			girod += KeyFrame_Dirigible[playIndex_Dirigible].girodInc;
+			i_curr_steps_Dirigible++;
 		}
 	}
 }
@@ -1246,7 +1411,7 @@ int main()
 	unsigned int spotLightCount = 0;
 
 
-	//KEYFRAMES DECLARADOS INICIALES
+	//KEYFRAMES DECLARADOS INICIALES HELICOPTERO
 
 	KeyFrame_Helicopter[0].movh_x = -5.0f;
 	KeyFrame_Helicopter[0].movh_y = 5.0f;
@@ -1259,6 +1424,21 @@ int main()
 	KeyFrame_Helicopter[2].movh_x = -15.0f;
 	KeyFrame_Helicopter[2].movh_y = 15.0f;
 	KeyFrame_Helicopter[2].giroh = 0;
+
+	//KEYFRAMES DECLARADOS INICIALES DIRIGIBLE
+
+	KeyFrame_Dirigible[0].movd_x = -5.0f;
+	KeyFrame_Dirigible[0].movd_y = 5.0f;
+	KeyFrame_Dirigible[0].girod = 0;
+
+	KeyFrame_Dirigible[1].movd_x = -10.0f;
+	KeyFrame_Dirigible[1].movd_y = 10.0f;
+	KeyFrame_Dirigible[1].girod = 0;
+
+	KeyFrame_Dirigible[2].movd_x = -15.0f;
+	KeyFrame_Dirigible[2].movd_y = 15.0f;
+	KeyFrame_Dirigible[2].girod = 0;
+
 
 
 	GLuint uniformProjection = 0, uniformModel = 0, uniformView = 0, uniformEyePosition = 0,
@@ -1278,8 +1458,9 @@ int main()
 		glfwPollEvents();
 
 		//para keyframes
-		inputKeyframes_Helicopter(mainWindow.getsKeys());
+		inputKeyframes(mainWindow.getsKeys());
 		animate_Helicopter();
+		animate_Dirigible();
 		
 
 		/*if (mainWindow.getCamAerea()) {
@@ -3909,7 +4090,7 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Estacion_M.RenderModel();
 
-		//Elipse
+		/*Elipse
 		a = 100 * cos(movDirigible * toRadians);
 		b = 150 * sin(movDirigible * toRadians);
 		if (countDirigible > 850.0f) {
@@ -3917,13 +4098,14 @@ int main()
 		}
 		else {
 			countDirigible += 1.0f;
-		}
+		}*/
 
 		//Dirigible
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(70.0f+a, 175.0f, 60.0f+b));
+		model = glm::mat4(1.0); 
+		posd = glm::vec3(posXd + movd_x, posYd, posZd + movd_y);
+		model = glm::translate(model, posd);
 		model = glm::scale(model, glm::vec3(6.0f, 6.0f, 6.0f));
-		model = glm::rotate(model, -a * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, girod * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Dirigible_M.RenderModel();
@@ -4169,8 +4351,9 @@ int main()
 }
 
 
-void inputKeyframes_Helicopter(bool* keys)
+void inputKeyframes(bool* keys)
 {
+	//Helicoptero
 	if (keys[GLFW_KEY_SPACE])
 	{
 		if (reproduciranimacion_Helicopter < 1)
@@ -4320,4 +4503,144 @@ void inputKeyframes_Helicopter(bool* keys)
 		}
 	}
 
+	//Dirigible
+	if (keys[GLFW_KEY_TAB])
+	{
+		if (reproduciranimacion_Dirigible < 1)
+		{
+			if (play_Dirigible == false && (FrameIndex_Dirigible > 1))
+			{
+				resetElements_Dirigible();
+				//First Interpolation				
+				interpolation_Dirigible();
+				play_Dirigible = true;
+				playIndex_Dirigible = 0;
+				i_curr_steps_Dirigible = 0;
+				reproduciranimacion_Dirigible++;
+				printf("\nPresiona BACKSPACE para habilitar reproducir de nuevo la animación'\n");
+				habilitaranimacion_Dirigible = 0;
+
+			}
+			else
+			{
+				play_Dirigible = false;
+			}
+		}
+	}
+	if (keys[GLFW_KEY_BACKSPACE])
+	{
+		if (habilitaranimacion_Dirigible < 1)
+		{
+			reproduciranimacion_Dirigible = 0;
+		}
+	}
+
+	if (keys[GLFW_KEY_PERIOD])
+	{
+		if (guardoFrame_Dirigible < 1)
+		{
+			saveFrame_Dirigible();
+			printf("\nPresiona , (coma) para habilitar guardar otro frame\n");
+			guardoFrame_Dirigible++;
+			reinicioFrame_Dirigible = 0;
+		}
+	}
+	if (keys[GLFW_KEY_COMMA])
+	{
+		if (reinicioFrame_Dirigible < 1)
+		{
+			guardoFrame_Dirigible = 0;
+		}
+	}
+
+	if (keys[GLFW_KEY_LEFT])
+	{
+		if (ciclo_Dirigible < 1)
+		{
+			movd_x -= 5.0f;
+			printf("movd_x es: %f\n", movd_x);
+			ciclo_Dirigible++;
+			ciclo2_Dirigible = 0;
+			printf("reinicia con H\n");
+		}
+	}
+
+	if (keys[GLFW_KEY_RIGHT])
+	{
+		if (ciclo_Dirigible < 1)
+		{
+			movd_x += 5.0f;
+			printf("movd_x es: %f\n", movd_x);
+			ciclo_Dirigible++;
+			ciclo2_Dirigible = 0;
+			printf("reinicia con H\n");
+		}
+	}
+
+	if (keys[GLFW_KEY_UP])
+	{
+		if (ciclo_Dirigible < 1)
+		{
+			movd_y -= 5.0f;
+			printf("movd_y es: %f\n", movd_x);
+			ciclo_Dirigible++;
+			ciclo2_Dirigible = 0;
+			printf("reinicia con H\n");
+		}
+	}
+	if (keys[GLFW_KEY_DOWN])
+	{
+		if (ciclo_Dirigible < 1)
+		{
+			movd_y += 5.0f;
+			printf("movd_y es: %f\n", movd_x);
+			ciclo_Dirigible++;
+			ciclo2_Dirigible = 0;
+			printf("reinicia con H\n");
+		}
+	}
+
+	if (keys[GLFW_KEY_B])
+	{
+		if (ciclo_Dirigible < 1)
+		{
+			girod += 90.0f;
+			printf("giroh es: %f\n", girod);
+			ciclo_Dirigible++;
+			ciclo2_Dirigible = 0;
+			printf("reinicia con H\n");
+		}
+	}
+
+
+	if (keys[GLFW_KEY_H])
+	{
+		if (ciclo2_Dirigible < 1)
+		{
+			ciclo_Dirigible = 0;
+		}
+	}
+
+
+	if (keys[GLFW_KEY_Z])
+	{
+		if (leoFrame_Dirigible < 1)
+		{
+			printf("\nLeyendo Frames\n");
+			readFrame_Dirigible();
+			printf("\nPresiona V para habilitar leer nuevamente el archivo\n");
+			leoFrame_Dirigible++;
+			reinicioLeoFrame_Dirigible = 0;
+		}
+	}
+	if (keys[GLFW_KEY_X])
+	{
+		if (reinicioLeoFrame_Dirigible < 1)
+		{
+			leoFrame_Dirigible = 0;
+		}
+	}
+
 }
+
+
