@@ -12,6 +12,10 @@
 #include <glm.hpp>
 #include <gtc\matrix_transform.hpp>
 #include <gtc\type_ptr.hpp>
+#include <fstream>
+#include <iostream>
+#include <stdlib.h>
+#include <string>
 #include "Window.h"
 #include "Mesh.h"
 #include "Shader_light.h"
@@ -796,6 +800,187 @@ void CreateShaders()
 	shaderList.push_back(*shader1);
 }
 
+
+//Animacion helicoptero
+void inputKeyframes_Helicopter(bool* keys);
+bool animacion_Helicopter = false;
+float reproduciranimacion_Helicopter, habilitaranimacion_Helicopter, guardoFrame_Helicopter, reinicioFrame_Helicopter, ciclo_Helicopter, ciclo2_Helicopter;
+float leoFrame_Helicopter=0.0f, reinicioLeoFrame = 0.0f, contador_Helicopter = 0;
+bool xokay=false, yokay = false, zokay = false, heliceokay=false;
+
+glm::vec3 posh = glm::vec3(0.0f, 0.0f, 0.0f);
+float posXh = 190.0f, posYh = 18.0f, posZh = 160.0f;
+
+//NEW// Keyframes
+float movh_x = 0.0f, movh_y = 0.0f;
+float giroh = 0, rot_helice=0.0f;
+
+#define MAX_FRAMES_Helicopter 10 //Cuantos cuadros se guardan
+int i_max_steps_Helicopter = 90; //Valores intermedios, entre mayor, mas suave se ve, pero ocupa mas recursos
+int i_curr_steps_Helicopter = 3; //Numero de frames declarados
+typedef struct _frame_Helicopter
+{
+	//Variables para GUARDAR Key Frames
+	float movh_x;
+	float movh_y;
+	float movh_xInc;
+	float movh_yInc;
+	float giroh;
+	float girohInc;
+	float rot_helice;
+	float rot_heliceInc;
+	//Por cada variable, se necesita otra incremental
+}FRAME;
+
+FRAME KeyFrame_Helicopter[MAX_FRAMES_Helicopter];
+int FrameIndex_Helicopter = 3;			//introducir datos
+bool play_Helicopter = false;
+int playIndex_Helicopter = 0;
+
+void saveFrame_Helicopter(void)
+{
+	using namespace std;
+	printf("Se guardo el frame (%d)\n", FrameIndex_Helicopter);
+
+	KeyFrame_Helicopter[FrameIndex_Helicopter].movh_x = movh_x;
+	KeyFrame_Helicopter[FrameIndex_Helicopter].movh_y = movh_y;
+	KeyFrame_Helicopter[FrameIndex_Helicopter].giroh = giroh;
+	KeyFrame_Helicopter[FrameIndex_Helicopter].rot_helice = rot_helice;
+
+	ofstream archivo("Frames_Helicoptero.txt", ios::app);
+	if (archivo.is_open()) {
+		archivo << "****************************** " << endl;
+		archivo << "KeyFrame[" + std::to_string(FrameIndex_Helicopter) + "].movh_x=" + std::to_string(movh_x) << endl;
+		archivo << "KeyFrame[" + std::to_string(FrameIndex_Helicopter) + "].movh_y=" + std::to_string(movh_y) << endl;
+		archivo << "KeyFrame[" + std::to_string(FrameIndex_Helicopter) + "].giroh=" + std::to_string(giroh) << endl;
+		archivo << "KeyFrame[" + std::to_string(FrameIndex_Helicopter) + "].rot_helice=" + std::to_string(rot_helice) << endl;
+		/*archivo << "\ni_curr_steps= " + std::to_string(i_curr_steps) << endl;*/
+		archivo.close();
+	}
+	else cerr << "Error de apertura del archivo." << endl;
+
+	FrameIndex_Helicopter++;
+}
+
+void readFrame_Helicopter(void)
+{
+	using namespace std;
+	string aux = "";
+	fstream fichero;
+	char linea[200];
+	fichero.open("Frames_Helicoptero.txt", ios::in);
+	if (fichero.fail()) {
+		cerr << "Error al abrir el archivo Pruebas.txt" << endl;
+	}
+	else {
+		fichero >> linea;           // Primera linea
+		while (!fichero.eof())      
+		{
+			//cout << texto << endl;    // Muestrar el contenido en terminal 
+			if (linea[0] == 'K') {
+				if (linea[17] == 'x') {
+					aux = aux + linea[19] + linea[20] + linea[21] + linea[22] + linea[23] + linea[24] + linea[25];
+					movh_x = stof(aux);
+					aux = "";
+					xokay = true;
+					cout << "movh_x =" + to_string(movh_x) << endl;
+				}
+				else if (linea[17] == 'y') {
+					aux = aux + linea[19] + linea[20] + linea[21] + linea[22] + linea[23] + linea[24] + linea[25];
+					movh_y = stof(aux);
+					aux = "";
+					yokay = true;
+					cout << "movh_y =" + to_string(movh_y) << endl;
+				}
+				else if (linea[12] == 'g') {
+					aux = aux + linea[18] + linea[19] + linea[20] + linea[21] + linea[22] + linea[23] + linea[24];
+					giroh = stof(aux);
+					aux = "";
+					zokay = true;
+					cout << "giroh =" + to_string(giroh) << endl;
+				}
+				else if (linea[12] == 'r') {
+					aux = aux + linea[23] + linea[24] + linea[25] + linea[26] + linea[27] + linea[28];
+					rot_helice = stof(aux);
+					aux = "";
+					heliceokay = true;
+					cout << "rot_helice =" + to_string(rot_helice) << endl;
+				}
+			}
+
+			if (xokay && yokay && zokay && heliceokay) {
+				xokay = false;
+				yokay = false;
+				zokay = false;
+				heliceokay = false;
+				KeyFrame_Helicopter[FrameIndex_Helicopter].movh_x = movh_x;
+				KeyFrame_Helicopter[FrameIndex_Helicopter].movh_y = movh_y;
+				KeyFrame_Helicopter[FrameIndex_Helicopter].giroh = giroh;
+				KeyFrame_Helicopter[FrameIndex_Helicopter].rot_helice = rot_helice;
+				cout << "\nKeyFrame [" + to_string(FrameIndex_Helicopter) + "] leido correctamente" << endl;
+				FrameIndex_Helicopter++;
+			}
+
+			fichero >> linea;         // Seguimos leyendo 
+		}
+		fichero.close();
+	}
+}
+
+
+void resetElements_Helicopter(void)
+{
+	movh_x = KeyFrame_Helicopter[0].movh_x;
+	movh_y = KeyFrame_Helicopter[0].movh_y;
+	giroh = KeyFrame_Helicopter[0].giroh;
+	rot_helice = KeyFrame_Helicopter[0].rot_helice;
+}
+
+void interpolation_Helicopter(void)
+{
+	KeyFrame_Helicopter[playIndex_Helicopter].movh_xInc = (KeyFrame_Helicopter[playIndex_Helicopter + 1].movh_x - KeyFrame_Helicopter[playIndex_Helicopter].movh_x) / i_max_steps_Helicopter;
+	KeyFrame_Helicopter[playIndex_Helicopter].movh_yInc = (KeyFrame_Helicopter[playIndex_Helicopter + 1].movh_y - KeyFrame_Helicopter[playIndex_Helicopter].movh_y) / i_max_steps_Helicopter;
+	KeyFrame_Helicopter[playIndex_Helicopter].girohInc = (KeyFrame_Helicopter[playIndex_Helicopter + 1].giroh - KeyFrame_Helicopter[playIndex_Helicopter].giroh) / i_max_steps_Helicopter;
+	KeyFrame_Helicopter[playIndex_Helicopter].rot_heliceInc = (KeyFrame_Helicopter[playIndex_Helicopter + 1].rot_helice - KeyFrame_Helicopter[playIndex_Helicopter].rot_helice) / i_max_steps_Helicopter;
+}
+
+void animate_Helicopter(void)
+{
+	//Movimiento del objeto
+	if (play_Helicopter)
+	{
+		if (i_curr_steps_Helicopter >= i_max_steps_Helicopter) //end of animation between frames
+		{
+			playIndex_Helicopter++;
+			printf("Frame (%d) reproducido\n", playIndex_Helicopter);
+			if (playIndex_Helicopter > FrameIndex_Helicopter - 2)	//end of total animation
+			{
+				printf("El ultimo frame es [%d]\n", FrameIndex_Helicopter);
+				printf("Termina animacion\n");
+				playIndex_Helicopter = 0;
+				play_Helicopter = false;
+			}
+			else //Next frame interpolations
+			{
+				i_curr_steps_Helicopter = 0; //Reset counter
+				//Interpolation
+				interpolation_Helicopter();
+			}
+		}
+		else
+		{
+			//Draw animation
+			movh_x += KeyFrame_Helicopter[playIndex_Helicopter].movh_xInc;
+			movh_y += KeyFrame_Helicopter[playIndex_Helicopter].movh_yInc;
+			giroh += KeyFrame_Helicopter[playIndex_Helicopter].girohInc;
+			rot_helice += KeyFrame_Helicopter[playIndex_Helicopter].rot_heliceInc;
+			i_curr_steps_Helicopter++;
+		}
+	}
+}
+
+
+
 int main()
 {
 	mainWindow = Window(1366, 768); // 1280, 1024 or 1024, 768
@@ -1060,6 +1245,22 @@ int main()
 	unsigned int pointLightCount = 0;
 	unsigned int spotLightCount = 0;
 
+
+	//KEYFRAMES DECLARADOS INICIALES
+
+	KeyFrame_Helicopter[0].movh_x = -5.0f;
+	KeyFrame_Helicopter[0].movh_y = 5.0f;
+	KeyFrame_Helicopter[0].giroh = 0;
+
+	KeyFrame_Helicopter[1].movh_x = -10.0f;
+	KeyFrame_Helicopter[1].movh_y = 10.0f;
+	KeyFrame_Helicopter[1].giroh = 0;
+
+	KeyFrame_Helicopter[2].movh_x = -15.0f;
+	KeyFrame_Helicopter[2].movh_y = 15.0f;
+	KeyFrame_Helicopter[2].giroh = 0;
+
+
 	GLuint uniformProjection = 0, uniformModel = 0, uniformView = 0, uniformEyePosition = 0,
 		uniformSpecularIntensity = 0, uniformShininess = 0;
 	GLuint uniformColor = 0;
@@ -1076,6 +1277,9 @@ int main()
 		//Recibir eventos del usuario
 		glfwPollEvents();
 
+		//para keyframes
+		inputKeyframes_Helicopter(mainWindow.getsKeys());
+		animate_Helicopter();
 		
 
 		/*if (mainWindow.getCamAerea()) {
@@ -3749,9 +3953,16 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Helipuerto_M.RenderModel();
 
+
+		//punto de giro
+		model = glm::mat4(1.0);
+		posh = glm::vec3(posXh + movh_x-10.0f, posYh + movh_y, posZh);
+		model = glm::translate(model, posh);
+		model = glm::rotate(model, giroh * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+
+
 		//Helicopter
-		model = modelaux;
-		model = glm::translate(model, glm::vec3(0.0f, 20.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(10.0f, 0.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
 		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		modelaux2 = model;
@@ -3762,6 +3973,7 @@ int main()
 		//helice
 		model = modelaux2;
 		model = glm::translate(model, glm::vec3(0.0f, 3.8f, 0.0f));
+		model = glm::rotate(model, rot_helice * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		helice_M.RenderModel();
 		
@@ -3954,4 +4166,158 @@ int main()
 	}
 
 	return 0;
+}
+
+
+void inputKeyframes_Helicopter(bool* keys)
+{
+	if (keys[GLFW_KEY_SPACE])
+	{
+		if (reproduciranimacion_Helicopter < 1)
+		{
+			if (play_Helicopter == false && (FrameIndex_Helicopter > 1))
+			{
+				resetElements_Helicopter();
+				//First Interpolation				
+				interpolation_Helicopter();
+				play_Helicopter = true;
+				playIndex_Helicopter = 0;
+				i_curr_steps_Helicopter = 0;
+				reproduciranimacion_Helicopter++;
+				printf("\nPresiona Enter para habilitar reproducir de nuevo la animación'\n");
+				habilitaranimacion_Helicopter = 0;
+
+			}
+			else
+			{
+				play_Helicopter = false;
+			}
+		}
+	}
+	if (keys[GLFW_KEY_ENTER])
+	{
+		if (habilitaranimacion_Helicopter < 1)
+		{
+			reproduciranimacion_Helicopter = 0;
+		}
+	}
+
+	if (keys[GLFW_KEY_9])
+	{
+		if (guardoFrame_Helicopter < 1)
+		{
+			saveFrame_Helicopter();
+			printf("\nPresiona 0 para habilitar guardar otro frame\n");
+			guardoFrame_Helicopter++;
+			reinicioFrame_Helicopter = 0;
+		}
+	}
+	if (keys[GLFW_KEY_0])
+	{
+		if (reinicioFrame_Helicopter < 1)
+		{
+			guardoFrame_Helicopter = 0;
+		}
+	}
+
+	if (keys[GLFW_KEY_L])
+	{
+		if (ciclo_Helicopter < 1)
+		{
+			movh_x -= 5.0f;
+			printf("movh_x es: %f\n", movh_x);
+			ciclo_Helicopter++;
+			ciclo2_Helicopter = 0;
+			printf("reinicia con P\n");
+		}
+	}
+	
+	if (keys[GLFW_KEY_J])
+	{
+		if (ciclo_Helicopter < 1)
+		{
+			movh_x += 5.0f;
+			printf("movh_x es: %f\n", movh_x);
+			ciclo_Helicopter++;
+			ciclo2_Helicopter = 0;
+			printf("reinicia con P\n");
+		}
+	}
+
+	if (keys[GLFW_KEY_I])
+	{
+		if (ciclo_Helicopter < 1)
+		{
+			movh_y += 5.0f;
+			printf("movh_y es: %f\n", movh_x);
+			ciclo_Helicopter++;
+			ciclo2_Helicopter = 0;
+			printf("reinicia con P\n");
+		}
+	}
+	if (keys[GLFW_KEY_K])
+	{
+		if (ciclo_Helicopter < 1)
+		{
+			movh_y -= 5.0f;
+			printf("movh_y es: %f\n", movh_x);
+			ciclo_Helicopter++;
+			ciclo2_Helicopter = 0;
+			printf("reinicia con P\n");
+		}
+	}
+
+	if (keys[GLFW_KEY_O])
+	{
+		if (ciclo_Helicopter < 1)
+		{
+			giroh += 90.0f;
+			printf("giroh es: %f\n", giroh);
+			ciclo_Helicopter++;
+			ciclo2_Helicopter = 0;
+			printf("reinicia con P\n");
+		}
+	}
+	
+
+	if (keys[GLFW_KEY_U])
+	{
+		if (ciclo_Helicopter < 1)
+		{
+			rot_helice += 90.0f;
+			printf("rot_helice es: %f\n", rot_helice);
+			ciclo_Helicopter++;
+			ciclo2_Helicopter = 0;
+			printf("reinicia con P\n");
+		}
+	}
+
+	if (keys[GLFW_KEY_P])
+	{
+		if (ciclo2_Helicopter < 1)
+		{
+			ciclo_Helicopter = 0;
+		}
+	}
+
+
+	if (keys[GLFW_KEY_M])
+	{
+		if (leoFrame_Helicopter < 1)
+		{
+			printf("\nLeyendo Frames\n");
+			readFrame_Helicopter();
+			printf("\nPresiona N para habilitar leer nuevamente el archivo\n");
+			leoFrame_Helicopter++;
+			reinicioLeoFrame = 0;
+		}
+	}
+	if (keys[GLFW_KEY_N])
+	{
+		if (reinicioLeoFrame < 1)
+		{
+			leoFrame_Helicopter = 0;
+		}
+	}
+
 }
