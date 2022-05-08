@@ -1,7 +1,9 @@
 ﻿  Gotham.cpp
 C:\Users\z3839\Documents\Gotham\GothamCity\Window.h(12,36): warning C4244: 'return': conversión de 'GLint' a 'GLfloat'; posible pérdida de datos
 C:\Users\z3839\Documents\Gotham\GothamCity\Window.h(13,37): warning C4244: 'return': conversión de 'GLint' a 'GLfloat'; posible pérdida de datos
-C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(316,2): warning C4305: 'inicializando': truncamiento de 'double' a 'GLfloat'
-C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(1451,15): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(1453,43): warning C4244: '+=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(317,2): warning C4305: 'inicializando': truncamiento de 'double' a 'GLfloat'
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(1452,15): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(1454,43): warning C4244: '+=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(1930,25): warning C4305: '-=': truncamiento de 'double' a 'float'
+LINK : warning LNK4098: la biblioteca predeterminada'MSVCRT' entra en conflicto con otras bibliotecas; use la biblioteca /NODEFAULTLIB:biblioteca
   GothamCity.vcxproj -> C:\Users\z3839\Documents\Gotham\GothamCity\Debug\GothamCity.exe

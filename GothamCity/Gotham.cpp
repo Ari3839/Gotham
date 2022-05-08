@@ -21,7 +21,6 @@
 #include "Shader_light.h"
 #include "Camera.h"
 #include "Texture.h"
-#include "Sphere.h"
 #include"Model.h"
 #include "Skybox.h"
 #include "CommonValues.h"
@@ -53,18 +52,20 @@ float rotBatsignal =0.0f, escalaBatsignal=1.0f;
 
 //Movimiento RedHood (compleja) automática
 float xRh= 125.0f, yRh= 0.0f, zRh= -250.0f;
-float brazo1 = 0.0f, brazo2 = 0.0f, pierna1 = 0.0f, pierna2 = 0.0f, cuerpo1 = 0.0f;
+float brazo1 = 0.0f, brazo2 = 0.0f, pierna1 = 0.0f, pierna2 = 0.0f, cuerpo1 = 0.0f, rotCuerpo = 0.0f;
 bool movBrazo = true, movBrazo2 = false, movPierna1=false, movPierna2=true, fin1=false;
 int  countDisp = 0;
+int cambioJ = 1;
 
 //Movimiento Nightwing (compleja) automática
 float xNw = -230.0f, yNw = 0.3f, zNw = 17.0f;
-float brazo3 = 0.0f, brazo4 = 0.0f, pierna3 = 0.0f, pierna4 = 0.0f, cuerpo2 = 0.0f, movY=0.0f;
+float brazo3 = 0.0f, brazo4 = 0.0f, pierna3 = 0.0f, pierna4 = 0.0f, cuerpo2 = 0.0f, movY=0.0f, rotCuerpo2 = 0.0f;
 bool movBrazo3 = true, movBrazo4 = false, movPierna3 = false, movPierna4 = true, movCuerpo2 = true, salto = false, fin2 = false;
 int  countSalto = 0;
+int cambioN = 1;
 
 //Movimiento Tim (simple) por teclado
-float brazo5 = 0.0f, brazo6 = 0.0f, pierna5 = 0.0f, pierna6 = 0.0f, cuerpo3 = 0.0f;
+float brazo5 = 0.0f, brazo6 = 0.0f, pierna5 = 0.0f, pierna6 = 0.0f, cuerpo3 = 0.0f, rotCuerpo3=0.0f;
 float staffScale = 1.0f, staffRot = 0.0f, movimientoY = 0.0f, ganchoTras = 0.0f, ganchoRot = 0.0f, ganchoMovZ=0.0f;
 bool movBrazo5 = true, movBrazo6 = false, movPierna5 = false, movPierna6 = true, movCuerpo3 = true, fin3 = false;
 int cambio = 1;
@@ -1849,7 +1850,100 @@ int main()
 			else if (cambio == 11 && movimientoY > 48.0f) {
 				brazo6 = 0.0f;
 				ganchoRot = 0.0f;
-				fin3 = true;
+				cambio = 12;
+			}
+			else if (cambio == 12 && rotCuerpo3 <=180.0f) {
+				rotCuerpo3 += 5.0f;
+			}
+			else if (cambio == 12 && rotCuerpo3 > 180.0f) {
+				cambio = 13;
+			}
+
+			else if (cambio == 13 && movimientoY >= 2.0f) {
+				movimientoY -= 0.5f;
+				if (cuerpo3 >= 66.0f) {
+					cuerpo3 -= 0.2f;
+				}
+			}
+			else if (cambio == 13 && movimientoY < 2.0f) {
+			  cambio = 14;
+			}
+			else if (cambio == 14 && cuerpo3 >= 0.0f) {
+				//Mov miembros
+				if (brazo5 <= 30.0f && movBrazo5 == true) {
+					brazo5 += 1.5f;
+				}
+				else if (brazo5 > 30.0f && movBrazo5 == true) {
+					movBrazo5 = false;
+				}
+				else if (brazo5 >= -30.0f && movBrazo5 == false) {
+					brazo5 -= 1.5f;
+				}
+				else if (brazo5 < -30.0f && movBrazo5 == false) {
+					movBrazo5 = true;
+				}
+
+
+				if (brazo6 <= 30.0f && movBrazo6 == true) {
+					brazo6 += 1.5f;
+				}
+				else if (brazo6 > 30.0f && movBrazo6 == true) {
+					movBrazo6 = false;
+				}
+				else if (brazo6 >= -30.0f && movBrazo6 == false) {
+					brazo6 -= 1.5f;
+				}
+				else if (brazo6 < -30.0f && movBrazo6 == false) {
+					movBrazo6 = true;
+				}
+
+
+				if (pierna5 <= 30.0f && movPierna5 == true) {
+					pierna5 += 1.5f;
+				}
+				else if (pierna5 > 30.0f && movPierna5 == true) {
+					movPierna5 = false;
+				}
+				else if (pierna5 >= -30.0f && movPierna5 == false) {
+					pierna5 -= 1.5f;
+				}
+				else if (pierna5 < -30.0f && movPierna5 == false) {
+					movPierna5 = true;
+				}
+
+
+				if (pierna6 <= 30.0f && movPierna6 == true) {
+					pierna6 += 1.5f;
+				}
+				else if (pierna6 > 30.0f && movPierna6 == true) {
+					movPierna6 = false;
+				}
+				else if (pierna6 >= -30.0f && movPierna6 == false) {
+					pierna6 -= 1.5f;
+				}
+				else if (pierna6 < -30.0f && movPierna6 == false) {
+					movPierna6 = true;
+				}
+
+				//Traslacion
+				cuerpo3 -= 0.25f;
+				movimientoY -= 0.003;
+			}
+			else if (cambio == 14 && cuerpo3 < 0.0f) {
+				cambio=15;
+			}
+			else if (cambio == 15 && rotCuerpo3 > 0.0f) {
+				rotCuerpo3 -= 5.0f;
+			}
+			else if (cambio == 15 && rotCuerpo3 <= 0.0f) {
+				pierna5 = 0.0f;
+				pierna6 = 0.0f;
+				brazo5 = 0.0f;
+				brazo6 = 0.0f;
+				cuerpo3 = 0.0f;
+				movimientoY = 0.0f;
+				cambio = 1;
+				mainWindow.setTim(false);
 			}
 		}
 		else{
@@ -1867,6 +1961,7 @@ int main()
 		//cuerpo
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(-12.0f, movimientoY, -17.0f+ cuerpo3));
+		model = glm::rotate(model, rotCuerpo3 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		modelaux = model;
 		model = glm::scale(model, glm::vec3(1.2f, 1.6f, 0.8f));
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -2453,7 +2548,7 @@ int main()
 		
 
 
-		if ( ( (cameraPiso.getCameraPosition().x- xRh <= 15.0f) || (cameraPiso.getCameraPosition().z - zRh <= 15.0f)) && (fin1==false)) {
+		if ( ( (camera.getCameraPosition().x- (xRh+cuerpo1) <= 100.0f) && (camera.getCameraPosition().z -(zRh+(cuerpo1* cuerpo1)) <= 100.0f)) && (fin1==false)) {
 			//Musica
 			music.pause();
 			Tim.pause();
@@ -2461,7 +2556,7 @@ int main()
 			Dick.pause();
 			Disparo.pause();
 
-			if (cuerpo1 <= 10.0f) {
+			if (cuerpo1 <= 10.0f && cambioJ==1) {
 				//Mov miembros
 				if (brazo1 <= 30.0f && movBrazo == true) {
 					brazo1 += 1.5f;
@@ -2521,18 +2616,111 @@ int main()
 				//Traslacion
 				cuerpo1 += 0.01f;
 			}
-			else if (cuerpo1 > 10.0f && brazo1 >= -90.0f) {
+			else if (cuerpo1 > 10.0f && cambioJ == 1) {
+				cambioJ = 2;
+			}
+			else if (brazo1 >= -90.0f && cambioJ == 2) {
 				brazo1 -= 1.5f;
 			}
-			else if (cuerpo1 > 10.0f && brazo1 < -90.0f && countDisp<150) {
+			else if (brazo1 < -90.0f && cambioJ == 2 && countDisp < 150) {
 				pierna1 = 0.0f;
 				pierna2 = 0.0f;
 				brazo2 = 0.0f;
 				Disparo.play();
 				countDisp += 1;
 			}
-			else if(cuerpo1 > 10.0f && countDisp >= 150) {
-				fin1 = true;
+			else if (brazo1 < -90.0f && cambioJ == 2 && countDisp >= 150) {
+				Disparo.pause();
+				cambioJ = 3;
+			}
+			else if (rotCuerpo<=180.0f && cambioJ == 3) {
+				rotCuerpo += 5.0f;
+			}
+			else if (rotCuerpo > 180.0f && cambioJ == 3) {
+				cambioJ = 4;
+			}
+			else if (cuerpo1 > 0.0f && cambioJ == 4) {
+				//Mov miembros
+				if (brazo1 <= 30.0f && movBrazo == true) {
+					brazo1 += 1.5f;
+				}
+				else if (brazo1 > 30.0f && movBrazo == true) {
+					movBrazo = false;
+				}
+				else if (brazo1 >= -30.0f && movBrazo == false) {
+					brazo1 -= 1.5f;
+				}
+				else if (brazo1 < -30.0f && movBrazo == false) {
+					movBrazo = true;
+				}
+
+
+				if (brazo2 <= 30.0f && movBrazo2 == true) {
+					brazo2 += 1.5f;
+				}
+				else if (brazo2 > 30.0f && movBrazo2 == true) {
+					movBrazo2 = false;
+				}
+				else if (brazo2 >= -30.0f && movBrazo2 == false) {
+					brazo2 -= 1.5f;
+				}
+				else if (brazo2 < -30.0f && movBrazo2 == false) {
+					movBrazo2 = true;
+				}
+
+
+				if (pierna1 <= 30.0f && movPierna1 == true) {
+					pierna1 += 1.5f;
+				}
+				else if (pierna1 > 30.0f && movPierna1 == true) {
+					movPierna1 = false;
+				}
+				else if (pierna1 >= -30.0f && movPierna1 == false) {
+					pierna1 -= 1.5f;
+				}
+				else if (pierna1 < -30.0f && movPierna1 == false) {
+					movPierna1 = true;
+				}
+
+
+				if (pierna2 <= 30.0f && movPierna2 == true) {
+					pierna2 += 1.5f;
+				}
+				else if (pierna2 > 30.0f && movPierna2 == true) {
+					movPierna2 = false;
+				}
+				else if (pierna2 >= -30.0f && movPierna2 == false) {
+					pierna2 -= 1.5f;
+				}
+				else if (pierna2 < -30.0f && movPierna2 == false) {
+					movPierna2 = true;
+				}
+
+				//Traslacion
+				cuerpo1 -= 0.01f;
+
+			}
+			else if (cuerpo1 <= 0.0f && cambioJ == 4) {
+				cambioJ = 5;
+			}
+			else if (rotCuerpo > 0.0f && cambioJ == 5) {
+				rotCuerpo -= 5.0f;
+			}
+			else if (rotCuerpo <= 0.0f && cambioJ == 5) {
+				cambioJ = 6;
+			}
+			else if (rotCuerpo > 0.0f && cambioJ == 6) {
+				rotCuerpo -= 5.0f;
+			}
+			else if (rotCuerpo <= 180.0f && cambioJ == 6) {
+				pierna1 = 0.0f;
+				pierna2 = 0.0f;
+				brazo1 = 0.0f;
+				brazo2 = 0.0f;
+				cuerpo1 = 0.0f;
+				countDisp = 0;
+				cambioJ = 1;
+
 				//Musica
 				music.play();
 				Tim.pause();
@@ -2541,13 +2729,29 @@ int main()
 				Disparo.pause();
 			}
 		}
-		
+		else {
+				pierna1 = 0.0f;
+				pierna2 = 0.0f;
+				brazo1 = 0.0f;
+				brazo2 = 0.0f;
+				cuerpo1 = 0.0f;
+				countDisp = 0;
+				cambioJ = 1;
+
+				//Musica
+				music.play();
+				Tim.pause();
+				Jason.pause();
+				Dick.pause();
+				Disparo.pause();
+			}
 
 		//RedHood
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(xRh, yRh, zRh));
 		model = glm::translate(model, glm::vec3(cuerpo1, 0.0f, cuerpo1 * cuerpo1));
 		model = glm::scale(model, glm::vec3(0.48f, 0.5f, 0.48f));
+		model = glm::rotate(model, rotCuerpo * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		modelaux2 = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
@@ -3215,7 +3419,7 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Building6_M.RenderModel();
 
-		if (((cameraPiso.getCameraPosition().x - xNw <= 15.0f) || (cameraPiso.getCameraPosition().z - zNw <= 15.0f)) && fin2==false) {
+		if (((camera.getCameraPosition().x - (xNw + cuerpo2 * cuerpo2) <= 100.0f) && (camera.getCameraPosition().z - (zNw + (cuerpo2)) <= 100.0f)) && fin2==false) {
 			//Musica
 			music.pause();
 			Tim.pause();
@@ -3223,7 +3427,7 @@ int main()
 			Dick.play();
 			Disparo.pause();
 
-			if (cuerpo2 <= 10.0f && movCuerpo2) {
+			if (cuerpo2 <= 10.0f && cambioN == 1) {
 				//Mov miembros
 				if (brazo3 <= 30.0f && movBrazo3 == true) {
 					brazo3 += 1.5f;
@@ -3283,32 +3487,108 @@ int main()
 				//Traslacion
 				cuerpo2 += 0.01f;
 			}
-			else if (cuerpo2 > 10.0f && movCuerpo2) {
+			else if (cuerpo2 > 10.0f && cambioN == 1) {
 				pierna3 = 0.0f;
 				pierna4 = 0.0f;
-				movCuerpo2 = false;
+				cambioN = 2;
 			}
-			else if (cuerpo2 > 10.0f && pierna3 >= -90.0f && pierna4 <= 90.0f && movCuerpo2 == false && salto == false) {
+			else if (pierna3 >= -90.0f && pierna4 <= 90.0f && cambioN == 2) {
 				pierna3 -= 1.0f;
 				pierna4 += 1.0f;
 				movY += 0.05f;
 			}
-			else if (cuerpo2 > 10.0f && pierna3 < -90.0f && pierna4 > 90.0f && movCuerpo2 == false && salto == false) {
-				salto = true;
+			else if (pierna3 < -90.0f && pierna4 > 90.0f && cambioN == 2) {
+				cambioN = 3;
 			}
-			else if (cuerpo2 > 10.0f && movCuerpo2 == false && movY > 0.0f  && salto == true) {
+			else if (movY > 0.0f && cambioN == 3) {
 				pierna3 += 1.0f;
 				pierna4 -= 1.0f;
 				movY -= 0.05f;
 			}
-			else if (cuerpo2 > 10.0f && movCuerpo2 == false && movY <= 0.0f && salto == true) {
-				fin2 = true;
+			else if (movY <= 0.0f && cambioN == 3) {
+				cambioN = 4;
+			}
+			else if (rotCuerpo2 <= 180.0f && cambioN == 4) {
+				rotCuerpo2 += 5.0f;
+			}
+			else if (rotCuerpo2 > 180.0f && cambioN == 4) {
+				cambioN = 5;
+			}
+			else if (cuerpo2 > 0.0f && cambioN == 5) {
+				//Mov miembros
+				if (brazo3 <= 30.0f && movBrazo3 == true) {
+					brazo3 += 1.5f;
+				}
+				else if (brazo3 > 30.0f && movBrazo3 == true) {
+					movBrazo3 = false;
+				}
+				else if (brazo3 >= -30.0f && movBrazo3 == false) {
+					brazo3 -= 1.5f;
+				}
+				else if (brazo3 < -30.0f && movBrazo3 == false) {
+					movBrazo3 = true;
+				}
+
+
+				if (brazo4 <= 30.0f && movBrazo4 == true) {
+					brazo4 += 1.5f;
+				}
+				else if (brazo4 > 30.0f && movBrazo4 == true) {
+					movBrazo4 = false;
+				}
+				else if (brazo4 >= -30.0f && movBrazo4 == false) {
+					brazo4 -= 1.5f;
+				}
+				else if (brazo4 < -30.0f && movBrazo4 == false) {
+					movBrazo4 = true;
+				}
+
+
+				if (pierna3 <= 30.0f && movPierna3 == true) {
+					pierna3 += 1.5f;
+				}
+				else if (pierna3 > 30.0f && movPierna3 == true) {
+					movPierna3 = false;
+				}
+				else if (pierna3 >= -30.0f && movPierna3 == false) {
+					pierna3 -= 1.5f;
+				}
+				else if (pierna3 < -30.0f && movPierna3 == false) {
+					movPierna3 = true;
+				}
+
+
+				if (pierna4 <= 30.0f && movPierna4 == true) {
+					pierna4 += 1.5f;
+				}
+				else if (pierna4 > 30.0f && movPierna4 == true) {
+					movPierna4 = false;
+				}
+				else if (pierna4 >= -30.0f && movPierna4 == false) {
+					pierna4 -= 1.5f;
+				}
+				else if (pierna4 < -30.0f && movPierna4 == false) {
+					movPierna4 = true;
+				}
+
+				//Traslacion
+				cuerpo2 -= 0.01f;
+			}
+			else if (cuerpo2 <= 0.0f && cambioN == 5) {
+				cambioN=6;
+			}
+			else if (rotCuerpo2 > 0.0f && cambioN == 6) {
+				rotCuerpo2 -= 5.0f;
+			}
+			else if (rotCuerpo2 <= 0.0f && cambioN == 6) {
+				cambioN = 1;
 				pierna3 = 0.0f;
 				pierna4 = 0.0f;
 				brazo3 = 0.0f;
 				brazo4 = 0.0f;
 				movY = 0.0f;
-				//Musica
+				cuerpo2 = 0.0f;
+
 				music.play();
 				Tim.pause();
 				Jason.pause();
@@ -3316,12 +3596,26 @@ int main()
 				Disparo.pause();
 			}
 		}
+		else {
+				cambioN = 1;
+				pierna3 = 0.0f;
+				pierna4 = 0.0f;
+				brazo3 = 0.0f;
+				brazo4 = 0.0f;
+				movY = 0.0f;
+				music.play();
+				Tim.pause();
+				Jason.pause();
+				Dick.pause();
+				Disparo.pause();
+		}
 
 		//Nigthwing
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(xNw,yNw,zNw));
 		model = glm::translate(model, glm::vec3(cuerpo2*cuerpo2, 0.3f+ movY, cuerpo2));
 		model = glm::scale(model, glm::vec3(0.48f, 0.49f, 0.48f));
+		model = glm::rotate(model, rotCuerpo2 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		modelaux2 = model;
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));

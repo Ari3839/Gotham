@@ -18,6 +18,7 @@ public:
 	GLboolean getSpotlights() { return spotlights; }
 	GLboolean getAnimacionBatmobile() { return animacionBatmobile; }
 	GLboolean getTim() { return Tim; }
+	void setTim(bool value) { Tim = false; }
 	bool getShouldClose() {
 		return  glfwWindowShouldClose(mainWindow);}
 	bool* getsKeys() { return keys; }
