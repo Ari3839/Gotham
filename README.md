@@ -35,7 +35,7 @@ Graphic Computing Project semester 2022-2: Gotham City in Voxel Art style.
 
 ![Portada](img/portada.png)
 
-### Author 🙋
+## Author 🙋
 Lázaro Martínez A. Ariadna\\
 Mexican student. Currently taking the 8th semester of my Computer engineering major in the Engineering Faculty of the UNAM.
 
