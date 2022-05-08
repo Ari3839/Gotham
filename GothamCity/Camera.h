@@ -1,4 +1,4 @@
-/*#pragma once
+#pragma once
 #include <glew.h>
 #include <glm.hpp>
 #include <gtc\matrix_transform.hpp>
@@ -31,9 +31,9 @@ private:
 	GLboolean aerea;
 
 	void update();
-};*/
+};
 
-//Camara de todo el escenario:
+/*//Camara de todo el escenario:
 #pragma once
 
 #include <glew.h>
@@ -72,4 +72,4 @@ private:
 	GLfloat turnSpeed;
 
 	void update();
-};
+};*/

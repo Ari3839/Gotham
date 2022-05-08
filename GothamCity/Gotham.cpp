@@ -85,7 +85,7 @@ Texture TimTexture;
 Skybox skybox;
 Skybox skybox2;
 
-Sound music = Sound("Music/The Batman - Michael Giacchino.mp3");
+Sound music = Sound("Music/Nycteris.mp3");
 Sound Tim = Sound("Music/twenty one pilots Stressed Out.mp3");
 Sound Jason = Sound("Music/Bohnes - Middle Finger.mp3");
 Sound Dick = Sound("Music/Fall Out Boy - Where Did The Party Go.mp3");
@@ -1171,7 +1171,7 @@ int main()
 	CrearPersonaje();
 	CreateShaders();
 
-	camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 10.0f, 0.5f);
+	//camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 10.0f, 0.5f);
 	cameraPiso = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -50.0f, 0.0f, 0.5f, 0.5f);
 	cameraAerea = Camera(glm::vec3(0.0f, 350.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, -90.0f, 0.5f, 0.5f);
 
@@ -1475,17 +1475,17 @@ int main()
 		animate_Dirigible();
 		
 
-		/*if (mainWindow.getCamAerea()) {
+		if (mainWindow.getCamAerea()) {
 			cameraAerea.keyControl(mainWindow.getsKeys(), deltaTime, mainWindow.getCamAerea());
 			cameraAerea.mouseControl(mainWindow.getXChange());
 		}
 		else {
 			cameraPiso.keyControl(mainWindow.getsKeys(), deltaTime, mainWindow.getCamAerea());
 			cameraPiso.mouseControl(mainWindow.getXChange());
-		}*/
+		}
 
-		camera.keyControl(mainWindow.getsKeys(), deltaTime);
-		camera.mouseControl(mainWindow.getXChange(), mainWindow.getYChange());
+		/*camera.keyControl(mainWindow.getsKeys(), deltaTime);
+		camera.mouseControl(mainWindow.getXChange(), mainWindow.getYChange());*/
 
 		// Clear the window
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -1494,13 +1494,13 @@ int main()
 		if ((count < cicloDia) && (mainWindow.getCamAerea())) {
 			skybox.DrawSkybox(cameraAerea.calculateViewMatrix(), projection);
 		}else if ((count < cicloDia) && (mainWindow.getCamAerea()==false)) {
-			//skybox.DrawSkybox(cameraPiso.calculateViewMatrix(), projection);
-			skybox.DrawSkybox(camera.calculateViewMatrix(), projection);
+			skybox.DrawSkybox(cameraPiso.calculateViewMatrix(), projection);
+			//skybox.DrawSkybox(camera.calculateViewMatrix(), projection);
 		}else if ((count >= cicloDia) && (mainWindow.getCamAerea())) {
 			skybox2.DrawSkybox(cameraAerea.calculateViewMatrix(), projection);
 		}else {
-			//skybox2.DrawSkybox(cameraPiso.calculateViewMatrix(), projection);
-			skybox2.DrawSkybox(camera.calculateViewMatrix(), projection);
+			skybox2.DrawSkybox(cameraPiso.calculateViewMatrix(), projection);
+			//skybox2.DrawSkybox(camera.calculateViewMatrix(), projection);
 		}
 		count++;
 		if (count >= cicloDiaNoche) {
@@ -1511,14 +1511,14 @@ int main()
 
 			//luz direccional
 			mainLight = DirectionalLight(1.0f, 1.0f, 1.0f,
-				0.85f, 0.1f,
-				-1.0f, 0.0f, 0.0f);
+				0.9f, 0.1f,
+				1.0f, 0.0f, 0.0f);
 
 			//Luces puntuales
 
 			//Helicoptero
 			pointLights[0] = PointLight(1.0f, 0.0f, 0.0f,
-				0.8f, 10.0f,
+				0.9f, 10.0f,
 				(posXh + movh_x) +10.0f , 5.0f, posZh,
 				0.3f, 0.2f, 0.1f);
 
@@ -1527,7 +1527,7 @@ int main()
 			
 			//Dirigible
 			pointLights[1] = PointLight(0.0f, 0.0f, 1.0f,
-				0.8f, 10.0f,
+				0.9f, 10.0f,
 				posXd, 0.0f, posZd,
 				0.3f, 0.2f, 0.1f);
 
@@ -1535,7 +1535,7 @@ int main()
 
 			//Batiseñal
 			pointLights[2] = PointLight(1.0f, 1.0f, 0.0f,
-				0.8f, 20.0f,
+				0.9f, 20.0f,
 				-192.0f, 82.8f, 46.0f,
 				//-170.0f, 104.0f, 66.0f,
 				0.3f, 0.2f, 0.1f);
@@ -1545,7 +1545,7 @@ int main()
 		else {
 			mainLight = DirectionalLight(1.0f, 1.0f, 1.0f,
 				1.0f, 0.1f,
-				-1.0f, 0.0f, 0.0f);
+				1.0f, 0.0f, 0.0f);
 
 			pointLightCount = 0;
 		}
@@ -1691,8 +1691,8 @@ int main()
 			glUniform3f(uniformEyePosition, cameraPiso.getCameraPosition().x, cameraPiso.getCameraPosition().y, cameraPiso.getCameraPosition().z);
 		}
 
-		glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera.calculateViewMatrix()));
-		glUniform3f(uniformEyePosition, camera.getCameraPosition().x, cameraPiso.getCameraPosition().y, cameraPiso.getCameraPosition().z);
+		/*glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera.calculateViewMatrix()));
+		glUniform3f(uniformEyePosition, camera.getCameraPosition().x, cameraPiso.getCameraPosition().y, cameraPiso.getCameraPosition().z);*/
 
 		//información al shader de fuentes de iluminación
 		shaderList[0].SetDirectionalLight(&mainLight);
@@ -1962,11 +1962,7 @@ int main()
 		}
 		else{
 			//Musica
-			music.play();
 			Tim.pause();
-			Jason.pause();
-			Dick.pause();
-			Disparo.pause();
 		}
 
 
@@ -2562,7 +2558,7 @@ int main()
 		
 
 
-		if ((camera.getCameraPosition().x- (xRh+cuerpo1) <= 100.0f) && (camera.getCameraPosition().z -(zRh+(cuerpo1* cuerpo1)) <= 100.0f)) {
+		if ((cameraPiso.getCameraPosition().x- (xRh+cuerpo1) <= 100.0f) && (cameraPiso.getCameraPosition().z -(zRh+(cuerpo1* cuerpo1)) <= 100.0f)) {
 			//Musica
 			music.pause();
 			Tim.pause();
@@ -2736,11 +2732,7 @@ int main()
 				cambioJ = 1;
 
 				//Musica
-				music.play();
-				Tim.pause();
 				Jason.pause();
-				Dick.pause();
-				Disparo.pause();
 			}
 		}
 		else {
@@ -2753,11 +2745,7 @@ int main()
 				cambioJ = 1;
 
 				//Musica
-				music.play();
-				Tim.pause();
 				Jason.pause();
-				Dick.pause();
-				Disparo.pause();
 			}
 
 		//RedHood
@@ -3433,7 +3421,7 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Building6_M.RenderModel();
 
-		if ((camera.getCameraPosition().x - (xNw + cuerpo2 * cuerpo2) <= 100.0f) && (camera.getCameraPosition().z - (zNw + (cuerpo2)) <= 100.0f)) {
+		if ((cameraPiso.getCameraPosition().x - (xNw + cuerpo2 * cuerpo2) <= 100.0f) && (cameraPiso.getCameraPosition().z - (zNw + (cuerpo2)) <= 100.0f)) {
 			//Musica
 			music.pause();
 			Tim.pause();
@@ -3603,11 +3591,7 @@ int main()
 				movY = 0.0f;
 				cuerpo2 = 0.0f;
 
-				music.play();
-				Tim.pause();
-				Jason.pause();
 				Dick.pause();
-				Disparo.pause();
 			}
 		}
 		else {
@@ -3617,11 +3601,8 @@ int main()
 				brazo3 = 0.0f;
 				brazo4 = 0.0f;
 				movY = 0.0f;
-				music.play();
-				Tim.pause();
-				Jason.pause();
+				
 				Dick.pause();
-				Disparo.pause();
 		}
 
 		//Nigthwing

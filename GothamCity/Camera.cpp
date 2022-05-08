@@ -1,4 +1,4 @@
-/*#include "Camera.h"
+#include "Camera.h"
 Camera::Camera() {}
 Camera::Camera(glm::vec3 startPosition, glm::vec3 startUp, GLfloat startYaw, GLfloat startPitch, GLfloat startMoveSpeed, GLfloat startTurnSpeed)
 {
@@ -75,8 +75,8 @@ void Camera::update()
 }
 Camera::~Camera()
 {
-}*/
-
+}
+/*
 //Camara de todo el escenario:
 #include "Camera.h"
 
@@ -174,4 +174,4 @@ void Camera::update()
 
 Camera::~Camera()
 {
-}
+}*/
