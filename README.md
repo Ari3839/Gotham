@@ -19,10 +19,10 @@ Estudiante Mexicana. Actualmente curso el 8vo Semestre de Ingeniería en computa
 
 ### Desarrollo :computer:
 
-- [Bitácora-Español](Docs/Bitcora_de_Proyecto)
+- [Bitácora-Español](Docs/Bitcora_de_Proyecto.pdf)
 - [Bitácora-Inglés]()
-- [Bitacora (Web)-Español](https://www.notion.so/Bit-cora-de-Proyecto-b106fc2e473b4a699981fdb58a79be85)
-- [Bitacora (Web)-Inglés](https://www.notion.so/Project-Log-a73b7b203b274a1d8833cf218c3e2f1b)
+- [Bitacora (Web)-Español](https://saber-eyebrow-039.notion.site/Bit-cora-de-Proyecto-b106fc2e473b4a699981fdb58a79be85)
+- [Bitacora (Web)-Inglés](https://saber-eyebrow-039.notion.site/Project-Log-a73b7b203b274a1d8833cf218c3e2f1b)
 - [Ejecutable]()
 - [Manual de usuario-Español]()
 - [Manual de usuario-Inglés]()
@@ -51,10 +51,10 @@ Mexican student. Currently taking the 8th semester of my Computer engineering ma
 
 ### Desarrollo :computer:
 
-- [Log-Spanish](Docs/Bitcora_de_Proyecto)
+- [Log-Spanish](Docs/Bitcora_de_Proyecto.pdf)
 - [Log-English]()
-- [Log (Web)-Spanish]: https://www.notion.so/Bit-cora-de-Proyecto-b106fc2e473b4a699981fdb58a79be85
-- [Log (Web)-English]: https://www.notion.so/Project-Log-a73b7b203b274a1d8833cf218c3e2f1b
+- [Log (Web)-Spanish](https://saber-eyebrow-039.notion.site/Bit-cora-de-Proyecto-b106fc2e473b4a699981fdb58a79be85)
+- [Log (Web)-English](https://saber-eyebrow-039.notion.site/Project-Log-a73b7b203b274a1d8833cf218c3e2f1b)
 - [Executable]()
 - [User Manual-Spanish]()
 - [User Manual-English]()
