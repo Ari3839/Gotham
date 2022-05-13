@@ -1,7 +1,7 @@
 # 3ds Max Wavefront OBJ Exporter v0.99 - (c)2007 guruware
-# File Created: 11.05.2022 21:17:39
+# File Created: 11.05.2022 20:14:07
 
-newmtl moto3_moto3_palette
+newmtl Moto_llantaAtras_palette
 	Kd 1.0000 1.0000 1.0000
 	Ks 0.9000 0.9000 0.9000
 	Tr 0.0000
@@ -14,4 +14,4 @@ newmtl moto3_moto3_palette
 	Ni 1.5000
 	Ke 0.0000 0.0000 0.0000
 	illum 2
-	map_Kd moto3.png
+	map_Kd Moto_llantaAtras.png

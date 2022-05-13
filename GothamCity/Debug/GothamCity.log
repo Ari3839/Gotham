@@ -1,8 +1,37 @@
 ﻿  Gotham.cpp
 C:\Users\z3839\Documents\Gotham\GothamCity\Window.h(12,36): warning C4244: 'return': conversión de 'GLint' a 'GLfloat'; posible pérdida de datos
 C:\Users\z3839\Documents\Gotham\GothamCity\Window.h(13,37): warning C4244: 'return': conversión de 'GLint' a 'GLfloat'; posible pérdida de datos
-C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(317,2): warning C4305: 'inicializando': truncamiento de 'double' a 'GLfloat'
-C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(1463,15): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(1465,43): warning C4244: '+=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(1944,25): warning C4305: '-=': truncamiento de 'double' a 'float'
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(349,2): warning C4305: 'inicializando': truncamiento de 'double' a 'GLfloat'
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(1507,15): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(1509,43): warning C4244: '+=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(2028,25): warning C4305: '-=': truncamiento de 'double' a 'float'
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(2493,15): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(2495,23): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(2495,49): warning C4018: '>': no coinciden signed/unsigned
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(2502,16): warning C4018: '>=': no coinciden signed/unsigned
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(2955,16): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(2958,22): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(2958,48): warning C4018: '>': no coinciden signed/unsigned
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(3100,16): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(3103,22): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(3103,50): warning C4018: '>': no coinciden signed/unsigned
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(3249,16): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(3252,22): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(3252,52): warning C4018: '>': no coinciden signed/unsigned
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(3393,16): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(3396,22): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(3396,48): warning C4018: '>': no coinciden signed/unsigned
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(3921,16): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(3924,22): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(3924,48): warning C4018: '>': no coinciden signed/unsigned
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(4071,16): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(4074,22): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(4074,52): warning C4018: '>': no coinciden signed/unsigned
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(4224,16): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(4227,22): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(4227,52): warning C4018: '>': no coinciden signed/unsigned
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(4313,17): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(4471,22): warning C4018: '>': no coinciden signed/unsigned
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(4471,50): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\z3839\Documents\Gotham\GothamCity\Gotham.cpp(4519,22): warning C4018: '>': no coinciden signed/unsigned
   GothamCity.vcxproj -> C:\Users\z3839\Documents\Gotham\GothamCity\Debug\GothamCity.exe

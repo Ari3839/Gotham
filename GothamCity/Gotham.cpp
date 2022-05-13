@@ -1,4 +1,4 @@
-#define STB_IMAGE_IMPLEMENTATION
+Ôªø#define STB_IMAGE_IMPLEMENTATION
 
 #include <stdio.h>
 #include <string.h>
@@ -31,7 +31,7 @@
 #include "Sound.h"
 const float toRadians = 3.14159265f / 180.0f;
 
-//Movimiento ave (compleja autom·tica)
+//Movimiento ave (compleja autom√°tica)
 float xbird = 0.0f, ybird = 0.0f, zbird = 0.0f, rotBird = 0.0f, rotWings = 0.0f, movbird =0.0f;
 float countBird = 0.0f;
 bool wings = true, sube = true;
@@ -47,28 +47,60 @@ float movDirigible = 0.0f, a = 0.0f, b = 0.0f, countDirigible = 0.0f;
 float xluz1 = 0.0f, zluz1 = 0.0f, xluz2 = 0.0f, zluz2 = 0.0f, xluz3 = 0.0f, zluz3 = 0.0f, movLuz=0.0f;
 int luces = 1;
 
-//Movimiento batiseÒal (simple autom·tica)
+//Movimiento batise√±al (simple autom√°tica)
 float rotBatsignal =0.0f, escalaBatsignal=1.0f;
 
-//Movimiento RedHood (compleja) autom·tica
+//Movimiento RedHood (compleja) autom√°tica
 float xRh= 125.0f, yRh= 0.0f, zRh= -250.0f;
 float brazo1 = 0.0f, brazo2 = 0.0f, pierna1 = 0.0f, pierna2 = 0.0f, cuerpo1 = 0.0f, rotCuerpo = 0.0f;
-bool movBrazo = true, movBrazo2 = false, movPierna1=false, movPierna2=true, fin1=false;
+bool movBrazo = true, movBrazo2 = false, movPierna1=false, movPierna2=true;
 int  countDisp = 0;
 int cambioJ = 1;
 
-//Movimiento Nightwing (compleja) autom·tica
-float xNw = -230.0f, yNw = 0.3f, zNw = 17.0f;
-float brazo3 = 0.0f, brazo4 = 0.0f, pierna3 = 0.0f, pierna4 = 0.0f, cuerpo2 = 0.0f, movY=0.0f, rotCuerpo2 = 0.0f;
-bool movBrazo3 = true, movBrazo4 = false, movPierna3 = false, movPierna4 = true, movCuerpo2 = true, salto = false, fin2 = false;
+//Movimiento Nightwing (compleja) autom√°tica
+float xNw = -230.0f, yNw = 0.3f, zNw = 22.0f;
+float brazo3 = 0.0f, brazo4 = 0.0f, pierna3 = 0.0f, pierna4 = 0.0f, cuerpo2 = 0.0f, movY=0.0f, rotCuerpo2 = 0.0f, movZ=0.0f;
+bool movBrazo3 = true, movBrazo4 = false, movPierna3 = false, movPierna4 = true, movCuerpo2 = true, salto = false;
 int  countSalto = 0;
 int cambioN = 1;
 
 //Movimiento Tim (simple) por teclado
 float brazo5 = 0.0f, brazo6 = 0.0f, pierna5 = 0.0f, pierna6 = 0.0f, cuerpo3 = 0.0f, rotCuerpo3=0.0f;
 float staffScale = 1.0f, staffRot = 0.0f, movimientoY = 0.0f, ganchoTras = 0.0f, ganchoRot = 0.0f, ganchoMovZ=0.0f;
-bool movBrazo5 = true, movBrazo6 = false, movPierna5 = false, movPierna6 = true, movCuerpo3 = true, fin3 = false;
+bool movBrazo5 = true, movBrazo6 = false, movPierna5 = false, movPierna6 = true, movCuerpo3 = true;
 int cambio = 1;
+
+//Variables sem√°foro
+int verde1 = 200, amarillo1 = 300, rojo1 = 600;
+int verde2 = 300, amarillo2 = 500;
+int cambioAuto = 1;
+
+float movAuto1 = 0.0f, rotLlanta1 = 0.0f;
+float movAuto2 = 0.0f, rotLlanta2 = 0.0f;
+float movAuto3 = 0.0f, rotLlanta3 = 0.0f;
+float movAuto4 = 0.0f, rotLlanta4 = 0.0f;
+float movAuto5 = 0.0f, rotLlanta5 = 0.0f;
+float movAuto6 = 0.0f, rotLlanta6 = 0.0f;
+float movAuto7 = 0.0f, rotLlanta7 = 0.0f;
+float movAuto8 = 0.0f, rotLlanta8 = 0.0f;
+float movAuto9 = 0.0f, rotLlanta9 = 0.0f;
+float movAuto10 = 0.0f, rotLlanta10 = 0.0f;
+float movAuto11 = 0.0f, rotLlanta11 = 0.0f;
+float movAuto12 = 0.0f, rotLlanta12 = 0.0f;
+float movAuto13 = 0.0f, rotLlanta13 = 0.0f;
+float movAuto14 = 0.0f, rotLlanta14 = 0.0f;
+float movAuto15 = 0.0f, rotLlanta15 = 0.0f;
+float movAuto16 = 0.0f, rotLlanta16 = 0.0f;
+float movAuto17 = 0.0f, rotLlanta17 = 0.0f;
+float movAuto18 = 0.0f, rotLlanta18 = 0.0f;
+float moto1 = 0.0f, rotLlantaMoto1 = 0.0f;
+float moto2 = 0.0f, rotLlantaMoto2 = 0.0f;
+float moto3 = 0.0f, rotLlantaMoto3 = 0.0f;
+float moto4 = 0.0f, rotLlantaMoto4 = 0.0f;
+float moto5 = 0.0f, rotLlantaMoto5 = 0.0f;
+float moto6 = 0.0f, rotLlantaMoto6 = 0.0f;
+float moto7 = 0.0f, rotLlantaMoto7 = 0.0f;
+float moto8 = 0.0f, rotLlantaMoto8 = 0.0f;
 
 Window mainWindow;
 std::vector<Mesh*> meshList;
@@ -91,8 +123,8 @@ Sound Jason = Sound("Music/Bohnes - Middle Finger.mp3");
 Sound Dick = Sound("Music/Fall Out Boy - Where Did The Party Go.mp3");
 Sound Disparo = Sound("Music/Disparo.mp3");
 
-Material Material_brillante;
-Material Material_opaco;
+Material MaterialParaLuces;
+Material MaterialNormal;
 
 
 //Sphere cabeza = Sphere(0.5, 20, 20);
@@ -113,7 +145,7 @@ static const char* vShader = "shaders/shader_light.vert";
 // Fragment Shader
 static const char* fShader = "shaders/shader_light.frag";
 
-//c·lculo del promedio de las normales para sombreado de Phong
+//c√°lculo del promedio de las normales para sombreado de Phong
 void calcAverageNormals(unsigned int* indices, unsigned int indiceCount, GLfloat* vertices, unsigned int verticeCount,
 	unsigned int vLength, unsigned int normalOffset)
 {
@@ -1005,7 +1037,7 @@ float leoFrame_Dirigible = 0.0f, reinicioLeoFrame_Dirigible = 0.0f, contador_Dir
 bool xdokay = false, ydokay = false, zdokay = false;
 
 glm::vec3 posd = glm::vec3(0.0f, 0.0f, 0.0f);
-float posXd = 70.0f, posYd = 175.0f, posZd = 60.0f;
+float posXd = 70.0f, posYd = 125.0f, posZd = 60.0f;
 
 
 //NEW// Keyframes
@@ -1173,7 +1205,7 @@ int main()
 
 	//camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 10.0f, 0.5f);
 	cameraPiso = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -50.0f, 0.0f, 0.5f, 0.5f);
-	cameraAerea = Camera(glm::vec3(0.0f, 350.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, -90.0f, 0.5f, 0.5f);
+	cameraAerea = Camera(glm::vec3(0.0f, 390.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, -90.0f, 2.0f, 0.5f);
 
 
 	plainTexture = Texture("Textures/plain.png");
@@ -1203,17 +1235,21 @@ int main()
 	Model Estacion_M;
 	Model Auto1_M;
 	Model Auto2_M;
+	Model Auto_llanta;
 	Model Dirigible_M;
 	Model Patrulla_M;
 	Model Moto1_M;
+	Model Moto1_LlantaDelantera;
+	Model Moto1_LlantaTrasera;
 	Model Moto2_M;
 	Model Moto3_M;
+	Model Moto3_llanta;
 	Model helicopter_M;
 	Model helice_M;
 	Model Pole_M;
 	Model Banca_M;
-	Model BatiseÒal1_M;
-	Model BatiseÒal2_M;
+	Model Batise√±al1_M;
+	Model Batise√±al2_M;
 	Model BlueBird_M;
 	Model BlueBirdWings_M;
 	Model Bote_M;
@@ -1273,7 +1309,7 @@ int main()
 	gancho_M.LoadModel("Modelos_obj/Personas/Gancho.obj");
 
 
-	//SeÒales
+	//Se√±ales
 	SignalB1_M = Model();
 	SignalB1_M.LoadModel("Modelos_obj/Edificios/RRSignal.obj");
 	SignalB1_luz_M = Model();
@@ -1320,10 +1356,10 @@ int main()
 	Pole_M.LoadModel("Modelos_obj/Poles/pole2.obj");
 	Banca_M = Model();
 	Banca_M.LoadModel("Modelos_obj/Others-street/banca.obj");
-	BatiseÒal1_M = Model();
-	BatiseÒal1_M.LoadModel("Modelos_obj/Others-street/batisenal.obj");
-	BatiseÒal2_M = Model();
-	BatiseÒal2_M.LoadModel("Modelos_obj/Others-street/batisenal2.obj");
+	Batise√±al1_M = Model();
+	Batise√±al1_M.LoadModel("Modelos_obj/Others-street/batisenal.obj");
+	Batise√±al2_M = Model();
+	Batise√±al2_M.LoadModel("Modelos_obj/Others-street/batisenal2.obj");
 	PhoneBox_M = Model();
 	PhoneBox_M.LoadModel("Modelos_obj/Others-street/phonebox.obj");
 	Bote_M = Model();
@@ -1360,16 +1396,24 @@ int main()
 	Auto1_M.LoadModel("Modelos_obj/Transportes/Auto1.obj");
 	Auto2_M = Model();
 	Auto2_M.LoadModel("Modelos_obj/Transportes/Auto2.obj");
+	Auto_llanta = Model();
+	Auto_llanta.LoadModel("Modelos_obj/Transportes/Auto1_llanta.obj");
 	Dirigible_M = Model();
 	Dirigible_M.LoadModel("Modelos_obj/Transportes/Dirigible.obj");
 	Patrulla_M = Model();
 	Patrulla_M.LoadModel("Modelos_obj/Transportes/Patrulla.obj");
 	Moto1_M = Model();
 	Moto1_M.LoadModel("Modelos_obj/Transportes/Moto.obj");
+	Moto1_LlantaDelantera = Model();
+	Moto1_LlantaDelantera.LoadModel("Modelos_obj/Transportes/Moto_llantaFrente.obj");
+	Moto1_LlantaTrasera = Model();
+	Moto1_LlantaTrasera.LoadModel("Modelos_obj/Transportes/Moto_llantaAtras.obj");
 	Moto2_M = Model();
 	Moto2_M.LoadModel("Modelos_obj/Transportes/moto2.obj");
 	Moto3_M = Model();
 	Moto3_M.LoadModel("Modelos_obj/Transportes/moto3.obj");
+	Moto3_llanta = Model();
+	Moto3_llanta.LoadModel("Modelos_obj/Transportes/moto2_llanta.obj");
 	helicopter_M = Model();
 	helicopter_M.LoadModel("Modelos_obj/Transportes/helicopter.obj");
 	helice_M = Model();
@@ -1419,8 +1463,8 @@ int main()
 	skybox2 = Skybox(skyboxFaces2);
 
 
-	Material_brillante = Material(4.0f, 256);
-	Material_opaco = Material(0.3f, 4);
+	MaterialParaLuces = Material(5.0f, 300);
+	MaterialNormal = Material(0.5f, 3);
 
 	//contador de luces puntuales
 	unsigned int pointLightCount = 0;
@@ -1514,40 +1558,80 @@ int main()
 				0.9f, 0.1f,
 				-1.0f, 0.0f, 0.0f);
 
-			//Luces puntuales
+			if (mainWindow.getHelicoptero()) {
+				//Luces puntuales	
 
-			//Helicoptero
-			pointLights[0] = PointLight(1.0f, 0.0f, 0.0f,
-				0.9f, 10.0f,
-				(posXh + movh_x) +10.0f , 5.0f, posZh,
-				0.3f, 0.2f, 0.1f);
+				//Dirigible
+				pointLights[0] = PointLight(0.0f, 0.0f, 1.0f,
+					0.9f, 10.0f,
+					posXd, 0.0f, posZd,
+					0.3f, 0.2f, 0.1f);
 
-			pointLights[1].SetPos(glm::vec3((posXh + movh_x) + 10.0f, 5.0f, posZh));
-			
-			
+				pointLights[0].SetPos(glm::vec3(posXd + movd_x, 0.0f, posZd + movd_y));
+
+				//Batise√±al
+				pointLights[1] = PointLight(1.0f, 1.0f, 0.0f,
+					0.9f, 20.0f,
+					-192.0f, 82.8f, 46.0f,
+					//-170.0f, 104.0f, 66.0f,
+					0.3f, 0.2f, 0.1f);
+
+				//Helicoptero
+				pointLights[2] = PointLight(1.0f, 0.0f, 0.0f,
+					0.9f, 10.0f,
+					(posXh + movh_x) + 10.0f, 5.0f, posZh,
+					0.3f, 0.2f, 0.1f);
+
+				pointLights[2].SetPos(glm::vec3((posXh + movh_x) + 10.0f, 5.0f, posZh));
+
+				pointLightCount = 3;
+			}
+			else {
+				//Luces puntuales	
+
 			//Dirigible
-			pointLights[1] = PointLight(0.0f, 0.0f, 1.0f,
-				0.9f, 10.0f,
-				posXd, 0.0f, posZd,
-				0.3f, 0.2f, 0.1f);
+				pointLights[0] = PointLight(0.0f, 0.0f, 1.0f,
+					0.9f, 10.0f,
+					posXd, 0.0f, posZd,
+					0.3f, 0.2f, 0.1f);
 
-			pointLights[1].SetPos(glm::vec3(posXd + movd_x, 0.0f, posZd + movd_y));
+				pointLights[0].SetPos(glm::vec3(posXd + movd_x, 0.0f, posZd + movd_y));
 
-			//BatiseÒal
-			pointLights[2] = PointLight(1.0f, 1.0f, 0.0f,
-				0.9f, 20.0f,
-				-192.0f, 82.8f, 46.0f,
-				//-170.0f, 104.0f, 66.0f,
-				0.3f, 0.2f, 0.1f);
+				//Batise√±al
+				pointLights[1] = PointLight(1.0f, 1.0f, 0.0f,
+					0.9f, 20.0f,
+					-192.0f, 82.8f, 46.0f,
+					//-170.0f, 104.0f, 66.0f,
+					0.3f, 0.2f, 0.1f);
 
-			pointLightCount = 3;
+				pointLightCount = 2;
+			}
+
+			
 		}
 		else {
 			mainLight = DirectionalLight(1.0f, 1.0f, 1.0f,
 				1.0f, 0.1f,
 				-1.0f, 0.0f, 0.0f);
 
-			pointLightCount = 0;
+			if (mainWindow.getHelicoptero()) {
+
+				//Helicoptero
+				pointLights[0] = PointLight(1.0f, 0.0f, 0.0f,
+					0.9f, 10.0f,
+					(posXh + movh_x) + 10.0f, 5.0f, posZh,
+					0.3f, 0.2f, 0.1f);
+
+				pointLights[0].SetPos(glm::vec3((posXh + movh_x) + 10.0f, 5.0f, posZh));
+
+				pointLightCount = 1;
+			}
+			else {
+				//Luces puntuales	
+				pointLightCount = 0;
+			}
+
+			
 		}
 		
 		//Show de luces
@@ -1676,7 +1760,7 @@ int main()
 		uniformEyePosition = shaderList[0].GetEyePositionLocation();
 		uniformColor = shaderList[0].getColorLocation();
 
-		//informaciÛn en el shader de intensidad especular y brillo
+		//informaci√≥n en el shader de intensidad especular y brillo
 		uniformSpecularIntensity = shaderList[0].GetSpecularIntensityLocation();
 		uniformShininess = shaderList[0].GetShininessLocation();
 
@@ -1694,7 +1778,7 @@ int main()
 		/*glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera.calculateViewMatrix()));
 		glUniform3f(uniformEyePosition, camera.getCameraPosition().x, cameraPiso.getCameraPosition().y, cameraPiso.getCameraPosition().z);*/
 
-		//informaciÛn al shader de fuentes de iluminaciÛn
+		//informaci√≥n al shader de fuentes de iluminaci√≥n
 		shaderList[0].SetDirectionalLight(&mainLight);
 		shaderList[0].SetPointLights(pointLights, pointLightCount);
 		shaderList[0].SetSpotLights(spotLights, spotLightCount);
@@ -1978,7 +2062,7 @@ int main()
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		TimTexture.UseTexture();
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		MaterialParaLuces.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[4]->RenderMesh();
 
 		//cuello
@@ -1990,7 +2074,7 @@ int main()
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		TimTexture.UseTexture();
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		MaterialParaLuces.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[11]->RenderMesh();
 
 		//cara
@@ -2001,7 +2085,7 @@ int main()
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		TimTexture.UseTexture();
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		MaterialParaLuces.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[3]->RenderMesh();
 
 		//Hombro izquierdo
@@ -2018,7 +2102,7 @@ int main()
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		TimTexture.UseTexture();
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		MaterialParaLuces.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[5]->RenderMesh();
 
 		//bostaff
@@ -2048,7 +2132,7 @@ int main()
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		TimTexture.UseTexture();
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		MaterialParaLuces.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[6]->RenderMesh();
 
 		//Gancho
@@ -2073,7 +2157,7 @@ int main()
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		TimTexture.UseTexture();
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		MaterialParaLuces.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[7]->RenderMesh();
 
 		//pie izq
@@ -2084,7 +2168,7 @@ int main()
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		TimTexture.UseTexture();
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		MaterialParaLuces.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[9]->RenderMesh();
 
 		//union pierna der
@@ -2100,7 +2184,7 @@ int main()
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		TimTexture.UseTexture();
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		MaterialParaLuces.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[8]->RenderMesh();
 
 		//pie der
@@ -2111,7 +2195,7 @@ int main()
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		TimTexture.UseTexture();
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		MaterialParaLuces.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[10]->RenderMesh();
 
 		//////////////////////////////////////////////////////////////////////////////////////////
@@ -2121,6 +2205,7 @@ int main()
 		modelaux = model;
 		model = glm::scale(model, glm::vec3(5.0f, 7.0f, 5.0f));
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		MaterialNormal.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		WE_M.RenderModel();
 		
@@ -2136,7 +2221,7 @@ int main()
 			WE2_luz_M.RenderModel();
 		}
 		
-		//SeÒal1
+		//Se√±al1
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(0.0f, 141.5f, 9.0f));
 		model = glm::scale(model, glm::vec3(2.5f, 2.5f, 1.0f));
@@ -2149,7 +2234,7 @@ int main()
 			WESignal_luz_M.RenderModel();
 		}
 
-		//SeÒal2
+		//Se√±al2
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(0.0f, 141.5f, -9.0f));
 		model = glm::scale(model, glm::vec3(2.5f, 2.5f, 1.0f));
@@ -2404,16 +2489,17 @@ int main()
 		model = glm::translate(model, glm::vec3(-0.3f, 3.3f, -1.5f));
 		model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		if (countSem<201) {
+		
+		if (countSem<verde1+1) {
 			Semaforo_V_M.RenderModel();
-		}else if ((countSem < 301) && (countSem > 200)) {
+		}else if ((countSem < amarillo1) && (countSem > verde1)) {
 			Semaforo_A_M.RenderModel();
 		}
 		else {
 			Semaforo_R_M.RenderModel();
 		}
 		countSem++;
-		if (countSem >= 600) {
+		if (countSem >= rojo1+1) {
 			countSem = 0;
 		}
 		
@@ -2543,7 +2629,7 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Building1_M.RenderModel();
 
-		//SeÒal
+		//Se√±al
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(0.0f, 60.0f, 32.0f));
 		model = glm::scale(model, glm::vec3(3.4f, 4.0f, 1.0f));
@@ -2756,7 +2842,7 @@ int main()
 		model = glm::rotate(model, rotCuerpo * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		modelaux2 = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		MaterialParaLuces.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Rh_Cuerpo_M.RenderModel();
 
 		//Brazo izq
@@ -2764,7 +2850,7 @@ int main()
 		model = glm::translate(model, glm::vec3(-1.55f, 1.2f, 0.0f));
 		model = glm::rotate(model, brazo1 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		MaterialParaLuces.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Rh_Brazo_M.RenderModel();
 
 		//Brazo der
@@ -2772,7 +2858,7 @@ int main()
 		model = glm::translate(model, glm::vec3(1.55f, 1.2f, 0.0f));
 		model = glm::rotate(model, brazo2 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		MaterialParaLuces.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Rh_Brazo_M.RenderModel();
 
 		//Pierna izq
@@ -2780,7 +2866,7 @@ int main()
 		model = glm::translate(model, glm::vec3(-0.75f, -1.63f, 0.0f));
 		model = glm::rotate(model, pierna2 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		MaterialParaLuces.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Rh_Pierna_M.RenderModel();
 
 		//Pierna der
@@ -2788,7 +2874,7 @@ int main()
 		model = glm::translate(model, glm::vec3(0.75f, -1.63f, 0.0f));
 		model = glm::rotate(model, pierna1 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		MaterialParaLuces.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Rh_Pierna_M.RenderModel();
 
 
@@ -2796,14 +2882,31 @@ int main()
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(140.0f, -1.9f, -135.0f));
 		model = glm::scale(model, glm::vec3(0.8f, 0.8f, 0.8f));
+		modelaux2 = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		MaterialParaLuces.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Moto1_M.RenderModel();
+
+		//Llanta delantera
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-2.1f, 1.15f, 0.0f));
+		MaterialNormal.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Moto1_LlantaDelantera.RenderModel();
+
+
+		//Llanta trasera
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(2.0f, 1.15f, 0.0f));
+		MaterialNormal.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Moto1_LlantaTrasera.RenderModel();
 
 		//arbol
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(30.0f, 0.0f, 30.0f));
 		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		MaterialNormal.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Tree_M.RenderModel();
 
@@ -2849,16 +2952,15 @@ int main()
 		model = glm::translate(model, glm::vec3(-0.3f, 3.3f, -1.5f));
 		model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		if (countSem < 201) {
+		if (countSem < verde1 + 1) {
 			Semaforo_V_M.RenderModel();
 		}
-		else if ((countSem < 301) && (countSem > 200)) {
+		else if ((countSem < amarillo1) && (countSem > verde1)) {
 			Semaforo_A_M.RenderModel();
 		}
 		else {
 			Semaforo_R_M.RenderModel();
 		}
-
 
 		//Banca
 		model = modelaux;
@@ -2932,7 +3034,7 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Building3_M.RenderModel();
 
-		//SeÒal
+		//Se√±al
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(10.5f, 58.8f, 21.5f));
 		model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
@@ -2994,10 +3096,11 @@ int main()
 		model = modelaux2;
 		model = glm::translate(model, glm::vec3(-0.3f, 3.3f, -1.5f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		if (countSem < 301) {
+		
+		if (countSem < verde2+1) {
 			Semaforo_R_M.RenderModel();
 		}
-		else if ((countSem < 501) && (countSem > 300)) {
+		else if ((countSem < amarillo2+1) && (countSem > verde2)) {
 			Semaforo_V_M.RenderModel();
 		}
 		else {
@@ -3143,10 +3246,10 @@ int main()
 		model = modelaux2;
 		model = glm::translate(model, glm::vec3(-0.3f, 3.3f, -1.5f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		if (countSem < 301) {
+		if (countSem < verde2 + 1) {
 			Semaforo_R_M.RenderModel();
 		}
-		else if ((countSem < 501) && (countSem > 300)) {
+		else if ((countSem < amarillo2 + 1) && (countSem > verde2)) {
 			Semaforo_V_M.RenderModel();
 		}
 		else {
@@ -3226,7 +3329,7 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Building2_M.RenderModel();
 
-		//SeÒal
+		//Se√±al
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(25.0f, 81.0f, -10.0f ));
 		model = glm::scale(model, glm::vec3(1.0f, 3.0f, 3.0f));
@@ -3287,10 +3390,10 @@ int main()
 		model = glm::translate(model, glm::vec3(-0.3f, 3.3f, -1.5f));
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		if (countSem < 201) {
+		if (countSem < verde1 + 1) {
 			Semaforo_V_M.RenderModel();
 		}
-		else if ((countSem < 301) && (countSem > 200)) {
+		else if ((countSem < amarillo1) && (countSem > verde1)) {
 			Semaforo_A_M.RenderModel();
 		}
 		else {
@@ -3429,7 +3532,7 @@ int main()
 			Dick.play();
 			Disparo.pause();
 
-			if (cuerpo2 <= 10.0f && cambioN == 1) {
+			if (cuerpo2 <= 100.0f && cambioN == 1) {
 				//Mov miembros
 				if (brazo3 <= 30.0f && movBrazo3 == true) {
 					brazo3 += 1.5f;
@@ -3487,36 +3590,46 @@ int main()
 				}
 
 				//Traslacion
-				cuerpo2 += 0.01f;
+				cuerpo2 += 0.5f;
 			}
 			else if (cuerpo2 > 10.0f && cambioN == 1) {
 				pierna3 = 0.0f;
 				pierna4 = 0.0f;
 				cambioN = 2;
 			}
-			else if (pierna3 >= -90.0f && pierna4 <= 90.0f && cambioN == 2) {
-				pierna3 -= 1.0f;
-				pierna4 += 1.0f;
-				movY += 0.05f;
-			}
-			else if (pierna3 < -90.0f && pierna4 > 90.0f && cambioN == 2) {
-				cambioN = 3;
-			}
-			else if (movY > 0.0f && cambioN == 3) {
-				pierna3 += 1.0f;
-				pierna4 -= 1.0f;
-				movY -= 0.05f;
-			}
-			else if (movY <= 0.0f && cambioN == 3) {
-				cambioN = 4;
-			}
-			else if (rotCuerpo2 <= 180.0f && cambioN == 4) {
+			else if (rotCuerpo2 <= 90.0f && cambioN == 2) {
 				rotCuerpo2 += 5.0f;
 			}
-			else if (rotCuerpo2 > 180.0f && cambioN == 4) {
-				cambioN = 5;
+			else if (rotCuerpo2 > 90.0f && cambioN == 2) {
+				cambioN = 3;
 			}
-			else if (cuerpo2 > 0.0f && cambioN == 5) {
+			else if (pierna3 >= -90.0f && pierna4 <= 90.0f && cambioN == 3) {
+				pierna3 -= 1.0f;
+				pierna4 += 1.0f;
+				movY += 0.1f;
+				movZ -= 0.01f;
+			}
+			else if (pierna3 < -90.0f && pierna4 > 90.0f && cambioN == 3) {
+				cambioN = 4;
+			}
+			else if (movY > 0.0f && cambioN == 4) {
+				pierna3 += 1.0f;
+				pierna4 -= 1.0f;
+				movY -= 0.1f;
+				movZ -= 0.01f;
+			}
+			else if (movY <= 0.0f && cambioN == 4) {
+				cambioN = 5;
+				/*printf("Z final:%f", movZ);*/
+			}
+			else if (rotCuerpo2 <= 270.0f && cambioN == 5) {
+				rotCuerpo2 += 5.0f;
+			}
+			else if (rotCuerpo2 > 0.0f && cambioN == 5) {
+				cambioN = 6;
+			}
+
+			else if (movZ <= 0.0f && cambioN == 6) {
 				//Mov miembros
 				if (brazo3 <= 30.0f && movBrazo3 == true) {
 					brazo3 += 1.5f;
@@ -3574,15 +3687,84 @@ int main()
 				}
 
 				//Traslacion
-				cuerpo2 -= 0.01f;
+				movZ += 0.01f;
 			}
-			else if (cuerpo2 <= 0.0f && cambioN == 5) {
-				cambioN=6;
+			else if (movZ > 0.0f && cambioN == 6) {
+				cambioN = 7;
 			}
-			else if (rotCuerpo2 > 0.0f && cambioN == 6) {
+			else if (rotCuerpo2 >= 180.0f && cambioN == 7) {
 				rotCuerpo2 -= 5.0f;
 			}
-			else if (rotCuerpo2 <= 0.0f && cambioN == 6) {
+			else if (rotCuerpo2 < 360.0f && cambioN == 7) {
+				cambioN = 8;
+			}
+			else if (cuerpo2 > 0.0f && cambioN == 8) {
+				//Mov miembros
+				if (brazo3 <= 30.0f && movBrazo3 == true) {
+					brazo3 += 1.5f;
+				}
+				else if (brazo3 > 30.0f && movBrazo3 == true) {
+					movBrazo3 = false;
+				}
+				else if (brazo3 >= -30.0f && movBrazo3 == false) {
+					brazo3 -= 1.5f;
+				}
+				else if (brazo3 < -30.0f && movBrazo3 == false) {
+					movBrazo3 = true;
+				}
+
+
+				if (brazo4 <= 30.0f && movBrazo4 == true) {
+					brazo4 += 1.5f;
+				}
+				else if (brazo4 > 30.0f && movBrazo4 == true) {
+					movBrazo4 = false;
+				}
+				else if (brazo4 >= -30.0f && movBrazo4 == false) {
+					brazo4 -= 1.5f;
+				}
+				else if (brazo4 < -30.0f && movBrazo4 == false) {
+					movBrazo4 = true;
+				}
+
+
+				if (pierna3 <= 30.0f && movPierna3 == true) {
+					pierna3 += 1.5f;
+				}
+				else if (pierna3 > 30.0f && movPierna3 == true) {
+					movPierna3 = false;
+				}
+				else if (pierna3 >= -30.0f && movPierna3 == false) {
+					pierna3 -= 1.5f;
+				}
+				else if (pierna3 < -30.0f && movPierna3 == false) {
+					movPierna3 = true;
+				}
+
+
+				if (pierna4 <= 30.0f && movPierna4 == true) {
+					pierna4 += 1.5f;
+				}
+				else if (pierna4 > 30.0f && movPierna4 == true) {
+					movPierna4 = false;
+				}
+				else if (pierna4 >= -30.0f && movPierna4 == false) {
+					pierna4 -= 1.5f;
+				}
+				else if (pierna4 < -30.0f && movPierna4 == false) {
+					movPierna4 = true;
+				}
+
+				//Traslacion
+				cuerpo2 -= 0.5f;
+			}
+			else if (cuerpo2 <= 0.0f && cambioN == 8) {
+				cambioN=9;
+			}
+			else if (rotCuerpo2 > 0.0f && cambioN == 9) {
+				rotCuerpo2 -= 5.0f;
+			}
+			else if (rotCuerpo2 <= 0.0f && cambioN == 9) {
 				cambioN = 1;
 				pierna3 = 0.0f;
 				pierna4 = 0.0f;
@@ -3590,6 +3772,7 @@ int main()
 				brazo4 = 0.0f;
 				movY = 0.0f;
 				cuerpo2 = 0.0f;
+				rotCuerpo2 = 0.0f;
 
 				Dick.pause();
 			}
@@ -3608,13 +3791,13 @@ int main()
 		//Nigthwing
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(xNw,yNw,zNw));
-		model = glm::translate(model, glm::vec3(cuerpo2*cuerpo2, 0.3f+ movY, cuerpo2));
+		model = glm::translate(model, glm::vec3(cuerpo2, 0.3f+ movY, -movZ*movZ));
 		model = glm::scale(model, glm::vec3(0.48f, 0.49f, 0.48f));
 		model = glm::rotate(model, rotCuerpo2 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		modelaux2 = model;
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		MaterialParaLuces.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Nw_Cuerpo_M.RenderModel();
 
 		//Brazo izq
@@ -3623,7 +3806,7 @@ int main()
 		model = glm::rotate(model, brazo3 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
 		model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		MaterialParaLuces.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Nw_Brazo_M.RenderModel();
 
 		//Brazo der
@@ -3632,7 +3815,7 @@ int main()
 		model = glm::rotate(model, brazo4 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		MaterialParaLuces.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Nw_Brazo_M.RenderModel();
 
 		//Pierna izq
@@ -3641,7 +3824,7 @@ int main()
 		model = glm::rotate(model, pierna4 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		MaterialParaLuces.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Nw_Pierna_M.RenderModel();
 
 		//Pierna der
@@ -3650,10 +3833,10 @@ int main()
 		model = glm::rotate(model, pierna3 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		MaterialParaLuces.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Nw_Pierna_M.RenderModel();
 
-		//BatiseÒal
+		//Batise√±al
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(-12.0f, 85.5f, -24.0f));
 		model = glm::scale(model, glm::vec3(1.5f, 1.5f, 1.5f));
@@ -3661,15 +3844,15 @@ int main()
 		model = glm::rotate(model, rotBatsignal * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(escalaBatsignal, escalaBatsignal, escalaBatsignal));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		MaterialParaLuces.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		if (count < cicloDia) {
-			BatiseÒal1_M.RenderModel();
+			Batise√±al1_M.RenderModel();
 			if (escalaBatsignal > 1.0f) {
 				escalaBatsignal -= 0.001f;
 			}
 		}
 		else {
-			BatiseÒal2_M.RenderModel();
+			Batise√±al2_M.RenderModel();
 			rotBatsignal += 1.0f;
 			if (escalaBatsignal < 2.0f) {
 				escalaBatsignal += 0.001f;
@@ -3689,6 +3872,7 @@ int main()
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(35.0f, 2.7f, 35.0f));
 		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		MaterialNormal.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Tree_M.RenderModel();
 
@@ -3734,10 +3918,10 @@ int main()
 		model = glm::translate(model, glm::vec3(-0.3f, 3.3f, -1.5f));
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		if (countSem < 201) {
+		if (countSem < verde1 + 1) {
 			Semaforo_V_M.RenderModel();
 		}
-		else if ((countSem < 301) && (countSem > 200)) {
+		else if ((countSem < amarillo1) && (countSem > verde1)) {
 			Semaforo_A_M.RenderModel();
 		}
 		else {
@@ -3822,7 +4006,7 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Building4_M.RenderModel();
 
-		//SeÒal
+		//Se√±al
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(-0.5f, 42.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(1.0f, 3.0f, 3.0f));
@@ -3884,10 +4068,10 @@ int main()
 		model = glm::translate(model, glm::vec3(-0.3f, 3.3f, -1.5f));
 		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		if (countSem < 301) {
+		if (countSem < verde2 + 1) {
 			Semaforo_R_M.RenderModel();
 		}
-		else if ((countSem < 501) && (countSem > 300)) {
+		else if ((countSem < amarillo2 + 1) && (countSem > verde2)) {
 			Semaforo_V_M.RenderModel();
 		}
 		else {
@@ -4037,10 +4221,10 @@ int main()
 		model = glm::translate(model, glm::vec3(-0.3f, 3.3f, -1.5f));
 		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		if (countSem < 301) {
+		if (countSem < verde2 + 1) {
 			Semaforo_R_M.RenderModel();
 		}
-		else if ((countSem < 501) && (countSem > 300)) {
+		else if ((countSem < amarillo2 + 1) && (countSem > verde2)) {
 			Semaforo_V_M.RenderModel();
 		}
 		else {
@@ -4126,79 +4310,669 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Camino_M.RenderModel();
 
-		//Auto
+		if ((countSem < amarillo1 + 1) && (cambioAuto == 1)) {
+			//Movimiento izq y derecha
+
+			//Carril derecho
+			if (625.0f - movAuto1 == 40.0f) {
+				movAuto1 = 0.0f;
+				//printf("\nSe reinicio mov1");
+			}
+			movAuto1 += 0.5f;
+			rotLlanta1 += 5.0f;
+
+			if (485.0f - movAuto2 == -100.0f) {
+				movAuto2 = 0.0f;
+				//printf("\nSe reinicio mov2");
+			}
+			movAuto2 += 0.5f;
+			rotLlanta2 += 5.0f;
+
+			
+			if (705.0f - movAuto3 == 120.0f) {
+				movAuto3 = 0.0f;
+				//printf("\nSe reinicio mov3");
+			}
+			movAuto3 += 0.5f;
+			rotLlanta3 += 5.0f;
+			
+			if (825.0f - movAuto4 == 240.0f) {
+				movAuto4= 0.0f;
+				//printf("\nSe reinicio mov4");
+			}
+			movAuto4 += 0.5f;
+			rotLlanta4 += 5.0f;
+
+			
+			if (345.0f - movAuto5 == -240.0f) {
+				movAuto5= 0.0f;
+				//printf("\nSe reinicio mov5");
+			}
+			movAuto5 += 0.5f;
+			rotLlanta5 += 5.0f;
+
+			
+			if (563.0f - movAuto6 == -22.0f) {
+				movAuto6= 0.0f;
+				//printf("\nSe reinicio mov6");
+			}
+			movAuto6 += 0.5f;
+			rotLlanta6 += 5.0f;
+
+
+
+			if (525.0f - moto1 == -60.0f) {
+				moto1 = 0.0f;
+				//printf("\nSe reinicio moto1");
+			}
+			moto1 += 0.5f;
+			rotLlantaMoto1 += 5.0f;
+
+			if (655.0f - moto2 == 70.0f) {
+				moto2 = 0.0f;
+				//printf("\nSe reinicio moto2");
+			}
+			moto2 += 0.5f;
+			rotLlantaMoto2 += 5.0f;
+
+
+			if (755.0f - moto3 == 170.0f) {
+				moto3 = 0.0f;
+				//printf("\nSe reinicio moto3");
+			}
+			moto3 += 0.5f;
+			rotLlantaMoto3 += 5.0f;
+			
+			if (415.0f - moto4 == -170.0f) {
+				moto4 = 0.0f;
+				//printf("\nSe reinicio moto4");
+			}
+			moto4 += 0.5f;
+			rotLlantaMoto4 += 5.0f;
+
+
+			//Carril izq
+			if (-555.0f + movAuto7 == 30.0f) {
+				movAuto7 = 0.0f;
+				//printf("\nSe reinicio mov7");
+			}
+			movAuto7 += 0.5f;
+			rotLlanta7 += 5.0f;
+
+			if (-695.0f + movAuto8 == -110.0f) {
+				movAuto8 = 0.0f;
+				//printf("\nSe reinicio mov8");
+			}
+			movAuto8 += 0.5f;
+			rotLlanta8 += 5.0f;
+			
+			if (-455.0f + movAuto9 == 130.0f) {
+				movAuto9 = 0.0f;
+				//printf("\nSe reinicio mov9");
+			}
+			movAuto9 += 0.5f;
+			rotLlanta9 += 5.0f;
+			
+			if (-345.0f + movAuto10 == 240.0f) {
+				movAuto10 = 0.0f;
+				//printf("\nSe reinicio mov10");
+			}
+			movAuto10 += 0.5f;
+			rotLlanta10 += 5.0f;
+			
+			if (-825.0f + movAuto11 == -240.0f) {
+				movAuto11 = 0.0f;
+				//printf("\nSe reinicio mov11");
+			}
+			movAuto11 += 0.5f;
+			rotLlanta11 += 5.0f;
+			
+			if (-607.0f + movAuto12 == -22.0f) {
+				movAuto12 = 0.0f;
+				//printf("\nSe reinicio mov12");
+			}
+			movAuto12 += 0.5f;
+			rotLlanta12 += 5.0f;
+
+			if (-645.0f + moto5 == -60.0f) {
+				moto5 = 0.0f;
+				//printf("\nSe reinicio moto5");
+			}
+			moto5 += 0.5f;
+			rotLlantaMoto5 += 5.0f;
+			
+			if (-515.0f + moto6 == 70.0f) {
+				moto6 = 0.0f;
+				//printf("\nSe reinicio moto6");
+			}
+			moto6 += 0.5f;
+			rotLlantaMoto6 += 5.0f;
+			
+			if (-415.0f + moto7 == 170.0f) {
+				moto7 = 0.0f;
+				//printf("\nSe reinicio moto7");
+			}
+			moto7 += 0.5f;
+			rotLlantaMoto7 += 5.0f;
+			
+			if (-755.0f + moto8 == -170.0f) {
+				moto8 = 0.0f;
+				//printf("\nSe reinicio moto8");
+			}
+			moto8 += 0.5f;
+			rotLlantaMoto8 += 5.0f;
+			
+			
+		}
+		else if ((countSem == amarillo1 + 1) && (cambioAuto == 1)) {
+			cambioAuto = 2;
+			//printf("Val:%f", 40.0f - movAuto1);
+		}
+		else if ((countSem > amarillo1 + 1 && countSem < rojo1) && (cambioAuto == 2)) {
+			//Mov enfrente y atr√°s
+
+			//Carril atr√°s
+			if (605.0f - movAuto13 == 20.0f) {
+				movAuto13 = 0.0f;
+				//printf("\nSe reinicio mov13");
+			}
+			movAuto13 += 0.5f;
+			rotLlanta13 += 5.0f;
+
+			if (755.0f - movAuto14 == 170.0f) {
+				movAuto14 = 0.0f;
+				//printf("\nSe reinicio mov14");
+			}
+			movAuto14 += 0.5f;
+			rotLlanta14 += 5.0f;
+			
+			if (455.0f - movAuto15 == -130.0f) {
+				movAuto15 = 0.0f;
+				//printf("\nSe reinicio mov15");
+			}
+			movAuto15 += 0.5f;
+			rotLlanta15 += 5.0f;
+
+			//Carril enfrente
+			if (-565.0f + movAuto16 == 20.0f) {
+				movAuto16 = 0.0f;
+				//printf("\nSe reinicio mov16");
+			}
+			movAuto16 += 0.5f;
+			rotLlanta16 += 5.0f;
+
+			if (-415.0f + movAuto17 == 170.0f) {
+				movAuto17 = 0.0f;
+				//printf("\nSe reinicio mov17");
+			}
+			movAuto17 += 0.5f;
+			rotLlanta17 += 5.0f;
+
+			if (-715.0f + movAuto18 == -130.0f) {
+				movAuto18 = 0.0f;
+				//printf("\nSe reinicio mov18");
+			}
+			movAuto18 += 0.5f;
+			rotLlanta18 += 5.0f;
+			
+		}
+		else if ((countSem > amarillo1 + 1 && countSem == rojo1) && (cambioAuto == 2)) {
+			cambioAuto = 1;
+		}
+
+		if (rotLlanta1 >= 360.0f) {
+			rotLlanta1 = 0.0f;
+		}
+		if (rotLlanta2 >= 360.0f) {
+			rotLlanta2 = 0.0f;
+		}
+		if (rotLlanta3 >= 360.0f) {
+			rotLlanta3 = 0.0f;
+		}
+		if (rotLlanta4 >= 360.0f) {
+			rotLlanta4 = 0.0f;
+		}
+		if (rotLlanta5 >= 360.0f) {
+			rotLlanta5 = 0.0f;
+		}
+		if (rotLlanta6 >= 360.0f) {
+			rotLlanta6 = 0.0f;
+		}
+		if (rotLlanta7 >= 360.0f) {
+			rotLlanta7 = 0.0f;
+		}
+		if (rotLlanta8 >= 360.0f) {
+			rotLlanta8 = 0.0f;
+		}
+		if (rotLlanta9 >= 360.0f) {
+			rotLlanta9 = 0.0f;
+		}
+		if (rotLlanta10 >= 360.0f) {
+			rotLlanta10 = 0.0f;
+		}
+		if (rotLlanta11 >= 360.0f) {
+			rotLlanta11 = 0.0f;
+		}
+		if (rotLlanta12 >= 360.0f) {
+			rotLlanta12 = 0.0f;
+		}
+		if (rotLlanta13 >= 360.0f) {
+			rotLlanta13 = 0.0f;
+		}
+		if (rotLlanta14 >= 360.0f) {
+			rotLlanta14 = 0.0f;
+		}
+		if (rotLlanta15 >= 360.0f) {
+			rotLlanta15 = 0.0f;
+		}
+		if (rotLlanta16 >= 360.0f) {
+			rotLlanta16 = 0.0f;
+		}
+		if (rotLlanta17 >= 360.0f) {
+			rotLlanta17 = 0.0f;
+		}
+		if (rotLlanta18 >= 360.0f) {
+			rotLlanta18 = 0.0f;
+		}
+		if (rotLlantaMoto1 >= 360.0f) {
+			rotLlantaMoto1 = 0.0f;
+		}
+		if (rotLlantaMoto2 >= 360.0f) {
+			rotLlantaMoto2 = 0.0f;
+		}
+		if (rotLlantaMoto3 >= 360.0f) {
+			rotLlantaMoto3 = 0.0f;
+		}
+		if (rotLlantaMoto4 >= 360.0f) {
+			rotLlantaMoto4 = 0.0f;
+		}
+		if (rotLlantaMoto5 >= 360.0f) {
+			rotLlantaMoto5 = 0.0f;
+		}
+		if (rotLlantaMoto6 >= 360.0f) {
+			rotLlantaMoto6 = 0.0f;
+		}
+		if (rotLlantaMoto7 >= 360.0f) {
+			rotLlantaMoto7 = 0.0f;
+		}
+		if (rotLlantaMoto8 >= 360.0f) {
+			rotLlantaMoto8 = 0.0f;
+		}
+		
+
+		//Auto 285
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(9.0f, 1.2f, 40.0f));
+		if (40.0f - movAuto1 >= -300.0f) {
+			model = glm::translate(model, glm::vec3(9.0f, 1.2f, 40.0f - movAuto1));
+		}
+		else if (40.0f - movAuto1 < -300.0f) {
+			model = glm::translate(model, glm::vec3(9.0f, 1.2f, 625.0f - movAuto1));
+		}
 		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		modelaux2 = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Auto1_M.RenderModel();
+
+		//llanta delantera der
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(1.4f, -0.4f, -1.5f));
+		model = glm::rotate(model, -rotLlanta1 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+		//llanta delantera izq
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-1.65f, -0.4f, -1.5f));
+		model = glm::rotate(model, -rotLlanta1 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+
+		//llanta posterior der
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(1.4f, -0.4f, 1.7f));
+		model = glm::rotate(model, -rotLlanta1 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+		//llanta posterior izq
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-1.65f, -0.4f, 1.5f));
+		model = glm::rotate(model, -rotLlanta1 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
 		
 		//Auto
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(9.0f, 1.2f, -100.0f));
+		if (-100.0f - movAuto2 >= -300.0f) {
+			model = glm::translate(model, glm::vec3(9.0f, 1.2f, -100.0f - movAuto2));
+		}
+		else if (-100.0f - movAuto2 < -300.0f) {
+			model = glm::translate(model, glm::vec3(9.0f, 1.2f, 485.0f - movAuto2));
+		}
 		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		modelaux2 = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Auto2_M.RenderModel();
 
-		//Auto
+		//llanta delantera der
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(1.4f, -0.4f, -1.5f));
+		model = glm::rotate(model, -rotLlanta2 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+		//llanta delantera izq
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-1.65f, -0.4f, -1.5f));
+		model = glm::rotate(model, -rotLlanta2 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+
+		//llanta posterior der
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(1.4f, -0.4f, 1.7f));
+		model = glm::rotate(model, -rotLlanta2 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+		//llanta posterior izq
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-1.65f, -0.4f, 1.5f));
+		model = glm::rotate(model, -rotLlanta2 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+
+		//Auto x - 420 =285
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(9.0f, 1.2f, 120.0f));
+		if (120.0f - movAuto3 >= -300.0f) {
+			model = glm::translate(model, glm::vec3(9.0f, 1.2f, 120.0f - movAuto3));
+		}
+		else if (120.0f - movAuto3 < -300.0f) {
+			model = glm::translate(model, glm::vec3(9.0f, 1.2f, 705.0f - movAuto3));
+		}
 		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		modelaux2 = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Auto2_M.RenderModel();
 
-		//Auto
+		//llanta delantera der
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(1.4f, -0.4f, -1.5f));
+		model = glm::rotate(model, -rotLlanta3 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+		//llanta delantera izq
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-1.65f, -0.4f, -1.5f));
+		model = glm::rotate(model, -rotLlanta3 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+
+		//llanta posterior der
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(1.4f, -0.4f, 1.7f));
+		model = glm::rotate(model, -rotLlanta3 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+		//llanta posterior izq
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-1.65f, -0.4f, 1.5f));
+		model = glm::rotate(model, -rotLlanta3 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+
+		//Auto x - 540 =285
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(9.0f, 1.2f, 240.0f));
+		if (240.0f - movAuto4 >= -300.0f) {
+			model = glm::translate(model, glm::vec3(9.0f, 1.2f, 240.0f - movAuto4));
+		}
+		else if (240.0f - movAuto4 < -300.0f) {
+			model = glm::translate(model, glm::vec3(9.0f, 1.2f, 825.0f - movAuto4));
+		}
 		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		modelaux2 = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Auto1_M.RenderModel();
 
-		//Auto
+		//llanta delantera der
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(1.4f, -0.4f, -1.5f));
+		model = glm::rotate(model, -rotLlanta4 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+		//llanta delantera izq
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-1.65f, -0.4f, -1.5f));
+		model = glm::rotate(model, -rotLlanta4 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+
+		//llanta posterior der
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(1.4f, -0.4f, 1.7f));
+		model = glm::rotate(model, -rotLlanta4 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+		//llanta posterior izq
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-1.65f, -0.4f, 1.5f));
+		model = glm::rotate(model, -rotLlanta4 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+
+		//Auto x - 60 =285
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(9.0f, 1.2f, -240.0f));
+		if (-240.0f - movAuto5 >= -300.0f) {
+			model = glm::translate(model, glm::vec3(9.0f, 1.2f, -240.0f - movAuto5));
+		}
+		else if (-240.0f - movAuto5 < -300.0f) {
+			model = glm::translate(model, glm::vec3(9.0f, 1.2f, 345.0f - movAuto5));
+		}
 		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		modelaux2 = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Auto1_M.RenderModel();
 
-		//Patrulla
+		//llanta delantera der
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(1.4f, -0.4f, -1.5f));
+		model = glm::rotate(model, -rotLlanta5 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+		//llanta delantera izq
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-1.65f, -0.4f, -1.5f));
+		model = glm::rotate(model, -rotLlanta5 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+
+		//llanta posterior der
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(1.4f, -0.4f, 1.7f));
+		model = glm::rotate(model, -rotLlanta5 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+		//llanta posterior izq
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-1.65f, -0.4f, 1.5f));
+		model = glm::rotate(model, -rotLlanta5 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+
+		//Patrulla x - 278 =285
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(9.0f, -0.4f, -22.0f));
+		if (-22.0f - movAuto6 >= -300.0f) {
+			model = glm::translate(model, glm::vec3(9.0f, -0.4f, -22.0f - movAuto6));
+		}
+		else if (-22.0f - movAuto6 < -300.0f) {
+			model = glm::translate(model, glm::vec3(9.0f, -0.4f, 563.0f - movAuto6));
+		}
+		modelaux2 = model;
 		model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Patrulla_M.RenderModel();
 
-		//Moto
+		//llanta delantera der
+		model = modelaux2;
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::translate(model, glm::vec3(1.6f, 1.0f, -1.55f));
+		model = glm::rotate(model, -rotLlanta6 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+		//llanta delantera izq
+		model = modelaux2;
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::translate(model, glm::vec3(-1.6f, 1.0f, -1.57f));
+		model = glm::rotate(model, -rotLlanta6 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+
+		//llanta posterior der
+		model = modelaux2;
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::translate(model, glm::vec3(1.6f, 1.0f, 1.75f));
+		model = glm::rotate(model, -rotLlanta6 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+		//llanta posterior izq
+		model = modelaux2;
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::translate(model, glm::vec3(-1.6f, 1.0f, 1.55f));
+		model = glm::rotate(model, -rotLlanta6 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+		
+		//Moto x - 240 =285
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(7.0f, 0.0f, -60.0f));
+		if (-60.0f - moto1 >= -300.0f) {
+			model = glm::translate(model, glm::vec3(7.0f, 0.7f, -60.0f - moto1));
+		}
+		else if (-60.0f - moto1 < -300.0f) {
+			model = glm::translate(model, glm::vec3(7.0f, 0.7f, 525.0f - moto1));
+		}
 		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
 		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		modelaux2 = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Moto2_M.RenderModel();
 
-		//Moto
+		//llanta delantera
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(0.0f, 0.05f, 0.72f));
+		model = glm::rotate(model, rotLlantaMoto1 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Moto3_llanta.RenderModel();
+
+		//llanta trasera
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(0.0f, 0.05f, -0.75f));
+		model = glm::rotate(model, rotLlantaMoto1 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Moto3_llanta.RenderModel();
+
+		//Moto x - 370 =285
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(6.0f, 0.0f, 70.0f));
+		if (70.0f - moto2 >= -300.0f) {
+			model = glm::translate(model, glm::vec3(7.0f, 0.7f, 70.0f - moto2));
+		}
+		else if (70.0f - moto2 < -300.0f) {
+			model = glm::translate(model, glm::vec3(7.0f, 0.7f, 655.0f - moto2));
+		}
 		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
 		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		modelaux2 = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Moto3_M.RenderModel();
 
-		//Moto
+		//llanta delantera
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(0.0f, 0.05f, 0.72f));
+		model = glm::rotate(model, rotLlantaMoto2 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Moto3_llanta.RenderModel();
+
+		//llanta trasera
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(0.0f, 0.05f, -0.75f));
+		model = glm::rotate(model, rotLlantaMoto2 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Moto3_llanta.RenderModel();
+
+		//Moto x - 470 =285
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(7.0f, 0.0f, 170.0f));
+		if (170.0f - moto3 >= -300.0f) {
+			model = glm::translate(model, glm::vec3(7.0f, 0.7f, 170.0f - moto3));
+		}
+		else if (170.0f - moto3 < -300.0f) {
+			model = glm::translate(model, glm::vec3(7.0f, 0.7f, 755.0f - moto3));
+		}
 		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
 		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		modelaux2 = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Moto2_M.RenderModel();
 
-		//Moto
+		//llanta delantera
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(0.0f, 0.05f, 0.72f));
+		model = glm::rotate(model, rotLlantaMoto3 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Moto3_llanta.RenderModel();
+
+		//llanta trasera
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(0.0f, 0.05f, -0.75f));
+		model = glm::rotate(model, rotLlantaMoto3 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Moto3_llanta.RenderModel();
+
+		//Moto x - 130 =285
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(6.0f, 0.0f, -170.0f));
+		if (-170.0f - moto4 >= -300.0f) {
+			model = glm::translate(model, glm::vec3(7.0f, 0.7f, -170.0f - moto4));
+		}
+		else if (-170.0f - moto4 < -300.0f) {
+			model = glm::translate(model, glm::vec3(7.0f, 0.7f, 415.0f - moto4));
+		}
 		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
 		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		modelaux2 = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Moto3_M.RenderModel();
+
+		//llanta delantera
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(0.0f, 0.05f, 0.72f));
+		model = glm::rotate(model, rotLlantaMoto4 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Moto3_llanta.RenderModel();
+
+		//llanta trasera
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(0.0f, 0.05f, -0.75f));
+		model = glm::rotate(model, rotLlantaMoto4 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Moto3_llanta.RenderModel();
 
 		////////////////////////////////////////////////////////////////////////////////////////////
 		//camino izq
@@ -4209,81 +4983,385 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Camino_M.RenderModel();
 
-		//Auto
+		//Auto x + 255 = -300
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(-9.0f, 1.2f, 30.0f));
+		if (30.0f + movAuto7 <= 285.0f) {
+			model = glm::translate(model, glm::vec3(-9.0f, 1.2f, 30.0f + movAuto7));
+		}
+		else if (30.0f + movAuto7 > 285.0f) {
+			model = glm::translate(model, glm::vec3(-9.0f, 1.2f, -555.0f + movAuto7));
+		}
 		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
 		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		modelaux2 = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Auto2_M.RenderModel();
 
-		//Auto
+		//llanta delantera der
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(1.4f, -0.4f, -1.5f));
+		model = glm::rotate(model, -rotLlanta7 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+		//llanta delantera izq
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-1.65f, -0.4f, -1.5f));
+		model = glm::rotate(model, -rotLlanta7 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+
+		//llanta posterior der
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(1.4f, -0.4f, 1.7f));
+		model = glm::rotate(model, -rotLlanta7 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+		//llanta posterior izq
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-1.65f, -0.4f, 1.5f));
+		model = glm::rotate(model, -rotLlanta7 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+
+		//Auto x + 395  = -300
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(-9.0f, 1.2f, -110.0f));
+		if (-110.0f + movAuto8 <= 285.0f) {
+			model = glm::translate(model, glm::vec3(-9.0f, 1.2f, -110.0f + movAuto8));
+		}
+		else if (-110.0f + movAuto8 > 285.0f) {
+			model = glm::translate(model, glm::vec3(-9.0f, 1.2f, -695.0f + movAuto8));
+		}
 		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
 		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		modelaux2 = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Auto1_M.RenderModel();
 
-		//Auto
+		//llanta delantera der
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(1.4f, -0.4f, -1.5f));
+		model = glm::rotate(model, -rotLlanta8 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+		//llanta delantera izq
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-1.65f, -0.4f, -1.5f));
+		model = glm::rotate(model, -rotLlanta8 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+
+		//llanta posterior der
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(1.4f, -0.4f, 1.7f));
+		model = glm::rotate(model, -rotLlanta8 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+		//llanta posterior izq
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-1.65f, -0.4f, 1.5f));
+		model = glm::rotate(model, -rotLlanta8 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+
+		//Auto x + 155  = -300
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(-9.0f, 1.2f, 130.0f));
+		if (130.0f + movAuto9 <= 285.0f) {
+			model = glm::translate(model, glm::vec3(-9.0f, 1.2f, 130.0f + movAuto9));
+		}
+		else if (130.0f + movAuto9 > 285.0f) {
+			model = glm::translate(model, glm::vec3(-9.0f, 1.2f, -455.0f + movAuto9));
+		}
 		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
 		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		modelaux2 = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Auto1_M.RenderModel();
 
-		//Auto
+		//llanta delantera der
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(1.4f, -0.4f, -1.5f));
+		model = glm::rotate(model, -rotLlanta9 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+		//llanta delantera izq
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-1.65f, -0.4f, -1.5f));
+		model = glm::rotate(model, -rotLlanta9 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+
+		//llanta posterior der
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(1.4f, -0.4f, 1.7f));
+		model = glm::rotate(model, -rotLlanta9 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+		//llanta posterior izq
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-1.65f, -0.4f, 1.5f));
+		model = glm::rotate(model, -rotLlanta9 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+
+		//Auto x + 45  = -300
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(-9.0f, 1.2f, 240.0f));
+		if (240.0f + movAuto10 <= 285.0f) {
+			model = glm::translate(model, glm::vec3(-9.0f, 1.2f, 240.0f + movAuto10));
+		}
+		else if (240.0f + movAuto10 > 285.0f) {
+			model = glm::translate(model, glm::vec3(-9.0f, 1.2f, -345.0f + movAuto10));
+		}
 		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
 		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		modelaux2 = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto2_M.RenderModel();
+
+		//llanta delantera der
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(1.4f, -0.4f, -1.5f));
+		model = glm::rotate(model, -rotLlanta10 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+		//llanta delantera izq
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-1.65f, -0.4f, -1.5f));
+		model = glm::rotate(model, -rotLlanta10 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+
+		//llanta posterior der
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(1.4f, -0.4f, 1.7f));
+		model = glm::rotate(model, -rotLlanta10 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+		//llanta posterior izq
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-1.65f, -0.4f, 1.5f));
+		model = glm::rotate(model, -rotLlanta10 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+
+		//Auto x + 525  = -300
+		model = modelaux;
+		if (-240.0f + movAuto11 <= 285.0f) {
+			model = glm::translate(model, glm::vec3(-9.0f, 1.2f, -240.0f + movAuto11));
+		}
+		else if (-240.0f + movAuto11 > 285.0f) {
+			model = glm::translate(model, glm::vec3(-9.0f, 1.2f, -825.0f + movAuto11));
+		}
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		modelaux2 = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Auto1_M.RenderModel();
 
-		//Auto
-		model = modelaux;
-		model = glm::translate(model, glm::vec3(-9.0f, 1.2f, -240.0f));
-		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
-		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		//llanta delantera der
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(1.4f, -0.4f, -1.5f));
+		model = glm::rotate(model, -rotLlanta11 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Auto1_M.RenderModel();
+		Auto_llanta.RenderModel();
 
-		//Patrulla
+		//llanta delantera izq
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-1.65f, -0.4f, -1.5f));
+		model = glm::rotate(model, -rotLlanta11 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+
+		//llanta posterior der
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(1.4f, -0.4f, 1.7f));
+		model = glm::rotate(model, -rotLlanta11 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+		//llanta posterior izq
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-1.65f, -0.4f, 1.5f));
+		model = glm::rotate(model, -rotLlanta11 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+
+		//Patrulla x + 307‚Ä¨  = -300
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(-9.0f, -0.4f, -22.0f));
+		if (-22.0f + movAuto12 <= 285.0f) {
+			model = glm::translate(model, glm::vec3(-9.0f, -0.4f, -22.0f + movAuto12));
+		}
+		else if (-22.0f + movAuto12 > 285.0f) {
+			model = glm::translate(model, glm::vec3(-9.0f, -0.4f, -607.0f + movAuto12));
+		}
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		modelaux2 = model;
 		model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
-		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Patrulla_M.RenderModel();
 
-		//Moto
+		//llanta delantera der
+		model = modelaux2;
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::translate(model, glm::vec3(1.6f, 1.0f, -1.55f));
+		model = glm::rotate(model, -rotLlanta12 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+		//llanta delantera izq
+		model = modelaux2;
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::translate(model, glm::vec3(-1.6f, 1.0f, -1.57f));
+		model = glm::rotate(model, -rotLlanta12 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+
+		//llanta posterior der
+		model = modelaux2;
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::translate(model, glm::vec3(1.6f, 1.0f, 1.75f));
+		model = glm::rotate(model, -rotLlanta12 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+		//llanta posterior izq
+		model = modelaux2;
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::translate(model, glm::vec3(-1.6f, 1.0f, 1.55f));
+		model = glm::rotate(model, -rotLlanta12 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+
+		//Moto x + 345‚Ä¨  = -300
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(-6.0f, 0.0f, -60.0f));
+		if (-60.0f + moto5 <= 285.0f) {
+			model = glm::translate(model, glm::vec3(-6.0f, 0.7f, -60.0f + moto5));
+		}
+		else if (-60.0f + moto5 > 285.0f) {
+			model = glm::translate(model, glm::vec3(-6.0f, 0.7f, -645.0f + moto5));
+		}
 		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+		modelaux2 = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Moto3_M.RenderModel();
 
-		//Moto
+		//llanta delantera
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(0.0f, 0.05f, 0.72f));
+		model = glm::rotate(model, rotLlantaMoto5 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Moto3_llanta.RenderModel();
+
+		//llanta trasera
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(0.0f, 0.05f, -0.75f));
+		model = glm::rotate(model, rotLlantaMoto5 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Moto3_llanta.RenderModel();
+
+
+		//Moto x + 215‚Ä¨  = -300
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(-7.0f, 0.0f, 70.0f));
+		if (70.0f + moto6 <= 285.0f) {
+			model = glm::translate(model, glm::vec3(-6.0f, 0.7f, 70.0f + moto6));
+		}
+		else if (70.0f + moto6 > 285.0f) {
+			model = glm::translate(model, glm::vec3(-6.0f, 0.7f, -515.0f + moto6));
+		}
 		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+		modelaux2 = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Moto2_M.RenderModel();
 
-		//Moto
-		model = modelaux;
-		model = glm::translate(model, glm::vec3(-6.0f, 0.0f, 170.0f));
-		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+		//llanta delantera
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(0.0f, 0.05f, 0.72f));
+		model = glm::rotate(model, rotLlantaMoto6 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Moto2_M.RenderModel();
+		Moto3_llanta.RenderModel();
 
-		//Moto
+		//llanta trasera
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(0.0f, 0.05f, -0.75f));
+		model = glm::rotate(model, rotLlantaMoto6 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Moto3_llanta.RenderModel();
+
+
+		//Moto x + 115‚Ä¨  = -300
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(-7.0f, 0.0f, -170.0f));
+		if (170.0f + moto7 <= 285.0f) {
+			model = glm::translate(model, glm::vec3(-6.0f, 0.7f, 170.0f + moto7));
+		}
+		else if (170.0f + moto7 > 285.0f) {
+			model = glm::translate(model, glm::vec3(-6.0f, 0.7f, -415.0f + moto7));
+		}
 		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+		modelaux2 = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Moto3_M.RenderModel();
+
+		//llanta delantera
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(0.0f, 0.05f, 0.72f));
+		model = glm::rotate(model, rotLlantaMoto7 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Moto3_llanta.RenderModel();
+
+		//llanta trasera
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(0.0f, 0.05f, -0.75f));
+		model = glm::rotate(model, rotLlantaMoto7 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Moto3_llanta.RenderModel();
+
+
+		//Moto x + 455  = -300
+		model = modelaux;
+		if (-170.0f + moto8 <= 285.0f) {
+			model = glm::translate(model, glm::vec3(-6.0f, 0.7f, -170.0f + moto8));
+		}
+		else if (-170.0f + moto8 > 285.0f) {
+			model = glm::translate(model, glm::vec3(-6.0f, 0.7f, -755.0f + moto8));
+		}
+		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+		modelaux2 = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Moto2_M.RenderModel();
+
+		//llanta delantera
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(0.0f, 0.05f, 0.72f));
+		model = glm::rotate(model, rotLlantaMoto8 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Moto3_llanta.RenderModel();
+
+		//llanta trasera
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(0.0f, 0.05f, -0.75f));
+		model = glm::rotate(model, rotLlantaMoto8 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Moto3_llanta.RenderModel();
+
 
 		////////////////////////////////////////////////////////////////////////////////////////////
 		//camino atras
@@ -4293,29 +5371,141 @@ int main()
 		model = glm::scale(model, glm::vec3(23.0f, 2.0f, 20.0f));
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Camino_M.RenderModel();
+		Camino_M.RenderModel(); 
 
-		//Auto
+		//Auto x - 320 =285
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(20.0f, -0.3f, -9.0f));
-		model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
+		if (20.0f - movAuto13 >= -300.0f) {
+			model = glm::translate(model, glm::vec3(20.0f - movAuto13, -0.3f, -9.0f));
+		}
+		else if (20.0f - movAuto13 < -300.0f) {
+			model = glm::translate(model, glm::vec3(605.0f - movAuto13, -0.3f, -9.0f));
+		}
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		modelaux2 = model;
+		model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Patrulla_M.RenderModel();
 
+		//llanta delantera der
+		model = modelaux2;
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::translate(model, glm::vec3(1.6f, 1.0f, -1.55f));
+		model = glm::rotate(model, -rotLlanta13 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+		//llanta delantera izq
+		model = modelaux2;
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::translate(model, glm::vec3(-1.6f, 1.0f, -1.57f));
+		model = glm::rotate(model, -rotLlanta13 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+
+		//llanta posterior der
+		model = modelaux2;
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::translate(model, glm::vec3(1.6f, 1.0f, 1.75f));
+		model = glm::rotate(model, -rotLlanta13 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+		//llanta posterior izq
+		model = modelaux2;
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::translate(model, glm::vec3(-1.6f, 1.0f, 1.55f));
+		model = glm::rotate(model, -rotLlanta13 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+		//Auto x - 470 =285
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(170.0f, 1.5f, -9.0f));
+		if (170.0f - movAuto14 >= -300.0f) {
+			model = glm::translate(model, glm::vec3(170.0f - movAuto14, 1.5f, -9.0f));
+		}
+		else if (170.0f - movAuto14 < -300.0f) {
+			model = glm::translate(model, glm::vec3(755.0f - movAuto14, 1.5f, -9.0f));
+		}
 		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		modelaux2 = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Auto1_M.RenderModel();
 
+		//llanta delantera der
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(1.4f, -0.4f, -1.5f));
+		model = glm::rotate(model, -rotLlanta14 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+		//llanta delantera izq
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-1.65f, -0.4f, -1.5f));
+		model = glm::rotate(model, -rotLlanta14 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+
+		//llanta posterior der
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(1.4f, -0.4f, 1.7f));
+		model = glm::rotate(model, -rotLlanta14 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+		//llanta posterior izq
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-1.65f, -0.4f, 1.5f));
+		model = glm::rotate(model, -rotLlanta14 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+		//Auto x - 170 =285
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(-130.0f, 1.5f, -9.0f));
+		if (-130.0f - movAuto15 >= -300.0f) {
+			model = glm::translate(model, glm::vec3(-130.0f - movAuto15, 1.5f, -9.0f));
+		}
+		else if (-130.0f - movAuto15 < -300.0f) {
+			model = glm::translate(model, glm::vec3(455.0f - movAuto15, 1.5f, -9.0f));
+		}
 		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		modelaux2 = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Auto2_M.RenderModel();
+
+		//llanta delantera der
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(1.4f, -0.4f, -1.5f));
+		model = glm::rotate(model, -rotLlanta15 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+		//llanta delantera izq
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-1.65f, -0.4f, -1.5f));
+		model = glm::rotate(model, -rotLlanta15 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+
+		//llanta posterior der
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(1.4f, -0.4f, 1.7f));
+		model = glm::rotate(model, -rotLlanta15 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+		//llanta posterior izq
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-1.65f, -0.4f, 1.5f));
+		model = glm::rotate(model, -rotLlanta15 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel(); 
+
 
 		////////////////////////////////////////////////////////////////////////////////////////////
 		//camino frente
@@ -4327,13 +5517,142 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Camino_M.RenderModel();
 
-		//Auto
+
+
+		//Auto x + 265 = -300
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(20.0f, -0.3f, 9.0f));
-		model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
+		if (20.0f + movAuto16 <= 285.0f) {
+			model = glm::translate(model, glm::vec3(20.0f + movAuto16, -0.3f, 9.0f));
+		}
+		else if (20.0f + movAuto16 > 285.0f) {
+			model = glm::translate(model, glm::vec3(-565.0f + movAuto16, -0.3f, 9.0f));
+		}
 		model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		modelaux2 = model;
+		model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Patrulla_M.RenderModel();
+
+		//llanta delantera der
+		model = modelaux2;
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::translate(model, glm::vec3(1.6f, 1.0f, -1.55f));
+		model = glm::rotate(model, -rotLlanta16 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+		//llanta delantera izq
+		model = modelaux2;
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::translate(model, glm::vec3(-1.6f, 1.0f, -1.57f));
+		model = glm::rotate(model, -rotLlanta16 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+
+		//llanta posterior der
+		model = modelaux2;
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::translate(model, glm::vec3(1.6f, 1.0f, 1.75f));
+		model = glm::rotate(model, -rotLlanta16 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+		//llanta posterior izq
+		model = modelaux2;
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::translate(model, glm::vec3(-1.6f, 1.0f, 1.55f));
+		model = glm::rotate(model, -rotLlanta16 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+		//Auto x + 115‚Ä¨ = -300
+		model = modelaux;
+		if (170.0f + movAuto17 <= 285.0f) {
+			model = glm::translate(model, glm::vec3(170.0f + movAuto17, 1.5f, 9.0f));
+		}
+		else if (170.0f + movAuto17 > 285.0f) {
+			model = glm::translate(model, glm::vec3(-415.0f + movAuto17, 1.5f, 9.0f));
+		}
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		modelaux2 = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto2_M.RenderModel();
+
+		//llanta delantera der
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(1.4f, -0.4f, -1.5f));
+		model = glm::rotate(model, -rotLlanta17 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+		//llanta delantera izq
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-1.65f, -0.4f, -1.5f));
+		model = glm::rotate(model, -rotLlanta17 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+
+		//llanta posterior der
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(1.4f, -0.4f, 1.7f));
+		model = glm::rotate(model, -rotLlanta17 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+		//llanta posterior izq
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-1.65f, -0.4f, 1.5f));
+		model = glm::rotate(model, -rotLlanta17 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+		//Auto x + 415‚Ä¨ = -300
+		model = modelaux;
+		if (-130.0f + movAuto18 <= 285.0f) {
+			model = glm::translate(model, glm::vec3(-130.0f + movAuto18, 1.5f, 9.0f));
+		}
+		else if (-130.0f + movAuto18 > 285.0f) {
+			model = glm::translate(model, glm::vec3(-715.0f + movAuto18, 1.5f, 9.0f));
+		}
+		model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+		model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		modelaux2 = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto1_M.RenderModel();
+
+		//llanta delantera der
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(1.4f, -0.4f, -1.5f));
+		model = glm::rotate(model, -rotLlanta18 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+		//llanta delantera izq
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-1.65f, -0.4f, -1.5f));
+		model = glm::rotate(model, -rotLlanta18 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+
+		//llanta posterior der
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(1.4f, -0.4f, 1.7f));
+		model = glm::rotate(model, -rotLlanta18 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+		//llanta posterior izq
+		model = modelaux2;
+		model = glm::translate(model, glm::vec3(-1.65f, -0.4f, 1.5f));
+		model = glm::rotate(model, -rotLlanta18 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Auto_llanta.RenderModel();
+
+
 
 		////////////////////////////////////////////////////////////////////////////////////////////
 		//Transportes
@@ -4345,7 +5664,7 @@ int main()
 		model = glm::scale(model, glm::vec3(24.0f, 10.0f, 10.0f));
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		MaterialParaLuces.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		BaseTren_M.RenderModel();
 
 		//Plataforma tren
@@ -4354,7 +5673,7 @@ int main()
 		model = glm::scale(model, glm::vec3(12.0f, 5.0f, 5.0f));
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		MaterialParaLuces.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		if (count < cicloDia) {
 			PlatTren_M.RenderModel();
 		}
@@ -4368,7 +5687,7 @@ int main()
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 18.0f));
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		MaterialParaLuces.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		tren_M.RenderModel();
 
 		//Estacion
@@ -4376,6 +5695,7 @@ int main()
 		model = glm::translate(model, glm::vec3(0.0f, -2.0f, 262.0f));
 		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(5.5f, 5.6f, 5.5f));
+		MaterialNormal.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Estacion_M.RenderModel();
 
@@ -4386,7 +5706,7 @@ int main()
 		model = glm::scale(model, glm::vec3(6.0f, 6.0f, 6.0f));
 		model = glm::rotate(model, girod * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		MaterialParaLuces.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Dirigible_M.RenderModel();
 
 		//////////////////////////////////////////////////////////////////////////////////////////
@@ -4394,6 +5714,7 @@ int main()
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(0.0f, -2.0f, 160.0f));
 		model = glm::scale(model, glm::vec3(17.0f, 12.0f, 12.0f));
+		MaterialNormal.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Escenario_M.RenderModel();
 		//////////////////////////////////////////////////////////////////////////////////////////
@@ -4428,13 +5749,14 @@ int main()
 		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		modelaux2 = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		MaterialParaLuces.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		helicopter_M.RenderModel();
 
 		//helice
 		model = modelaux2;
 		model = glm::translate(model, glm::vec3(0.0f, 3.8f, 0.0f));
 		model = glm::rotate(model, rot_helice * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		MaterialNormal.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		helice_M.RenderModel();
 		
@@ -4490,7 +5812,7 @@ int main()
 		model = glm::rotate(model, rotBatmobile * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		modelaux = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		MaterialParaLuces.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Batmobile_M.RenderModel();
 
 		//Llanta delantera derecha
@@ -4591,12 +5913,6 @@ int main()
 			countBird += 1.0f;
 		}
 
-		if (movbird > 359.0f) {
-			movbird = 0.0f;
-		}
-		if (movbird < -359.0f) {
-			movbird = 0.0f;
-		}
 		if (rotBird > 359.0f) {
 			rotBird = 0.0f;
 		}
@@ -4611,6 +5927,7 @@ int main()
 		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::rotate(model, rotBird * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		modelaux = model;
+		MaterialNormal.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		BlueBird_M.RenderModel();
 
@@ -4618,6 +5935,7 @@ int main()
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(0.0f, -0.1f, -0.2f));
 		model = glm::rotate(model, rotWings * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); 
+		MaterialNormal.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		BlueBirdWings_M.RenderModel();
 
@@ -4646,7 +5964,7 @@ void inputKeyframes(bool* keys)
 				playIndex_Helicopter = 0;
 				i_curr_steps_Helicopter = 0;
 				reproduciranimacion_Helicopter++;
-				printf("\nPresiona Enter para habilitar reproducir de nuevo la animaciÛn'\n");
+				printf("\nPresiona Enter para habilitar reproducir de nuevo la animaci√≥n'\n");
 				habilitaranimacion_Helicopter = 0;
 
 			}
@@ -4821,7 +6139,7 @@ void inputKeyframes(bool* keys)
 				playIndex_Dirigible = 0;
 				i_curr_steps_Dirigible = 0;
 				reproduciranimacion_Dirigible++;
-				printf("\nPresiona BACKSPACE para habilitar reproducir de nuevo la animaciÛn'\n");
+				printf("\nPresiona BACKSPACE para habilitar reproducir de nuevo la animaci√≥n'\n");
 				habilitaranimacion_Dirigible = 0;
 
 			}

@@ -24,7 +24,14 @@ KeyFrame[5].giroh=180.000000
 KeyFrame[5].rot_helice=6390.000000
 ****************************** 
 KeyFrame[6].movh_x=0.000000
-KeyFrame[6].movh_y=0.000000
+KeyFrame[6].movh_y=100.000000
 KeyFrame[6].movh_z=0.000000
-KeyFrame[6].giroh=180.000000
+KeyFrame[6].giroh=360.000000
 KeyFrame[6].rot_helice=7020.000000
+****************************** 
+KeyFrame[7].movh_x=0.000000
+KeyFrame[7].movh_y=0.000000
+KeyFrame[7].movh_z=0.000000
+KeyFrame[7].giroh=360.000000
+KeyFrame[7].rot_helice=7680.000000
+****************************** 

@@ -18,6 +18,7 @@ Window::Window(GLint windowWidth, GLint windowHeight)
 	spotlights = false;
 	animacionBatmobile = false;
 	Tim = false;
+	helicoptero = false;
 
 	for (size_t i = 0; i < 1024; i++)
 	{
@@ -156,9 +157,20 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 	if (key == GLFW_KEY_8)
 	{
 		theWindow->Tim = false;
+	}
+
+
+	if (key == GLFW_KEY_9)
+	{
+		theWindow->helicoptero = true;
+	}
+	if (key == GLFW_KEY_0)
+	{
+		theWindow->helicoptero = false;
 
 	}
 
+	
 
 
 	if (key >= 0 && key < 1024)
