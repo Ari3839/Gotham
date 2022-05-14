@@ -34,10 +34,10 @@ void Camera::keyControl(bool* keys, GLfloat deltaTime, GLboolean aerea)
 		position -= front * velocity;
 	}
 
-		if (keys[GLFW_KEY_A])
-		{
-			position -= right * velocity;
-		}
+	if (keys[GLFW_KEY_A])
+	{
+		position -= right * velocity;
+	}
 	if (keys[GLFW_KEY_D])
 	{
 		position += right * velocity;

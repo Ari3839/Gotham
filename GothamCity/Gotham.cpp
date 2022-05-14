@@ -21,6 +21,7 @@
 #include "Shader_light.h"
 #include "Camera.h"
 #include "Texture.h"
+#include "Toroide.h"
 #include"Model.h"
 #include "Skybox.h"
 #include "CommonValues.h"
@@ -75,6 +76,7 @@ int verde1 = 200, amarillo1 = 300, rojo1 = 600;
 int verde2 = 300, amarillo2 = 500;
 int cambioAuto = 1;
 
+//Animacion de los autos y motos de la calle.
 float movAuto1 = 0.0f, rotLlanta1 = 0.0f;
 float movAuto2 = 0.0f, rotLlanta2 = 0.0f;
 float movAuto3 = 0.0f, rotLlanta3 = 0.0f;
@@ -126,6 +128,7 @@ Sound Disparo = Sound("Music/Disparo.mp3");
 Material MaterialParaLuces;
 Material MaterialNormal;
 
+Toroide Tor = Toroide(1.0, 1.5, 10, 10);
 
 //Sphere cabeza = Sphere(0.5, 20, 20);
 GLfloat deltaTime = 0.0f;
@@ -914,42 +917,84 @@ void readFrame_Helicopter(void)
 		fichero >> linea;           // Primera linea
 		while (!fichero.eof())      
 		{
-			//cout << texto << endl;    // Muestrar el contenido en terminal 
-			if (linea[0] == 'K') {
-				if (linea[17] == 'x') {
-					aux = aux + linea[19] + linea[20] + linea[21] + linea[22] + linea[23] + linea[24] + linea[25];
-					movh_x = stof(aux);
-					aux = "";
-					xokay = true;
-					cout << "movh_x =" + to_string(movh_x) << endl;
+			if (FrameIndex_Helicopter < 10) {
+				//cout << texto << endl;    // Muestrar el contenido en terminal 
+				if (linea[0] == 'K') {
+					if (linea[17] == 'x') {
+						aux = aux + linea[19] + linea[20] + linea[21] + linea[22] + linea[23] + linea[24] + linea[25];
+						movh_x = stof(aux);
+						aux = "";
+						xokay = true;
+						cout << "movh_x =" + to_string(movh_x) << endl;
+					}
+					else if (linea[17] == 'y') {
+						aux = aux + linea[19] + linea[20] + linea[21] + linea[22] + linea[23] + linea[24] + linea[25];
+						movh_y = stof(aux);
+						aux = "";
+						yokay = true;
+						cout << "movh_y =" + to_string(movh_y) << endl;
+					}
+					else if (linea[17] == 'z') {
+						aux = aux + linea[19] + linea[20] + linea[21] + linea[22] + linea[23] + linea[24] + linea[25];
+						movh_z = stof(aux);
+						aux = "";
+						zokay = true;
+						cout << "movh_z =" + to_string(movh_z) << endl;
+					}
+					else if (linea[12] == 'g') {
+						aux = aux + linea[18] + linea[19] + linea[20] + linea[21] + linea[22] + linea[23] + linea[24];
+						giroh = stof(aux);
+						aux = "";
+						gokay = true;
+						cout << "giroh =" + to_string(giroh) << endl;
+					}
+					else if (linea[12] == 'r') {
+						aux = aux + linea[23] + linea[24] + linea[25] + linea[26] + linea[27] + linea[28];
+						rot_helice = stof(aux);
+						aux = "";
+						heliceokay = true;
+						cout << "rot_helice =" + to_string(rot_helice) << endl;
+					}
 				}
-				else if (linea[17] == 'y') {
-					aux = aux + linea[19] + linea[20] + linea[21] + linea[22] + linea[23] + linea[24] + linea[25];
-					movh_y = stof(aux);
-					aux = "";
-					yokay = true;
-					cout << "movh_y =" + to_string(movh_y) << endl;
-				}
-				else if (linea[17] == 'z') {
-					aux = aux + linea[19] + linea[20] + linea[21] + linea[22] + linea[23] + linea[24] + linea[25];
-					movh_z = stof(aux);
-					aux = "";
-					zokay = true;
-					cout << "movh_z =" + to_string(movh_z) << endl;
-				}
-				else if (linea[12] == 'g') {
-					aux = aux + linea[18] + linea[19] + linea[20] + linea[21] + linea[22] + linea[23] + linea[24];
-					giroh = stof(aux);
-					aux = "";
-					gokay = true;
-					cout << "giroh =" + to_string(giroh) << endl;
-				}
-				else if (linea[12] == 'r') {
-					aux = aux + linea[23] + linea[24] + linea[25] + linea[26] + linea[27] + linea[28];
-					rot_helice = stof(aux);
-					aux = "";
-					heliceokay = true;
-					cout << "rot_helice =" + to_string(rot_helice) << endl;
+			}
+			else {
+				//cout << texto << endl;    // Muestrar el contenido en terminal 
+				if (linea[0] == 'K') {
+					if (linea[18] == 'x') {
+						aux = aux + linea[20] + linea[21] + linea[22] + linea[23] + linea[24] + linea[25] + linea[26] ;
+						movh_x = stof(aux);
+						aux = "";
+						xokay = true;
+						cout << "movh_x =" + to_string(movh_x) << endl;
+					}
+					else if (linea[18] == 'y') {
+						aux = aux + linea[20] + linea[21] + linea[22] + linea[23] + linea[24] + linea[25] + linea[26];
+						movh_y = stof(aux);
+						aux = "";
+						yokay = true;
+						cout << "movh_y =" + to_string(movh_y) << endl;
+					}
+					else if (linea[18] == 'z') {
+						aux = aux + linea[20] + linea[21] + linea[22] + linea[23] + linea[24] + linea[25] + linea[26];
+						movh_z = stof(aux);
+						aux = "";
+						zokay = true;
+						cout << "movh_z =" + to_string(movh_z) << endl;
+					}
+					else if (linea[13] == 'g') {
+						aux = aux + linea[19] + linea[20] + linea[21] + linea[22] + linea[23] + linea[24] + linea[25];
+						giroh = stof(aux);
+						aux = "";
+						gokay = true;
+						cout << "giroh =" + to_string(giroh) << endl;
+					}
+					else if (linea[13] == 'r') {
+						aux = aux + linea[24] + linea[25] + linea[26] + linea[27] + linea[28] + linea[29];
+						rot_helice = stof(aux);
+						aux = "";
+						heliceokay = true;
+						cout << "rot_helice =" + to_string(rot_helice) << endl;
+					}
 				}
 			}
 
@@ -1037,7 +1082,7 @@ float leoFrame_Dirigible = 0.0f, reinicioLeoFrame_Dirigible = 0.0f, contador_Dir
 bool xdokay = false, ydokay = false, zdokay = false;
 
 glm::vec3 posd = glm::vec3(0.0f, 0.0f, 0.0f);
-float posXd = 70.0f, posYd = 125.0f, posZd = 60.0f;
+float posXd = 70.0f, posYd = 110.0f, posZd = 60.0f;
 
 
 //NEW// Keyframes
@@ -1101,28 +1146,55 @@ void readFrame_Dirigible(void)
 		fichero >> linea;           // Primera linea
 		while (!fichero.eof())
 		{
-			//cout << texto << endl;    // Muestrar el contenido en terminal 
-			if (linea[0] == 'K') {
-				if (linea[17] == 'x') {
-					aux = aux + linea[19] + linea[20] + linea[21] + linea[22] + linea[23] + linea[24] + linea[25];
-					movd_x = stof(aux);
-					aux = "";
-					xdokay = true;
-					cout << "movd_x =" + to_string(movd_x) << endl;
+			if (FrameIndex_Dirigible < 10) {
+				//cout << texto << endl;    // Muestrar el contenido en terminal 
+				if (linea[0] == 'K') {
+					if (linea[17] == 'x') {
+						aux = aux + linea[19] + linea[20] + linea[21] + linea[22] + linea[23] + linea[24] + linea[25];
+						movd_x = stof(aux);
+						aux = "";
+						xdokay = true;
+						cout << "movd_x =" + to_string(movd_x) << endl;
+					}
+					else if (linea[17] == 'y') {
+						aux = aux + linea[19] + linea[20] + linea[21] + linea[22] + linea[23] + linea[24] + linea[25];
+						movd_y = stof(aux);
+						aux = "";
+						ydokay = true;
+						cout << "movd_y =" + to_string(movd_y) << endl;
+					}
+					else if (linea[12] == 'g') {
+						aux = aux + linea[18] + linea[19] + linea[20] + linea[21] + linea[22] + linea[23] + linea[24];
+						girod = stof(aux);
+						aux = "";
+						zdokay = true;
+						cout << "girod =" + to_string(girod) << endl;
+					}
 				}
-				else if (linea[17] == 'y') {
-					aux = aux + linea[19] + linea[20] + linea[21] + linea[22] + linea[23] + linea[24] + linea[25];
-					movd_y = stof(aux);
-					aux = "";
-					ydokay = true;
-					cout << "movd_y =" + to_string(movd_y) << endl;
-				}
-				else if (linea[12] == 'g') {
-					aux = aux + linea[18] + linea[19] + linea[20] + linea[21] + linea[22] + linea[23] + linea[24];
-					girod = stof(aux);
-					aux = "";
-					zdokay = true;
-					cout << "girod =" + to_string(girod) << endl;
+			}
+			else {
+				if (linea[0] == 'K') {
+					if (linea[18] == 'x') {
+						aux = aux +  linea[20] + linea[21] + linea[22] + linea[23] + linea[24] + linea[25] + linea[26] ;
+						movd_x = stof(aux);
+						aux = "";
+						xdokay = true;
+						cout << "movd_x =" + to_string(movd_x) << endl;
+					}
+					else if (linea[18] == 'y') {
+						aux = aux  + linea[20] + linea[21] + linea[22] + linea[23] + linea[24] + linea[25] + linea[26];
+						movd_y = stof(aux);
+						aux = "";
+						ydokay = true;
+						cout << "movd_y =" + to_string(movd_y) << endl;
+					}
+					else if (linea[13] == 'g') {
+						aux = aux  + linea[19] + linea[20] + linea[21] + linea[22] + linea[23] + linea[24] + linea[25];
+						girod = stof(aux);
+						aux = "";
+						zdokay = true;
+						cout << "girod =" + to_string(girod) << endl;
+					}
 				}
 			}
 
@@ -1205,7 +1277,7 @@ int main()
 
 	//camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 10.0f, 0.5f);
 	cameraPiso = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -50.0f, 0.0f, 0.5f, 0.5f);
-	cameraAerea = Camera(glm::vec3(0.0f, 390.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, -90.0f, 2.0f, 0.5f);
+	cameraAerea = Camera(glm::vec3(0.0f, 320.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, -90.0f, 2.0f, 0.5f);
 
 
 	plainTexture = Texture("Textures/plain.png");
@@ -1465,6 +1537,9 @@ int main()
 
 	MaterialParaLuces = Material(5.0f, 300);
 	MaterialNormal = Material(0.5f, 3);
+
+	Tor.init(); //inicializar toroide
+	Tor.load();//enviar la toroide al shader
 
 	//contador de luces puntuales
 	unsigned int pointLightCount = 0;
@@ -3524,7 +3599,7 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Building6_M.RenderModel();
 
-		if ((cameraPiso.getCameraPosition().x - (xNw + cuerpo2 * cuerpo2) <= 100.0f) && (cameraPiso.getCameraPosition().z - (zNw + (cuerpo2)) <= 100.0f)) {
+		if ((cameraPiso.getCameraPosition().x - (xNw + cuerpo2) <= 50.0f) && (cameraPiso.getCameraPosition().z - (zNw - movZ) <= 50.0f)) {
 			//Musica
 			music.pause();
 			Tim.pause();
@@ -5726,10 +5801,22 @@ int main()
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		pista_M.RenderModel();
+		
+
+		//Toroide
+		model = glm::mat4(1.0);
+		color = glm::vec3(1.0f, 0.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(-190.0f, 1.0f, 160.0f));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Tor.render();
+
 
 		//Helipuerto
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(190.0f, -2.0f, 160.0f));
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		modelaux = model;
 		model = glm::scale(model, glm::vec3(8.0f, 5.0f, 8.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
@@ -5738,13 +5825,13 @@ int main()
 
 		//punto de giro
 		model = glm::mat4(1.0);
-		posh = glm::vec3(posXh + movh_x-10.0f, posYh + movh_y, posZh);
+		posh = glm::vec3(posXh -10.0f + movh_x, posYh + movh_y, posZh + movh_z);
 		model = glm::translate(model, posh);
 		model = glm::rotate(model, giroh * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 
 
 		//Helicopter
-		model = glm::translate(model, glm::vec3(10.0f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(10.0f , 0.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
 		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		modelaux2 = model;
@@ -5964,7 +6051,7 @@ void inputKeyframes(bool* keys)
 				playIndex_Helicopter = 0;
 				i_curr_steps_Helicopter = 0;
 				reproduciranimacion_Helicopter++;
-				printf("\nPresiona Enter para habilitar reproducir de nuevo la animación'\n");
+				printf("\nPresiona Enter para habilitar reproducir de nuevo la animacion'\n");
 				habilitaranimacion_Helicopter = 0;
 
 			}
@@ -6029,7 +6116,7 @@ void inputKeyframes(bool* keys)
 		if (ciclo_Helicopter < 1)
 		{
 			movh_y += 25.0f;
-			printf("movh_y es: %f\n", movh_x);
+			printf("movh_y es: %f\n", movh_y);
 			ciclo_Helicopter++;
 			ciclo2_Helicopter = 0;
 			printf("reinicia con F5\n");
@@ -6040,12 +6127,36 @@ void inputKeyframes(bool* keys)
 		if (ciclo_Helicopter < 1)
 		{
 			movh_y -= 25.0f;
-			printf("movh_y es: %f\n", movh_x);
+			printf("movh_y es: %f\n", movh_y);
 			ciclo_Helicopter++;
 			ciclo2_Helicopter = 0;
 			printf("reinicia con F5\n");
 		}
 	}
+
+	if (keys[GLFW_KEY_N])
+	{
+		if (ciclo_Helicopter < 1)
+		{
+			movh_z += 25.0f;
+			printf("movh_z es: %f\n", movh_z);
+			ciclo_Helicopter++;
+			ciclo2_Helicopter = 0;
+			printf("reinicia con F5\n");
+		}
+	}
+	if (keys[GLFW_KEY_M])
+	{
+		if (ciclo_Helicopter < 1)
+		{
+			movh_z -= 25.0f;
+			printf("movh_z es: %f\n", movh_z);
+			ciclo_Helicopter++;
+			ciclo2_Helicopter = 0;
+			printf("reinicia con F5\n");
+		}
+	}
+
 
 	if (keys[GLFW_KEY_O])
 	{
@@ -6139,7 +6250,7 @@ void inputKeyframes(bool* keys)
 				playIndex_Dirigible = 0;
 				i_curr_steps_Dirigible = 0;
 				reproduciranimacion_Dirigible++;
-				printf("\nPresiona BACKSPACE para habilitar reproducir de nuevo la animación'\n");
+				printf("\nPresiona BACKSPACE para habilitar reproducir de nuevo la animacion'\n");
 				habilitaranimacion_Dirigible = 0;
 
 			}
@@ -6204,7 +6315,7 @@ void inputKeyframes(bool* keys)
 		if (ciclo_Dirigible < 1)
 		{
 			movd_y -= 5.0f;
-			printf("movd_y es: %f\n", movd_x);
+			printf("movd_y es: %f\n", movd_y);
 			ciclo_Dirigible++;
 			ciclo2_Dirigible = 0;
 			printf("reinicia con F1\n");
@@ -6215,7 +6326,7 @@ void inputKeyframes(bool* keys)
 		if (ciclo_Dirigible < 1)
 		{
 			movd_y += 5.0f;
-			printf("movd_y es: %f\n", movd_x);
+			printf("movd_y es: %f\n", movd_y);
 			ciclo_Dirigible++;
 			ciclo2_Dirigible = 0;
 			printf("reinicia con F1\n");

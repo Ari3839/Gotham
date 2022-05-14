@@ -34,4 +34,3 @@ KeyFrame[7].movh_y=0.000000
 KeyFrame[7].movh_z=0.000000
 KeyFrame[7].giroh=360.000000
 KeyFrame[7].rot_helice=7680.000000
-****************************** 

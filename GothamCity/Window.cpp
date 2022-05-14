@@ -110,14 +110,6 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 	{
 		glfwSetWindowShouldClose(window, GL_TRUE);
 	}
-	if (key == GLFW_KEY_Y)
-	{
-		theWindow-> muevex += 1.0;
-	}
-	if (key == GLFW_KEY_U)
-	{
-		theWindow-> muevex -= 1.0;
-	}
 
 	if (key == GLFW_KEY_1)
 	{
