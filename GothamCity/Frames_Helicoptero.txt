@@ -1,36 +1,8 @@
-****************************** 
-KeyFrame[2].movh_x=0.000000
-KeyFrame[2].movh_y=100.000000
-KeyFrame[2].movh_z=0.000000
-KeyFrame[2].giroh=0.000000
-KeyFrame[2].rot_helice=1080.000122
-****************************** 
-KeyFrame[3].movh_x=-390.000000
-KeyFrame[3].movh_y=100.000000
-KeyFrame[3].movh_z=0.000000
-KeyFrame[3].giroh=0.000000
-KeyFrame[3].rot_helice=3510.000000
-****************************** 
-KeyFrame[4].movh_x=-390.000000
-KeyFrame[4].movh_y=100.000000
-KeyFrame[4].movh_z=0.000000
-KeyFrame[4].giroh=180.000000
-KeyFrame[4].rot_helice=3780.000000
-****************************** 
-KeyFrame[5].movh_x=0.000000
-KeyFrame[5].movh_y=100.000000
-KeyFrame[5].movh_z=0.000000
-KeyFrame[5].giroh=180.000000
-KeyFrame[5].rot_helice=6390.000000
-****************************** 
-KeyFrame[6].movh_x=0.000000
-KeyFrame[6].movh_y=100.000000
-KeyFrame[6].movh_z=0.000000
-KeyFrame[6].giroh=360.000000
-KeyFrame[6].rot_helice=7020.000000
-****************************** 
-KeyFrame[7].movh_x=0.000000
-KeyFrame[7].movh_y=0.000000
-KeyFrame[7].movh_z=0.000000
-KeyFrame[7].giroh=360.000000
-KeyFrame[7].rot_helice=7680.000000
+**************************************** 
+KeyFrame[3].movh_x= -35.999989
+KeyFrame[3].movh_y= 25.999989
+KeyFrame[3].giroh= 0.000000
+**************************************** 
+KeyFrame[4].movh_x= -75.999985
+KeyFrame[4].movh_y= 30.999989
+KeyFrame[4].giroh= 0.000000

@@ -29,10 +29,6 @@ private:
 	int slices;
 	int stacks;
 
-	int _numIndices = 0;
-	int _primitiveRestartIndex = 0;
-
-
 	GLuint VAO, VBO, EBO;
 };
 

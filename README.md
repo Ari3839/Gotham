@@ -15,7 +15,7 @@ Estudiante Mexicana. Actualmente curso el 8vo Semestre de Ingeniería en computa
 - [Evidencia del sistema de Almacenamiento-Inglés](Docs/Development_Tool_GitHub_Translate.pdf)
 - [Documento de Propuesta](Docs/Propuesta.pdf)
 - [Croquis/Boceto](Docs/Boceto.pdf)
-- [Diagrama de Gantt](Docs/DiagramaGantt.xlsx)
+- [Diagrama de Gantt](Docs/DiagramaGantt.pdf)
 
 ### Desarrollo :computer:
 
@@ -47,7 +47,7 @@ Mexican student. Currently taking the 8th semester of my Computer engineering ma
 - [Development Tool Evidence-English](Docs/Development_Tool_GitHub_Translate.pdf)
 - [Proposal Document](Docs/Propuesta.pdf)
 - [Draft](Docs/Boceto.pdf)
-- [Gantt Diagram](Docs/DiagramaGantt.xlsx)
+- [Gantt Diagram](Docs/DiagramaGantt.pdf)
 
 ### Desarrollo :computer:
 

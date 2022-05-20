@@ -128,7 +128,7 @@ Sound Disparo = Sound("Music/Disparo.mp3");
 Material MaterialParaLuces;
 Material MaterialNormal;
 
-Toroide Tor = Toroide(1.0, 1.5, 10, 10);
+Toroide Tor = Toroide(1.0, 2.0, 20, 20);
 
 //Sphere cabeza = Sphere(0.5, 20, 20);
 GLfloat deltaTime = 0.0f;
