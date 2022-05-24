@@ -28,7 +28,7 @@ Estudiante Mexicana. Actualmente curso el 8vo Semestre de Ingeniería en computa
 - [Manual de usuario-Inglés](Docs/User_Manual_GothamCity.pdf)
 - [Manual técnico-Español](Docs/Manual_Tecnico_GothamCity.pdf)
 - [Manual técnico-Inglés](Docs/Technical_Manual_GothamCity.pdf)
-- [Video](https://youtu.be/QDiIbJG0AlI)
+- [Video](https://youtu.be/_JEh2xgnp5E)
 
 # Gotham City :sparkles:
 Graphic Computing Project semester 2022-2: Gotham City in Voxel Art style. 
@@ -60,4 +60,4 @@ Mexican student. Currently taking the 8th semester of my Computer engineering ma
 - [User Manual-English](Docs/User_Manual_GothamCity.pdf)
 - [Technical Manual-Spanish](Docs/Manual_Tecnico_GothamCity.pdf)
 - [Technical Manual-English](Docs/Technical_Manual_GothamCity.pdf)
-- [Video](https://youtu.be/QDiIbJG0AlI)  
+- [Video](https://youtu.be/_JEh2xgnp5E)
